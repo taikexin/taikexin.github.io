@@ -158,6 +158,40 @@ nav ul a:hover::after{width:100%}
 .cover-page .en{font-size:11px;letter-spacing:.55em;color:#b08d4f;margin-top:14px}
 .cover-page .orn{width:64px;height:1px;background:#b08d4f;margin:26px auto}
 .cover-page p{font-size:12.5px;color:#8b7d5f;line-height:2.1;letter-spacing:.1em}
+/* 目录页 */
+.toc-list{width:100%;max-width:350px;margin-top:4px}
+.toc-list a{display:flex;align-items:center;gap:14px;padding:10px 8px;border-bottom:1px dashed #d9cfb6;cursor:pointer;transition:.3s}
+.toc-list a:hover{background:rgba(176,141,79,.1)}
+.toc-list .tn{font-family:var(--serif);color:#b08d4f;font-size:16px;flex:none}
+.toc-list .tt{flex:1;font-family:var(--serif);font-size:16px;font-weight:700;color:#2b2620;line-height:1.3}
+.toc-list .td{display:block;font-size:10.5px;color:#8b7d5f;font-family:var(--sans);font-weight:400;margin-top:3px;letter-spacing:.04em}
+.toc-list .tp{flex:none;font-size:11px;color:#a89a78;letter-spacing:.15em}
+/* 单元分隔页 */
+.unit-page{align-items:center;justify-content:center;text-align:center;background:linear-gradient(105deg,#f0e7d2 0%,#e7dabc 100%)}
+.unit-page .no{font-size:11px;letter-spacing:.55em;color:#b08d4f;margin-bottom:22px}
+.unit-page .big{font-family:var(--serif);font-size:38px;font-weight:900;color:#2b2620;letter-spacing:.22em}
+.unit-page .en{font-size:11px;letter-spacing:.5em;color:#b08d4f;margin-top:16px}
+.unit-page .orn{width:64px;height:1px;background:#b08d4f;margin:26px auto}
+.unit-page p{font-size:12.5px;color:#8b7d5f;line-height:2.1;letter-spacing:.08em;max-width:330px}
+/* 案例/工具列表页 */
+.case-list{flex:1;display:flex;flex-direction:column;gap:9px;overflow:hidden;justify-content:center;min-height:0}
+.case-item{display:flex;align-items:center;gap:12px;padding:10px 13px;border:1px solid #e0d6bc;border-radius:10px;background:rgba(255,255,255,.38);transition:.3s;text-decoration:none}
+.case-item:hover{border-color:#b08d4f;background:rgba(176,141,79,.09);transform:translateX(4px)}
+.case-item .cat{flex:none;font-size:9.5px;letter-spacing:.16em;color:#b08d4f;border:1px solid #c9b689;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.case-item .cb{flex:1;min-width:0}
+.case-item h4{font-family:var(--serif);font-size:14.5px;color:#2b2620;line-height:1.35}
+.case-item p{font-size:10.5px;color:#8b7d5f;margin-top:3px;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.case-item .tags{margin-top:5px}
+.case-item .t{display:inline-block;font-size:9.5px;color:#7a6a45;background:rgba(176,141,79,.1);border:1px solid #d8c9a4;border-radius:6px;padding:2px 7px;margin:0 4px 3px 0}
+.case-item .go{flex:none;font-size:12px;color:#b08d4f}
+/* 出版物页 */
+.bk-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:0}
+.bk-grid img{width:100%;height:100%;max-height:300px;object-fit:cover;border-radius:8px;box-shadow:0 10px 26px rgba(60,45,15,.22)}
+/* 影像海报网格 */
+.film-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:center;min-height:0}
+.film-grid a{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 8px 20px rgba(60,45,15,.18)}
+.film-grid img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.film-grid .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(28,20,6,.88));color:#f6f0e2;font-size:11.5px;padding:22px 8px 8px;letter-spacing:.12em;text-align:center}
 /* 控制 */
 .book-ctrl{margin-top:44px;display:flex;align-items:center;justify-content:center;gap:26px}
 .bbtn{width:52px;height:52px;border-radius:50%;border:1px solid rgba(201,168,106,.5);background:transparent;color:var(--gold-2);
@@ -288,6 +322,10 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
   .bbtn{width:46px;height:46px}
   .book-hint{display:none}
   .scroll-cue{display:none}
+  .dots{gap:6px;max-width:300px;flex-wrap:wrap;justify-content:center}
+  .unit-page .big{font-size:29px}
+  .toc-list .tt{font-size:14.5px}
+  .case-item{padding:8px 10px;gap:9px}
 }
 @media(min-width:821px){.mbook{display:none}}
 </style>
@@ -398,20 +436,44 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
   <div class="wrap">
     <div class="kicker reveal">SELECTED WORKS</div>
     <h2 class="h2 reveal">作品集 · <em>翻开这本书</em></h2>
-    <p class="lead reveal">从剧本到影像，从舞台到世界观——每一页，都是一次从文字到体验的完整创作。点击两侧箭头或使用键盘方向键翻阅。</p>
+    <p class="lead reveal">六大单元 · 26 页精选——从编剧影像到出版著作，从 AI 产品到互动作品与效率工具，一本翻完全部代表作。点击两侧箭头或使用键盘方向键翻阅。</p>
   </div>
 
   <div class="book-stage reveal">
     <div class="book" id="bookEl">
-      <!-- Sheet 1 -->
+      <!-- Sheet 1：扉页 + 目录 -->
       <div class="sheet">
         <div class="face front"><div class="page cover-page" data-page="01">
           <div class="big">作品集</div>
           <div class="en">SELECTED WORKS 2013—2026</div>
           <div class="orn"></div>
-          <p>剧本 · 影像 · 舞台剧 · 世界观<br>邰可心 创作精选<br><br>请向右翻阅 →</p>
+          <p>编剧 · 出版 · AI 产品 · 效率工具<br>六大单元 · 邰可心 创作精选<br><br>请向右翻阅 →</p>
         </div></div>
-        <div class="face back"><div class="page" data-page="02">
+        <div class="face back"><div class="page cover-page" data-page="02">
+          <div class="big" style="font-size:32px">目 录</div>
+          <div class="en">CONTENTS</div>
+          <div class="orn"></div>
+          <div class="toc-list">
+            <a data-goto="3"><span class="tn">壹</span><span class="tt">编剧与影像作品<span class="td">剧本 · 成片 · 舞台剧 · 世界观</span></span><span class="tp">03</span></a>
+            <a data-goto="12"><span class="tn">贰</span><span class="tt">出版著作<span class="td">《人工智能 · AIGC 少年创客指南》</span></span><span class="tp">12</span></a>
+            <a data-goto="14"><span class="tn">叁</span><span class="tt">AI 产品<span class="td">字节跳动 ·《豆包爱学》</span></span><span class="tp">14</span></a>
+            <a data-goto="16"><span class="tn">肆</span><span class="tt">AI 互动作品<span class="td">13 款已上线教育产品 · 点击即玩</span></span><span class="tp">16</span></a>
+            <a data-goto="20"><span class="tn">伍</span><span class="tt">AI 效率工具<span class="td">5 款产品 · 14 个实战工具</span></span><span class="tp">20</span></a>
+            <a data-goto="23"><span class="tn">陆</span><span class="tt">更多影像作品<span class="td">启蒙动画 · 韵律 · 算法 · 科创</span></span><span class="tp">23</span></a>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Sheet 2：单元壹分隔 + 长度剧本 -->
+      <div class="sheet">
+        <div class="face front"><div class="page unit-page" data-page="03">
+          <div class="no">第 壹 单元</div>
+          <div class="big">编剧与影像</div>
+          <div class="en">SCREENPLAY &amp; FILM</div>
+          <div class="orn"></div>
+          <p>从物理启蒙情景剧到巡演 30+ 城市的儿童舞台剧——把知识讲成一出好戏。</p>
+        </div></div>
+        <div class="face back"><div class="page" data-page="04">
           <div class="p-kicker">剧本 · SCREENPLAY</div>
           <div class="p-title">《长度的测量》</div>
           <div class="p-sub">半间教室 · 物理启蒙情景剧（节选）</div>
@@ -432,9 +494,9 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
         </div></div>
       </div>
 
-      <!-- Sheet 2 -->
+      <!-- Sheet 3：长度成片 + 田忌剧本 -->
       <div class="sheet">
-        <div class="face front"><div class="page" data-page="03">
+        <div class="face front"><div class="page" data-page="05">
           <div class="p-kicker">影像 · FILM</div>
           <div class="p-title">《长度的测量》成片</div>
           <div class="p-sub">编剧 / 课程设计 · 约 13 分钟</div>
@@ -444,7 +506,7 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
             <div class="video-note"><span>秦始皇 × 小贩：把「统一度量衡」讲成一出戏</span><span>13′16″</span></div>
           </div>
         </div></div>
-        <div class="face back"><div class="page" data-page="04">
+        <div class="face back"><div class="page" data-page="06">
           <div class="p-kicker">剧本 · SCREENPLAY</div>
           <div class="p-title">《田忌赛马》</div>
           <div class="p-sub">米小圈成语故事 · 配音对比稿（节选）</div>
@@ -463,9 +525,9 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
         </div></div>
       </div>
 
-      <!-- Sheet 3 -->
+      <!-- Sheet 4：田忌成片 + 李白白剧照 -->
       <div class="sheet">
-        <div class="face front"><div class="page" data-page="05">
+        <div class="face front"><div class="page" data-page="07">
           <div class="p-kicker">影像 · FILM</div>
           <div class="p-title">《田忌赛马》成片</div>
           <div class="p-sub">编剧 · 约 8 分钟</div>
@@ -475,7 +537,7 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
             <div class="video-note"><span>以弱胜强的策略启蒙，笑点与知识点齐飞</span><span>08′05″</span></div>
           </div>
         </div></div>
-        <div class="face back"><div class="page" data-page="06">
+        <div class="face back"><div class="page" data-page="08">
           <div class="p-kicker">舞台剧 · STAGE PLAY</div>
           <div class="p-title">《米小圈之李白白不白》</div>
           <div class="p-sub">儿童舞台剧 · 巡演 30+ 城市</div>
@@ -486,9 +548,9 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
         </div></div>
       </div>
 
-      <!-- Sheet 4 -->
+      <!-- Sheet 5：李白白剧本 + Apollo世界观 -->
       <div class="sheet">
-        <div class="face front"><div class="page" data-page="07">
+        <div class="face front"><div class="page" data-page="09">
           <div class="p-kicker">剧本 · STAGE SCRIPT</div>
           <div class="p-title">《李白白不白》剧本</div>
           <div class="p-sub">根据北猫《米小圈上学记》改编（节选）</div>
@@ -505,7 +567,7 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
           </div>
           <a class="full-link" href="scripts/libai.html" target="_blank">阅读完整剧本 →</a>
         </div></div>
-        <div class="face back"><div class="page" data-page="08">
+        <div class="face back"><div class="page" data-page="10">
           <div class="p-kicker">世界观 · IP UNIVERSE</div>
           <div class="p-title">Apollo · 世界观设计</div>
           <div class="p-sub">清北网校 IP「小北」宇宙 · 顶层设计</div>
@@ -522,9 +584,9 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
         </div></div>
       </div>
 
-      <!-- Sheet 5 -->
+      <!-- Sheet 6：角色美术 + 单元贰分隔 -->
       <div class="sheet">
-        <div class="face front"><div class="page" data-page="09">
+        <div class="face front"><div class="page" data-page="11">
           <div class="p-kicker">世界观 · CHARACTER & ART</div>
           <div class="p-title">角色与美术风格</div>
           <div class="p-sub">主要角色 · 数学大陆 · 场景设定</div>
@@ -538,11 +600,174 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
           </div>
           <a class="full-link" href="scripts/apollo.html" target="_blank">查看完整世界观 →</a>
         </div></div>
-        <div class="face back"><div class="page cover-page" data-page="10">
+        <div class="face back"><div class="page unit-page" data-page="12">
+          <div class="no">第 贰 单元</div>
+          <div class="big">出版著作</div>
+          <div class="en">PUBLISHED BOOK</div>
+          <div class="orn"></div>
+          <p>从课堂到书架——把 AI 启蒙，写进孩子看得懂的第一本书。</p>
+        </div></div>
+      </div>
+
+      <!-- Sheet 7：出版著作 + 单元叁分隔 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="13">
+          <div class="p-kicker">出版 · PUBLISHED</div>
+          <div class="p-title">《AIGC 少年创客指南》</div>
+          <div class="p-sub">人工智能 · 你的第一个 AI 助手 · 安徽师范大学出版社</div>
+          <div class="p-rule"></div>
+          <div class="bk-grid">
+            <img src="assets/img/book-cover.jpg" alt="《AIGC 少年创客指南》封面">
+            <img src="assets/img/book-titlepage.jpg" alt="扉页编委署名">
+          </div>
+          <div class="apollo-txt" style="margin-top:10px"><p>小鹿 AI 编程研究院主编 · 编委：<b>邰可心</b> —— 写给孩子的人工智能启蒙读本。</p></div>
+          <a class="full-link" href="#pub">查看著作详情 →</a>
+        </div></div>
+        <div class="face back"><div class="page unit-page" data-page="14">
+          <div class="no">第 叁 单元</div>
+          <div class="big">AI 产品</div>
+          <div class="en">AI PRODUCT</div>
+          <div class="orn"></div>
+          <p>从写故事到造产品——在《豆包爱学》里，定义一种全新的 AI 学习体验。</p>
+        </div></div>
+      </div>
+
+      <!-- Sheet 8：豆包爱学 + 单元肆分隔 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="15">
+          <div class="p-kicker">AI 产品 · AI PRODUCT</div>
+          <div class="p-title">字节跳动 ·《豆包爱学》</div>
+          <div class="p-sub">AI 互动故事 × AI 口语练习 · 2022 — 至今</div>
+          <div class="p-rule"></div>
+          <div class="p-img">
+            <img src="assets/img/doubao-page.jpg" alt="豆包爱学项目展示页">
+          </div>
+          <div class="apollo-txt" style="margin-top:10px"><p>负责「互动故事」「口语练习」的课程与内容设计，涵盖内容体系、交互逻辑与人物设定。<b>单集最高点击超 300 万</b>——让孩子一边写故事、一边学知识。</p></div>
+          <a class="full-link" href="#works">了解更多 →</a>
+        </div></div>
+        <div class="face back"><div class="page unit-page" data-page="16">
+          <div class="no">第 肆 单元</div>
+          <div class="big">AI 互动作品</div>
+          <div class="en">AI INTERACTIVE WORKS</div>
+          <div class="orn"></div>
+          <p>13 款已上线的 AI 教育产品，由 AI 协同策划、设计与开发——点击书页卡片，即可开始体验。</p>
+        </div></div>
+      </div>
+
+      <!-- Sheet 9：数学思维 + 语文英语 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="17">
+          <div class="p-kicker">AI 互动作品 · 数学思维</div>
+          <div class="p-title">数学思维 · 6 款</div>
+          <div class="p-sub">点击卡片即可开始体验</div>
+          <div class="p-rule"></div>
+          <div class="case-list">
+            <a class="case-item" href="cases/case01-math-island/"><span class="cat">数学思维</span><span class="cb"><h4>数学探险岛</h4><p>五站复习完整体验，把单元总复习变成一次探险闯关</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case02-cylinder-3d/"><span class="cat">数学思维</span><span class="cb"><h4>圆柱 3D 工坊</h4><p>六站探究，在 3D 交互里看懂圆柱</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case03-sector-geo/"><span class="cat">数学思维</span><span class="cb"><h4>扇形几何工坊</h4><p>五站探索，动手拆解扇形与几何之美</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case04-percent-life/"><span class="cat">数学思维</span><span class="cb"><h4>百分数生活岛</h4><p>五站应用，在生活场景里学会百分数</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case05-ratio-camp/"><span class="cat">数学思维</span><span class="cb"><h4>比和比例任务营</h4><p>五站实践任务，彻底吃透比和比例</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case06-rope-line/"><span class="cat">数学思维</span><span class="cb"><h4>缠绳线段图实验室</h4><p>三步推理，用线段图破解缠绳问题</p></span><span class="go">→</span></a>
+          </div>
+        </div></div>
+        <div class="face back"><div class="page" data-page="18">
+          <div class="p-kicker">AI 互动作品 · 语文 × 英语</div>
+          <div class="p-title">语文素养 · 英语学习</div>
+          <div class="p-sub">点击卡片即可开始体验</div>
+          <div class="p-rule"></div>
+          <div class="case-list">
+            <a class="case-item" href="cases/case08-garden-map/"><span class="cat">语文素养</span><span class="cb"><h4>大观园阅读地图</h4><p>穿行园景与人物之间，读懂《红楼梦》</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case09-literacy-garden/"><span class="cat">语文素养</span><span class="cb"><h4>识字小花园</h4><p>测评 + 学习一体化的识字启蒙花园</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case07-word-energy/"><span class="cat">英语学习</span><span class="cb"><h4>词语能量岛</h4><p>听说读写全项英语训练营</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case12-english-platform/"><span class="cat">英语学习</span><span class="cb"><h4>亲子英语学习平台</h4><p>一体化家庭英语学习工作台</p></span><span class="go">→</span></a>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Sheet 10：深度阅读 + 单元伍分隔 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="19">
+          <div class="p-kicker">AI 互动作品 · 深度阅读</div>
+          <div class="p-title">深度阅读 · 3 款</div>
+          <div class="p-sub">点击卡片即可开始体验</div>
+          <div class="p-rule"></div>
+          <div class="case-list">
+            <a class="case-item" href="cases/case10-deep-reading/"><span class="cat">深度阅读</span><span class="cb"><h4>小鹿阅读导览工坊</h4><p>AI 带队的可信讲书与材料拆解工作台</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case11-three-kingdoms/"><span class="cat">深度阅读</span><span class="cb"><h4>少年三国 · 闯关学名著</h4><p>亲历身份闯关，沉浸式走进三国世界</p></span><span class="go">→</span></a>
+            <a class="case-item" href="cases/case13-family-reading/"><span class="cat">深度阅读</span><span class="cb"><h4>读书有光 · 家庭精读系统</h4><p>家庭共读童书精读系统</p></span><span class="go">→</span></a>
+          </div>
+        </div></div>
+        <div class="face back"><div class="page unit-page" data-page="20">
+          <div class="no">第 伍 单元</div>
+          <div class="big">AI 效率工具</div>
+          <div class="en">AI EFFICIENCY TOOLS</div>
+          <div class="orn"></div>
+          <p>5 款产品 · 14 个实战工具，覆盖办公、内容、投资、电商与品牌五大场景。</p>
+        </div></div>
+      </div>
+
+      <!-- Sheet 11：效率工具 上/下 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="21">
+          <div class="p-kicker">AI 效率工具 · 一</div>
+          <div class="p-title">办公 · 内容 · 数据</div>
+          <div class="p-sub">点击卡片前往在线体验</div>
+          <div class="p-rule"></div>
+          <div class="case-list">
+            <a class="case-item" href="https://d8a24945763442c18102a0b1f158461a.app.workbuddy.link/" target="_blank" rel="noopener"><span class="cat">办公提效</span><span class="cb"><h4>超实用 AI 指令卡</h4><div class="tags"><span class="t">日报周报助手</span><span class="t">朋友圈文案</span></div></span><span class="go">↗</span></a>
+            <a class="case-item" href="https://34e3387d446640c4a8fda00509926e0e.app.workbuddy.link/" target="_blank" rel="noopener"><span class="cat">内容运营</span><span class="cb"><h4>小红书实战弹药库</h4><div class="tags"><span class="t">爆款文案</span><span class="t">评论破冰</span><span class="t">标题钩子</span><span class="t">选品雷达</span></div></span><span class="go">↗</span></a>
+            <a class="case-item" href="https://9d6152dc111248e095bc7b54f6ae588b.app.workbuddy.link/" target="_blank" rel="noopener"><span class="cat">数据工作流</span><span class="cb"><h4>AI 投资数据分析库</h4><div class="tags"><span class="t">标的拆箱</span><span class="t">仓位体检</span><span class="t">收盘情报局</span></div></span><span class="go">↗</span></a>
+          </div>
+        </div></div>
+        <div class="face back"><div class="page" data-page="22">
+          <div class="p-kicker">AI 效率工具 · 二</div>
+          <div class="p-title">电商 · 品牌</div>
+          <div class="p-sub">点击卡片前往在线体验</div>
+          <div class="p-rule"></div>
+          <div class="case-list">
+            <a class="case-item" href="https://6c4b47e7f2744fb397f03707c147720b.app.workbuddy.link/" target="_blank" rel="noopener"><span class="cat">电商运营</span><span class="cb"><h4>AI 闲鱼运营助手</h4><div class="tags"><span class="t">闲置选品</span><span class="t">标题打磨</span><span class="t">数据复盘</span><span class="t">咨询回复</span><span class="t">售后回访</span></div></span><span class="go">↗</span></a>
+            <a class="case-item" href="https://simayan-zitie-v3-20260805.netlify.app/" target="_blank" rel="noopener"><span class="cat">品牌画册</span><span class="cb"><h4>司马彦字帖 · 商品宣传册</h4><div class="tags"><span class="t">三级产品目录</span><span class="t">多维筛选选帖</span><span class="t">渠道合作页</span></div></span><span class="go">↗</span></a>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Sheet 12：单元陆分隔 + 更多影像 -->
+      <div class="sheet">
+        <div class="face front"><div class="page unit-page" data-page="23">
+          <div class="no">第 陆 单元</div>
+          <div class="big">更多影像作品</div>
+          <div class="en">MORE FILMS</div>
+          <div class="orn"></div>
+          <p>化学启蒙 · 韵律教学 · 计算思维 · 科创课堂——四个完整的影像切片。</p>
+        </div></div>
+        <div class="face back"><div class="page" data-page="24">
+          <div class="p-kicker">影像 · MORE FILMS</div>
+          <div class="p-title">更多影像作品</div>
+          <div class="p-sub">点击海报前往观看完整视频</div>
+          <div class="p-rule"></div>
+          <div class="film-grid">
+            <a href="#works"><img src="assets/img/poster-yuansu.jpg" alt="《元素公寓》"><span class="cap">元素公寓</span></a>
+            <a href="#works"><img src="assets/img/poster-yunlv.jpg" alt="《韵律操》"><span class="cap">韵律操</span></a>
+            <a href="#works"><img src="assets/img/poster-suanfa.jpg" alt="《聪明的算法》"><span class="cap">聪明的算法</span></a>
+            <a href="#works"><img src="assets/img/poster-kechuang.jpg" alt="《科技创新课》"><span class="cap">科技创新课</span></a>
+          </div>
+          <a class="full-link" href="#works">前往「更多作品」观看完整视频 →</a>
+        </div></div>
+      </div>
+
+      <!-- Sheet 13：谢谢 + 封底 -->
+      <div class="sheet">
+        <div class="face front"><div class="page cover-page" data-page="25">
           <div class="big">谢谢翻阅</div>
           <div class="en">THANKS FOR READING</div>
           <div class="orn"></div>
-          <p>更多作品，请继续向下浏览<br>↓</p>
+          <p>六大单元 · 26 页精选<br>更多细节，请继续向下浏览<br>↓</p>
+        </div></div>
+        <div class="face back"><div class="page cover-page" data-page="26">
+          <div class="big" style="font-size:30px">邰可心</div>
+          <div class="en">TAI KEXIN · PORTFOLIO</div>
+          <div class="orn"></div>
+          <p>教育内容产品 · AI 课程设计 · IP 与剧本创作<br><br>669407416@qq.com · 173-1050-2220</p>
         </div></div>
       </div>
 
@@ -758,7 +983,7 @@ function buildMobile(){
     d.className = 'mpage';
     d.appendChild(f.cloneNode(true));
     d.addEventListener('click', e => {
-      if (e.target.closest('video')) return;
+      if (e.target.closest('video,a,button')) return;
       i === cur ? goTo(cur + 1) : goTo(i);
     });
     mbookEl.appendChild(d);
@@ -820,10 +1045,21 @@ addEventListener('keydown', e => {
 });
 // 桌面端：点击书的左右半区翻页
 document.getElementById('bookEl').addEventListener('click', e => {
-  if (e.target.closest('video')) return;
+  if (e.target.closest('video,a,button')) return;
   const r = e.currentTarget.getBoundingClientRect();
   (e.clientX - r.left > r.width / 2) ? goTo(cur + 1) : goTo(cur - 1);
 });
+// 目录跳转：data-goto 为目标页码（1 起）
+function jumpTo(p){
+  if (mode === 'm') goTo(p - 1);
+  else goTo(p % 2 === 1 ? (p - 1) / 2 : p / 2);
+}
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-goto]');
+  if (!g) return;
+  e.stopPropagation();
+  jumpTo(+g.dataset.goto);
+}, true);
 matchMedia('(max-width:820px)').addEventListener('change', initBook);
 initBook();
 </script>

@@ -192,6 +192,16 @@ nav ul a:hover::after{width:100%}
 .film-grid a{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 8px 20px rgba(60,45,15,.18)}
 .film-grid img{width:100%;aspect-ratio:16/10;object-fit:cover}
 .film-grid .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(28,20,6,.88));color:#f6f0e2;font-size:11.5px;padding:22px 8px 8px;letter-spacing:.12em;text-align:center}
+/* 豆包爱学页 */
+.db-grid{display:grid;grid-template-columns:108px 1fr;gap:16px;align-items:center;margin-bottom:12px}
+.db-icon{width:108px;border-radius:26px;box-shadow:0 10px 26px rgba(60,45,15,.25)}
+.db-card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1px solid #d8c9a4;border-radius:14px;background:linear-gradient(160deg,#fdf9ec,#f3ecd6);box-shadow:0 12px 30px rgba(60,45,15,.15);margin:4px 0}
+.db-card img{width:96px;border-radius:24px;box-shadow:0 8px 20px rgba(60,45,15,.2)}
+.db-card-t{font-family:var(--serif);font-size:25px;font-weight:800;color:#2b2620;letter-spacing:.08em}
+.db-card-s{font-size:12px;color:#8b7d5f;letter-spacing:.18em}
+.db-card-b{margin-top:8px;background:#b08d4f;color:#fff;font-size:11.5px;letter-spacing:.14em;border-radius:8px;padding:9px 20px}
+/* 著作署名高亮 */
+.pub-hl{display:inline-block;font-family:var(--serif);font-size:14.5px;font-weight:800;color:#7a5416;border:2px solid #b08d4f;border-radius:10px;padding:8px 16px;margin:12px 0 0;letter-spacing:.06em;background:rgba(176,141,79,.08)}
 /* 控制 */
 .book-ctrl{margin-top:44px;display:flex;align-items:center;justify-content:center;gap:26px}
 .bbtn{width:52px;height:52px;border-radius:50%;border:1px solid rgba(201,168,106,.5);background:transparent;color:var(--gold-2);
@@ -337,9 +347,7 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
   <ul>
     <li><a href="#resume">关于我</a></li>
     <li><a href="#book">作品集</a></li>
-    <li><a href="#works">更多作品</a></li>
     <li><a href="#pub">出版著作</a></li>
-    <li><a href="#ai">AI 实战</a></li>
     <li><a href="#contact">联系我</a></li>
   </ul>
 </nav>
@@ -436,7 +444,7 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
   <div class="wrap">
     <div class="kicker reveal">SELECTED WORKS</div>
     <h2 class="h2 reveal">作品集 · <em>翻开这本书</em></h2>
-    <p class="lead reveal">六大单元 · 26 页精选——从编剧影像到出版著作，从 AI 产品到互动作品与效率工具，一本翻完全部代表作。点击两侧箭头或使用键盘方向键翻阅。</p>
+    <p class="lead reveal">六大单元 · 30 页精选——从编剧影像到出版著作，从 AI 产品到互动作品与效率工具，一本翻完全部代表作。点击两侧箭头或使用键盘方向键翻阅。</p>
   </div>
 
   <div class="book-stage reveal">
@@ -457,9 +465,9 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
             <a data-goto="3"><span class="tn">壹</span><span class="tt">编剧与影像作品<span class="td">剧本 · 成片 · 舞台剧 · 世界观</span></span><span class="tp">03</span></a>
             <a data-goto="12"><span class="tn">贰</span><span class="tt">出版著作<span class="td">《人工智能 · AIGC 少年创客指南》</span></span><span class="tp">12</span></a>
             <a data-goto="14"><span class="tn">叁</span><span class="tt">AI 产品<span class="td">字节跳动 ·《豆包爱学》</span></span><span class="tp">14</span></a>
-            <a data-goto="16"><span class="tn">肆</span><span class="tt">AI 互动作品<span class="td">13 款已上线教育产品 · 点击即玩</span></span><span class="tp">16</span></a>
-            <a data-goto="20"><span class="tn">伍</span><span class="tt">AI 效率工具<span class="td">5 款产品 · 14 个实战工具</span></span><span class="tp">20</span></a>
-            <a data-goto="23"><span class="tn">陆</span><span class="tt">更多影像作品<span class="td">启蒙动画 · 韵律 · 算法 · 科创</span></span><span class="tp">23</span></a>
+            <a data-goto="17"><span class="tn">肆</span><span class="tt">AI 互动作品<span class="td">13 款已上线教育产品 · 点击即玩</span></span><span class="tp">17</span></a>
+            <a data-goto="21"><span class="tn">伍</span><span class="tt">AI 效率工具<span class="td">5 款产品 · 14 个实战工具</span></span><span class="tp">21</span></a>
+            <a data-goto="24"><span class="tn">陆</span><span class="tt">更多影像作品<span class="td">启蒙动画 · 韵律 · 算法 · 科创 · 书内直接播放</span></span><span class="tp">24</span></a>
           </div>
         </div></div>
       </div>
@@ -612,16 +620,19 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
       <!-- Sheet 7：出版著作 + 单元叁分隔 -->
       <div class="sheet">
         <div class="face front"><div class="page" data-page="13">
-          <div class="p-kicker">出版 · PUBLISHED</div>
+          <div class="p-kicker">出版 · PUBLISHED BOOK</div>
           <div class="p-title">《AIGC 少年创客指南》</div>
-          <div class="p-sub">人工智能 · 你的第一个 AI 助手 · 安徽师范大学出版社</div>
+          <div class="p-sub">写给孩子的人工智能启蒙读本 —— 你的第一个 AI 助手</div>
           <div class="p-rule"></div>
           <div class="bk-grid">
             <img src="assets/img/book-cover.jpg" alt="《AIGC 少年创客指南》封面">
             <img src="assets/img/book-titlepage.jpg" alt="扉页编委署名">
           </div>
-          <div class="apollo-txt" style="margin-top:10px"><p>小鹿 AI 编程研究院主编 · 编委：<b>邰可心</b> —— 写给孩子的人工智能启蒙读本。</p></div>
-          <a class="full-link" href="#pub">查看著作详情 →</a>
+          <div class="apollo-txt" style="margin-top:10px">
+            <p>主编：小鹿 AI 编程研究院 · 出版：安徽师范大学出版社</p>
+            <p style="margin-top:3px">编委：何山 · <b>邰可心</b> · 黄晶晶</p>
+          </div>
+          <div class="pub-hl">邰可心 · 本书编委 —— 把前沿 AI，翻译成孩子的第一课</div>
         </div></div>
         <div class="face back"><div class="page unit-page" data-page="14">
           <div class="no">第 叁 单元</div>
@@ -632,31 +643,48 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
         </div></div>
       </div>
 
-      <!-- Sheet 8：豆包爱学 + 单元肆分隔 -->
+      <!-- Sheet 8：豆包爱学 主页面 + 项目实践卡 -->
       <div class="sheet">
         <div class="face front"><div class="page" data-page="15">
           <div class="p-kicker">AI 产品 · AI PRODUCT</div>
           <div class="p-title">字节跳动 ·《豆包爱学》</div>
           <div class="p-sub">AI 互动故事 × AI 口语练习 · 2022 — 至今</div>
           <div class="p-rule"></div>
+          <div class="db-grid">
+            <img class="db-icon" src="assets/img/doubao-icon.png" alt="豆包爱学真实图标">
+            <div class="apollo-txt">
+              <p>负责《豆包爱学》中<b>「互动故事」「口语练习」</b>产品的课程与内容设计，涵盖内容体系、课程形式、交互逻辑、人物设定与故事脉络。</p>
+              <p style="margin-top:6px"><b>单集最高点击超 300 万</b>——让孩子一边写故事、一边学知识，是一种全新的 AI 学习体验。</p>
+            </div>
+          </div>
           <div class="p-img">
             <img src="assets/img/doubao-page.jpg" alt="豆包爱学项目展示页">
           </div>
-          <div class="apollo-txt" style="margin-top:10px"><p>负责「互动故事」「口语练习」的课程与内容设计，涵盖内容体系、交互逻辑与人物设定。<b>单集最高点击超 300 万</b>——让孩子一边写故事、一边学知识。</p></div>
-          <a class="full-link" href="#works">了解更多 →</a>
         </div></div>
-        <div class="face back"><div class="page unit-page" data-page="16">
+        <div class="face back"><div class="page" data-page="16">
+          <div class="p-kicker">真实 AI 项目 · REAL AI PROJECT</div>
+          <div class="p-title">我又在探索 AI 的奥秘</div>
+          <div class="p-sub">此前做过的真实 AI 教育项目</div>
+          <div class="p-rule"></div>
+          <div class="db-card">
+            <img src="assets/img/doubao-icon.png" alt="豆包爱学图标">
+            <div class="db-card-t">豆包爱学</div>
+            <div class="db-card-s">AI 教育产品实践</div>
+            <div class="db-card-b">真实项目 · 真实探索 · 持续迭代</div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Sheet 9：单元肆分隔 + 数学思维 -->
+      <div class="sheet">
+        <div class="face front"><div class="page unit-page" data-page="17">
           <div class="no">第 肆 单元</div>
           <div class="big">AI 互动作品</div>
           <div class="en">AI INTERACTIVE WORKS</div>
           <div class="orn"></div>
           <p>13 款已上线的 AI 教育产品，由 AI 协同策划、设计与开发——点击书页卡片，即可开始体验。</p>
         </div></div>
-      </div>
-
-      <!-- Sheet 9：数学思维 + 语文英语 -->
-      <div class="sheet">
-        <div class="face front"><div class="page" data-page="17">
+        <div class="face back"><div class="page" data-page="18">
           <div class="p-kicker">AI 互动作品 · 数学思维</div>
           <div class="p-title">数学思维 · 6 款</div>
           <div class="p-sub">点击卡片即可开始体验</div>
@@ -670,7 +698,11 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
             <a class="case-item" href="cases/case06-rope-line/"><span class="cat">数学思维</span><span class="cb"><h4>缠绳线段图实验室</h4><p>三步推理，用线段图破解缠绳问题</p></span><span class="go">→</span></a>
           </div>
         </div></div>
-        <div class="face back"><div class="page" data-page="18">
+      </div>
+
+      <!-- Sheet 10：语文英语 + 深度阅读 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="19">
           <div class="p-kicker">AI 互动作品 · 语文 × 英语</div>
           <div class="p-title">语文素养 · 英语学习</div>
           <div class="p-sub">点击卡片即可开始体验</div>
@@ -682,11 +714,7 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
             <a class="case-item" href="cases/case12-english-platform/"><span class="cat">英语学习</span><span class="cb"><h4>亲子英语学习平台</h4><p>一体化家庭英语学习工作台</p></span><span class="go">→</span></a>
           </div>
         </div></div>
-      </div>
-
-      <!-- Sheet 10：深度阅读 + 单元伍分隔 -->
-      <div class="sheet">
-        <div class="face front"><div class="page" data-page="19">
+        <div class="face back"><div class="page" data-page="20">
           <div class="p-kicker">AI 互动作品 · 深度阅读</div>
           <div class="p-title">深度阅读 · 3 款</div>
           <div class="p-sub">点击卡片即可开始体验</div>
@@ -697,18 +725,18 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
             <a class="case-item" href="cases/case13-family-reading/"><span class="cat">深度阅读</span><span class="cb"><h4>读书有光 · 家庭精读系统</h4><p>家庭共读童书精读系统</p></span><span class="go">→</span></a>
           </div>
         </div></div>
-        <div class="face back"><div class="page unit-page" data-page="20">
+      </div>
+
+      <!-- Sheet 11：单元伍分隔 + 效率工具一 -->
+      <div class="sheet">
+        <div class="face front"><div class="page unit-page" data-page="21">
           <div class="no">第 伍 单元</div>
           <div class="big">AI 效率工具</div>
           <div class="en">AI EFFICIENCY TOOLS</div>
           <div class="orn"></div>
           <p>5 款产品 · 14 个实战工具，覆盖办公、内容、投资、电商与品牌五大场景。</p>
         </div></div>
-      </div>
-
-      <!-- Sheet 11：效率工具 上/下 -->
-      <div class="sheet">
-        <div class="face front"><div class="page" data-page="21">
+        <div class="face back"><div class="page" data-page="22">
           <div class="p-kicker">AI 效率工具 · 一</div>
           <div class="p-title">办公 · 内容 · 数据</div>
           <div class="p-sub">点击卡片前往在线体验</div>
@@ -719,7 +747,11 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
             <a class="case-item" href="https://9d6152dc111248e095bc7b54f6ae588b.app.workbuddy.link/" target="_blank" rel="noopener"><span class="cat">数据工作流</span><span class="cb"><h4>AI 投资数据分析库</h4><div class="tags"><span class="t">标的拆箱</span><span class="t">仓位体检</span><span class="t">收盘情报局</span></div></span><span class="go">↗</span></a>
           </div>
         </div></div>
-        <div class="face back"><div class="page" data-page="22">
+      </div>
+
+      <!-- Sheet 12：效率工具二 + 单元陆分隔 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="23">
           <div class="p-kicker">AI 效率工具 · 二</div>
           <div class="p-title">电商 · 品牌</div>
           <div class="p-sub">点击卡片前往在线体验</div>
@@ -729,41 +761,72 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
             <a class="case-item" href="https://simayan-zitie-v3-20260805.netlify.app/" target="_blank" rel="noopener"><span class="cat">品牌画册</span><span class="cb"><h4>司马彦字帖 · 商品宣传册</h4><div class="tags"><span class="t">三级产品目录</span><span class="t">多维筛选选帖</span><span class="t">渠道合作页</span></div></span><span class="go">↗</span></a>
           </div>
         </div></div>
-      </div>
-
-      <!-- Sheet 12：单元陆分隔 + 更多影像 -->
-      <div class="sheet">
-        <div class="face front"><div class="page unit-page" data-page="23">
+        <div class="face back"><div class="page unit-page" data-page="24">
           <div class="no">第 陆 单元</div>
           <div class="big">更多影像作品</div>
           <div class="en">MORE FILMS</div>
           <div class="orn"></div>
-          <p>化学启蒙 · 韵律教学 · 计算思维 · 科创课堂——四个完整的影像切片。</p>
-        </div></div>
-        <div class="face back"><div class="page" data-page="24">
-          <div class="p-kicker">影像 · MORE FILMS</div>
-          <div class="p-title">更多影像作品</div>
-          <div class="p-sub">点击海报前往观看完整视频</div>
-          <div class="p-rule"></div>
-          <div class="film-grid">
-            <a href="#works"><img src="assets/img/poster-yuansu.jpg" alt="《元素公寓》"><span class="cap">元素公寓</span></a>
-            <a href="#works"><img src="assets/img/poster-yunlv.jpg" alt="《韵律操》"><span class="cap">韵律操</span></a>
-            <a href="#works"><img src="assets/img/poster-suanfa.jpg" alt="《聪明的算法》"><span class="cap">聪明的算法</span></a>
-            <a href="#works"><img src="assets/img/poster-kechuang.jpg" alt="《科技创新课》"><span class="cap">科技创新课</span></a>
-          </div>
-          <a class="full-link" href="#works">前往「更多作品」观看完整视频 →</a>
+          <p>化学启蒙 · 韵律教学 · 计算思维 · 科创课堂——四个完整影像切片，书页内直接播放。</p>
         </div></div>
       </div>
 
-      <!-- Sheet 13：谢谢 + 封底 -->
+      <!-- Sheet 13：元素公寓 + 韵律操 -->
       <div class="sheet">
-        <div class="face front"><div class="page cover-page" data-page="25">
+        <div class="face front"><div class="page" data-page="25">
+          <div class="p-kicker">影像 · CHEMISTRY</div>
+          <div class="p-title">《元素公寓》</div>
+          <div class="p-sub">化学启蒙动画 · 约 3 分钟</div>
+          <div class="p-rule"></div>
+          <div class="video-box">
+            <video controls playsinline preload="none" poster="assets/img/poster-yuansu.jpg" src="assets/video/yuansu.mp4"></video>
+            <div class="video-note"><span>元素周期表化身公寓住户，拟人化讲清元素性格</span><span>03′</span></div>
+          </div>
+        </div></div>
+        <div class="face back"><div class="page" data-page="26">
+          <div class="p-kicker">影像 · RHYTHM</div>
+          <div class="p-title">《韵律操》</div>
+          <div class="p-sub">动感韵律教学 · 节奏与动作设计</div>
+          <div class="p-rule"></div>
+          <div class="video-box">
+            <video controls playsinline preload="none" poster="assets/img/poster-yunlv.jpg" src="assets/video/yunlv.mp4"></video>
+            <div class="video-note"><span>节奏与动作结合，让孩子在律动中学习与记忆</span><span>动感教学</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Sheet 14：聪明的算法 + 科技创新课 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="27">
+          <div class="p-kicker">影像 · COMPUTATIONAL THINKING</div>
+          <div class="p-title">《聪明的算法》</div>
+          <div class="p-sub">计算思维启蒙 · 约 7 分钟</div>
+          <div class="p-rule"></div>
+          <div class="video-box">
+            <video controls playsinline preload="none" poster="assets/img/poster-suanfa.jpg" src="assets/video/suanfa.mp4"></video>
+            <div class="video-note"><span>把抽象的算法概念，变成孩子看得懂的故事</span><span>07′</span></div>
+          </div>
+        </div></div>
+        <div class="face back"><div class="page" data-page="28">
+          <div class="p-kicker">影像 · SCI-TECH CLASS</div>
+          <div class="p-title">《科技创新课》</div>
+          <div class="p-sub">科创课程完整切片 · 约 11 分钟</div>
+          <div class="p-rule"></div>
+          <div class="video-box">
+            <video controls playsinline preload="none" poster="assets/img/poster-kechuang.jpg" src="assets/video/kechuang.mp4"></video>
+            <div class="video-note"><span>科技发明与课堂互动结合，呈现完整科创课堂设计</span><span>11′</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Sheet 15：谢谢 + 封底 -->
+      <div class="sheet">
+        <div class="face front"><div class="page cover-page" data-page="29">
           <div class="big">谢谢翻阅</div>
           <div class="en">THANKS FOR READING</div>
           <div class="orn"></div>
-          <p>六大单元 · 26 页精选<br>更多细节，请继续向下浏览<br>↓</p>
+          <p>六大单元 · 30 页精选<br>更多细节，请继续向下浏览<br>↓</p>
         </div></div>
-        <div class="face back"><div class="page cover-page" data-page="26">
+        <div class="face back"><div class="page cover-page" data-page="30">
           <div class="big" style="font-size:30px">邰可心</div>
           <div class="en">TAI KEXIN · PORTFOLIO</div>
           <div class="orn"></div>
@@ -783,45 +846,6 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
   <div class="book-hint">← → 方向键也可翻页 · 视频可直接在书页内播放</div>
 </section>
 
-<!-- ================= 其他作品 ================= -->
-<section class="works" id="works">
-  <div class="wrap">
-    <div class="kicker reveal">MORE WORKS</div>
-    <h2 class="h2 reveal">更多作品</h2>
-
-    <div class="works-grid">
-      <div class="work-card reveal">
-        <video controls playsinline preload="none" poster="assets/img/poster-yuansu.jpg" src="assets/video/yuansu.mp4"></video>
-        <div class="work-body"><h3>《元素公寓》</h3><p>化学启蒙动画：元素周期表化身公寓住户，用拟人化故事讲清元素性格，约 3 分钟。</p></div>
-      </div>
-      <div class="work-card reveal">
-        <video controls playsinline preload="none" poster="assets/img/poster-yunlv.jpg" src="assets/video/yunlv.mp4"></video>
-        <div class="work-body"><h3>《韵律操》</h3><p>动感韵律教学内容，节奏与动作设计结合，让孩子在律动中学习与记忆。</p></div>
-      </div>
-      <div class="work-card reveal">
-        <video controls playsinline preload="none" poster="assets/img/poster-suanfa.jpg" src="assets/video/suanfa.mp4"></video>
-        <div class="work-body"><h3>《聪明的算法》</h3><p>计算思维启蒙：把抽象的算法概念变成孩子看得懂、愿意看的故事，约 7 分钟。</p></div>
-      </div>
-      <div class="work-card reveal">
-        <video controls playsinline preload="none" poster="assets/img/poster-kechuang.jpg" src="assets/video/kechuang.mp4"></video>
-        <div class="work-body"><h3>《科技创新课》</h3><p>科创课程完整切片：科技发明与课堂互动结合，呈现完整的科创课堂设计，约 11 分钟。</p></div>
-      </div>
-    </div>
-
-    <div class="doubao reveal">
-      <div class="doubao-icon"><img src="assets/img/doubao-icon.png" alt="豆包爱学"></div>
-      <div class="doubao-body">
-        <div>
-          <h3>字节跳动 ·《豆包爱学》</h3>
-          <span class="tag">AI 互动故事</span><span class="tag">AI 口语练习</span><span class="tag">2022 — 至今</span>
-          <p>负责《豆包爱学》中「互动故事」「口语练习」产品的课程与内容设计，涵盖内容体系、课程形式、交互逻辑、人物设定与故事脉络。<b>单集最高点击超 300 万</b>——让孩子一边写故事、一边学知识，是一种全新的 AI 学习体验。</p>
-        </div>
-        <img src="assets/img/doubao-page.jpg" alt="豆包爱学项目展示页">
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= 出版著作 ================= -->
 <section class="pub" id="pub">
   <div class="wrap">
@@ -833,100 +857,19 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
         <img class="p2" src="assets/img/book-titlepage.jpg" alt="《人工智能 AIGC少年创客指南》扉页·编委署名">
       </div>
       <div class="pub-info reveal">
-        <div class="en">写给孩子的人工智能启蒙读本</div>
+        <div class="en">写给孩子的人工智能启蒙读本 · 我的出版著作</div>
         <h3>《人工智能 · AIGC 少年创客指南》<small>—— 你的第一个 AI 助手</small></h3>
         <div class="pub-meta">
+          编委：<b>邰可心</b> · 何山 · 黄晶晶<br>
           主编：小鹿 AI 编程研究院<br>
-          编委：何山 · <b>邰可心</b> · 黄晶晶<br>
           出版：安徽师范大学出版社
         </div>
         <div class="pub-tags">
-          <span class="tag">正式出版</span><span class="tag">少儿 AI 启蒙</span><span class="tag">编委</span>
+          <span class="tag">正式出版</span><span class="tag">少儿 AI 启蒙</span><span class="tag">邰可心 · 编委</span>
         </div>
-        <div class="pub-quote">把前沿的 AI 能力，翻译成孩子能听懂、能上手的第一课——这与我做课程的初心一脉相承。</div>
+        <div class="pub-quote">作为本书编委，我把前沿的 AI 能力，翻译成孩子能听懂、能上手的第一课——这与我做课程的初心一脉相承。</div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ================= AI 实战案例 ================= -->
-<section class="ai" id="ai">
-  <div class="wrap">
-    <div class="ai-head">
-      <div>
-        <div class="kicker reveal">AI IN PRACTICE</div>
-        <h2 class="h2 reveal">AI 实战案例</h2>
-      </div>
-      <p class="reveal">18 个已上线的 AI 产品，全部由 AI 协同策划、设计与开发——覆盖数学、语文、英语、阅读四大学习场景，以及办公、内容、投资、电商、品牌五大效率场景。教育类产品已迁入本站，点开即可完整体验。</p>
-    </div>
-
-    <!-- A. AI 教育互动产品（已迁入本站，点击即玩） -->
-    <div class="ai-group reveal">
-      <div class="ai-group-title"><h3>AI 教育互动产品</h3><span>13 款 · 已迁入本站 · 点击即玩</span></div>
-      <div class="edu-grid">
-        <a class="edu-card" href="cases/case01-math-island/"><span class="cat">数学思维</span><h4>数学探险岛</h4><p>五站复习完整体验，把单元总复习变成一次探险闯关</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case02-cylinder-3d/"><span class="cat">数学思维</span><h4>圆柱 3D 工坊</h4><p>六站探究，在 3D 交互里看懂圆柱</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case03-sector-geo/"><span class="cat">数学思维</span><h4>扇形几何工坊</h4><p>五站探索，动手拆解扇形与几何之美</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case04-percent-life/"><span class="cat">数学思维</span><h4>百分数生活岛</h4><p>五站应用，在生活场景里学会百分数</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case05-ratio-camp/"><span class="cat">数学思维</span><h4>比和比例任务营</h4><p>五站实践任务，彻底吃透比和比例</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case06-rope-line/"><span class="cat">数学思维</span><h4>缠绳线段图实验室</h4><p>三步推理，用线段图破解缠绳问题</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case08-garden-map/"><span class="cat">语文素养</span><h4>大观园阅读地图</h4><p>穿行园景与人物之间，读懂《红楼梦》</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case09-literacy-garden/"><span class="cat">语文素养</span><h4>识字小花园</h4><p>测评 + 学习一体化的识字启蒙花园</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case07-word-energy/"><span class="cat">英语学习</span><h4>词语能量岛</h4><p>听说读写全项英语训练营</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case12-english-platform/"><span class="cat">英语学习</span><h4>亲子英语学习平台</h4><p>一体化家庭英语学习工作台</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case10-deep-reading/"><span class="cat">深度阅读</span><h4>小鹿阅读导览工坊</h4><p>AI 带队的可信讲书与材料拆解工作台</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case11-three-kingdoms/"><span class="cat">深度阅读</span><h4>少年三国 · 闯关学名著</h4><p>亲历身份闯关，沉浸式走进三国世界</p><span class="go">立即体验 →</span></a>
-        <a class="edu-card" href="cases/case13-family-reading/"><span class="cat">深度阅读</span><h4>读书有光 · 家庭精读系统</h4><p>家庭共读童书精读系统</p><span class="go">立即体验 →</span></a>
-      </div>
-    </div>
-
-    <!-- B. AI 效率工具产品 -->
-    <div class="ai-group reveal">
-      <div class="ai-group-title"><h3>AI 效率工具产品</h3><span>5 款 · 14 个实战工具</span></div>
-      <div class="ai-grid" style="margin-top:0">
-      <a class="ai-card reveal" href="https://d8a24945763442c18102a0b1f158461a.app.workbuddy.link/" target="_blank" rel="noopener">
-        <div class="ai-num">CASE 01<span class="ai-count">内含 2 个工具</span></div>
-        <h3>超实用 AI 指令卡</h3>
-        <p style="min-height:0">把「会问」变成「拿来就用」：整段指令一键复制，填入真实信息，任一 AI 直接产出可用初稿。</p>
-        <div class="ai-tools"><span class="t">日报周报助手</span><span class="t">微信朋友圈文案</span></div>
-        <div class="ai-foot"><span class="tag">办公提效</span><span class="go">在线体验 ↗</span></div>
-      </a>
-      <a class="ai-card reveal" href="https://34e3387d446640c4a8fda00509926e0e.app.workbuddy.link/" target="_blank" rel="noopener">
-        <div class="ai-num">CASE 02<span class="ai-count">内含 4 个工具</span></div>
-        <h3>小红书实战弹药库</h3>
-        <p style="min-height:0">从一段真实经历出发，快速搭出可继续修改的笔记、标题、评论与选品方向——先有真实，才有共鸣。</p>
-        <div class="ai-tools"><span class="t">爆款文案</span><span class="t">评论破冰</span><span class="t">标题钩子</span><span class="t">选品雷达</span></div>
-        <div class="ai-foot"><span class="tag">内容运营</span><span class="go">在线体验 ↗</span></div>
-      </a>
-      <a class="ai-card reveal" href="https://9d6152dc111248e095bc7b54f6ae588b.app.workbuddy.link/" target="_blank" rel="noopener">
-        <div class="ai-num">CASE 03<span class="ai-count">内含 3 个工具</span></div>
-        <h3>AI 投资数据分析库</h3>
-        <p style="min-height:0">让 AI 整理证据、标注口径与来源，把市场噪音变成可核验的数据；每个结论都有时间、来源与缺失标记。</p>
-        <div class="ai-tools"><span class="t">标的拆箱 · 个股研究快照</span><span class="t">仓位体检 · 组合结构核对</span><span class="t">收盘情报局 · 每日复盘</span></div>
-        <div class="ai-foot"><span class="tag">数据工作流</span><span class="go">在线体验 ↗</span></div>
-      </a>
-      <a class="ai-card reveal" href="https://6c4b47e7f2744fb397f03707c147720b.app.workbuddy.link/" target="_blank" rel="noopener">
-        <div class="ai-num">CASE 04<span class="ai-count">内含 5 个工具</span></div>
-        <h3>AI 闲鱼运营助手</h3>
-        <p style="min-height:0">从「卖什么」到「怎么回复」，把运营中的判断和表达整理成可复用草稿，五张卡覆盖完整成交链路。</p>
-        <div class="ai-tools"><span class="t">闲置选品</span><span class="t">标题打磨</span><span class="t">数据复盘</span><span class="t">咨询回复</span><span class="t">售后回访</span></div>
-        <div class="ai-foot"><span class="tag">电商运营</span><span class="go">在线体验 ↗</span></div>
-      </a>
-      <a class="ai-card reveal" href="https://simayan-zitie-v3-20260805.netlify.app/" target="_blank" rel="noopener">
-        <div class="ai-num">CASE 05<span class="ai-count">整站画册</span></div>
-        <h3>司马彦字帖 · 商品宣传册</h3>
-        <p style="min-height:0">AI 设计的品牌提案型画册：1180 款 SKU 翻译为「品类→分类→系列」三级目录与多维筛选，C 端选购与 B 端渠道合作一站打通。</p>
-        <div class="ai-tools"><span class="t">三级产品目录</span><span class="t">多维筛选选帖</span><span class="t">渠道合作页</span></div>
-        <div class="ai-foot"><span class="tag">品牌画册</span><span class="go">在线体验 ↗</span></div>
-      </a>
-      <div class="ai-card reveal" style="display:flex;flex-direction:column;justify-content:center;background:linear-gradient(150deg,var(--ink-3),var(--ink-2))">
-        <div class="ai-num">MORE</div>
-        <h3>更多 AI 产品，持续生产中</h3>
-        <p style="min-height:0">提示词体系 × 工作流设计 × 全栈上线——这套方法论，可以复制到任何一个业务场景。</p>
-      </div>
-      </div>
-    </div>
-    <div class="ai-note reveal">注：教育互动产品已迁入本站，微信内可直接体验；效率工具为独立站点，如提示请在浏览器中打开。</div>
   </div>
 </section>
 

@@ -193,13 +193,24 @@ nav ul a:hover::after{width:100%}
 .film-grid img{width:100%;aspect-ratio:16/10;object-fit:cover}
 .film-grid .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(28,20,6,.88));color:#f6f0e2;font-size:11.5px;padding:22px 8px 8px;letter-spacing:.12em;text-align:center}
 /* 豆包爱学页 */
-.db-grid{display:grid;grid-template-columns:108px 1fr;gap:16px;align-items:center;margin-bottom:12px}
-.db-icon{width:108px;border-radius:26px;box-shadow:0 10px 26px rgba(60,45,15,.25)}
-.db-card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1px solid #d8c9a4;border-radius:14px;background:linear-gradient(160deg,#fdf9ec,#f3ecd6);box-shadow:0 12px 30px rgba(60,45,15,.15);margin:4px 0}
-.db-card img{width:96px;border-radius:24px;box-shadow:0 8px 20px rgba(60,45,15,.2)}
-.db-card-t{font-family:var(--serif);font-size:25px;font-weight:800;color:#2b2620;letter-spacing:.08em}
-.db-card-s{font-size:12px;color:#8b7d5f;letter-spacing:.18em}
-.db-card-b{margin-top:8px;background:#b08d4f;color:#fff;font-size:11.5px;letter-spacing:.14em;border-radius:8px;padding:9px 20px}
+.db-hero{display:grid;grid-template-columns:118px 1fr;gap:18px;align-items:center}
+.db-icon{width:118px;border-radius:28px;box-shadow:0 12px 28px rgba(60,45,15,.25)}
+.db-num{font-family:var(--serif);font-size:46px;font-weight:900;color:#7a5416;line-height:1}
+.db-num i{font-style:normal;font-size:.55em}
+.db-num-s{font-size:11px;letter-spacing:.25em;color:#a8895c;margin:6px 0 12px}
+.db-desc{font-size:12.5px;line-height:1.85;color:#4a443a}
+.db-label{font-size:10px;letter-spacing:.4em;color:#b08d4f;margin:20px 0 10px}
+.db-chips{display:flex;flex-wrap:wrap;gap:8px}
+.db-chips span{font-size:11px;color:#7a5416;border:1px solid #c9b689;background:rgba(176,141,79,.08);border-radius:999px;padding:6px 14px;letter-spacing:.08em}
+.db-quote{margin-top:auto;border-left:3px solid #b08d4f;padding:10px 14px;font-family:var(--serif);font-size:15px;line-height:1.7;color:#4a443a;background:rgba(176,141,79,.07);border-radius:0 8px 8px 0}
+.db-hl-list{flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center;min-height:0}
+.db-hl{display:flex;gap:14px;align-items:flex-start;border:1px solid #e0d6bc;border-radius:10px;padding:14px 16px;background:rgba(255,255,255,.38)}
+.db-hl .n{font-family:var(--serif);font-size:20px;font-weight:800;color:#b08d4f;line-height:1.2}
+.db-hl h4{font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:4px}
+.db-hl p{font-size:11.5px;line-height:1.7;color:#8b7d5f}
+.db-mini{display:flex;align-items:center;gap:12px;margin-top:14px;border:1px dashed #c9b689;border-radius:10px;padding:10px 14px}
+.db-mini img{width:40px;border-radius:10px}
+.db-mini-t{font-size:12px;color:#8b7d5f;letter-spacing:.1em}
 /* 著作署名高亮 */
 .pub-hl{display:inline-block;font-family:var(--serif);font-size:14.5px;font-weight:800;color:#7a5416;border:2px solid #b08d4f;border-radius:10px;padding:8px 16px;margin:12px 0 0;letter-spacing:.06em;background:rgba(176,141,79,.08)}
 /* 控制 */
@@ -347,7 +358,6 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
   <ul>
     <li><a href="#resume">关于我</a></li>
     <li><a href="#book">作品集</a></li>
-    <li><a href="#pub">出版著作</a></li>
     <li><a href="#contact">联系我</a></li>
   </ul>
 </nav>
@@ -626,13 +636,12 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
           <div class="p-rule"></div>
           <div class="bk-grid">
             <img src="assets/img/book-cover.jpg" alt="《AIGC 少年创客指南》封面">
-            <img src="assets/img/book-titlepage.jpg" alt="扉页编委署名">
+            <img src="assets/img/book-titlepage.jpg" alt="扉页署名页">
           </div>
           <div class="apollo-txt" style="margin-top:10px">
             <p>主编：小鹿 AI 编程研究院 · 出版：安徽师范大学出版社</p>
-            <p style="margin-top:3px">编委：何山 · <b>邰可心</b> · 黄晶晶</p>
           </div>
-          <div class="pub-hl">邰可心 · 本书编委 —— 把前沿 AI，翻译成孩子的第一课</div>
+          <div class="pub-hl">邰可心 创作 · 把前沿 AI，翻译成孩子的第一课</div>
         </div></div>
         <div class="face back"><div class="page unit-page" data-page="14">
           <div class="no">第 叁 单元</div>
@@ -650,27 +659,33 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
           <div class="p-title">字节跳动 ·《豆包爱学》</div>
           <div class="p-sub">AI 互动故事 × AI 口语练习 · 2022 — 至今</div>
           <div class="p-rule"></div>
-          <div class="db-grid">
+          <div class="db-hero">
             <img class="db-icon" src="assets/img/doubao-icon.png" alt="豆包爱学真实图标">
-            <div class="apollo-txt">
-              <p>负责《豆包爱学》中<b>「互动故事」「口语练习」</b>产品的课程与内容设计，涵盖内容体系、课程形式、交互逻辑、人物设定与故事脉络。</p>
-              <p style="margin-top:6px"><b>单集最高点击超 300 万</b>——让孩子一边写故事、一边学知识，是一种全新的 AI 学习体验。</p>
+            <div>
+              <div class="db-num">300<i>万+</i></div>
+              <div class="db-num-s">单集最高点击</div>
+              <p class="db-desc">负责<b>「互动故事」「口语练习」</b>两大核心产品的课程与内容设计。</p>
             </div>
           </div>
-          <div class="p-img">
-            <img src="assets/img/doubao-page.jpg" alt="豆包爱学项目展示页">
+          <div class="db-label">我的设计范围</div>
+          <div class="db-chips">
+            <span>内容体系</span><span>课程形式</span><span>交互逻辑</span><span>人物设定</span><span>故事脉络</span>
           </div>
+          <div class="db-quote">让孩子一边写故事、一边学知识——<b>一种全新的 AI 学习体验</b>。</div>
         </div></div>
         <div class="face back"><div class="page" data-page="16">
-          <div class="p-kicker">真实 AI 项目 · REAL AI PROJECT</div>
-          <div class="p-title">我又在探索 AI 的奥秘</div>
-          <div class="p-sub">此前做过的真实 AI 教育项目</div>
+          <div class="p-kicker">产品亮点 · HIGHLIGHTS</div>
+          <div class="p-title">这门 AI 课，我设计什么</div>
+          <div class="p-sub">真实项目 · 真实探索 · 持续迭代</div>
           <div class="p-rule"></div>
-          <div class="db-card">
+          <div class="db-hl-list">
+            <div class="db-hl"><span class="n">01</span><div><h4>互动故事</h4><p>孩子执笔、AI 接龙——把写作兴趣变成持续的学习动力</p></div></div>
+            <div class="db-hl"><span class="n">02</span><div><h4>口语练习</h4><p>AI 对话式练习体系，让开口训练可量化、可进阶</p></div></div>
+            <div class="db-hl"><span class="n">03</span><div><h4>一体化内容设计</h4><p>从人物设定到故事脉络，内容、交互、叙事同频设计</p></div></div>
+          </div>
+          <div class="db-mini">
             <img src="assets/img/doubao-icon.png" alt="豆包爱学图标">
-            <div class="db-card-t">豆包爱学</div>
-            <div class="db-card-s">AI 教育产品实践</div>
-            <div class="db-card-b">真实项目 · 真实探索 · 持续迭代</div>
+            <div class="db-mini-t">豆包爱学 · AI 教育产品实践</div>
           </div>
         </div></div>
       </div>
@@ -844,33 +859,6 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
     <button class="bbtn" id="nextBtn" aria-label="下一页">›</button>
   </div>
   <div class="book-hint">← → 方向键也可翻页 · 视频可直接在书页内播放</div>
-</section>
-
-<!-- ================= 出版著作 ================= -->
-<section class="pub" id="pub">
-  <div class="wrap">
-    <div class="kicker reveal">PUBLISHED BOOK</div>
-    <h2 class="h2 reveal">出版著作</h2>
-    <div class="pub-grid">
-      <div class="pub-photos reveal">
-        <img class="p1" src="assets/img/book-cover.jpg" alt="《人工智能 AIGC少年创客指南》封面">
-        <img class="p2" src="assets/img/book-titlepage.jpg" alt="《人工智能 AIGC少年创客指南》扉页·编委署名">
-      </div>
-      <div class="pub-info reveal">
-        <div class="en">写给孩子的人工智能启蒙读本 · 我的出版著作</div>
-        <h3>《人工智能 · AIGC 少年创客指南》<small>—— 你的第一个 AI 助手</small></h3>
-        <div class="pub-meta">
-          编委：<b>邰可心</b> · 何山 · 黄晶晶<br>
-          主编：小鹿 AI 编程研究院<br>
-          出版：安徽师范大学出版社
-        </div>
-        <div class="pub-tags">
-          <span class="tag">正式出版</span><span class="tag">少儿 AI 启蒙</span><span class="tag">邰可心 · 编委</span>
-        </div>
-        <div class="pub-quote">作为本书编委，我把前沿的 AI 能力，翻译成孩子能听懂、能上手的第一课——这与我做课程的初心一脉相承。</div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- ================= 页脚 ================= -->

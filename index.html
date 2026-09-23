@@ -72,10 +72,13 @@ nav ul a:hover::after{width:100%}
 .hero-sub b{color:var(--gold-2);font-weight:600}
 .hero-roles{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px}
 .hero-roles span{font-size:13px;letter-spacing:.12em;color:var(--txt);border-left:2px solid var(--gold);padding:4px 14px;background:rgba(255,255,255,.05)}
-.hero-contact{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 30px}
-.hero-contact a{font-family:var(--serif);font-size:19px;letter-spacing:.1em;color:var(--gold-2);border-bottom:1px solid rgba(201,168,106,.45);padding-bottom:2px;transition:.3s}
-.hero-contact a:hover{color:#fff;border-bottom-color:#fff}
-.hero-contact span{font-size:13px;letter-spacing:.15em;color:#d8d4ca}
+.hero-contact{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px}
+.hc-mail,.hc-item{display:flex;align-items:center;gap:12px;padding:11px 22px 11px 13px;border:1px solid rgba(201,168,106,.35);border-radius:14px;background:rgba(11,14,23,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:.35s}
+.hc-mail:hover{border-color:var(--gold);background:rgba(201,168,106,.12);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.hc-ic{width:38px;height:38px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(140deg,rgba(201,168,106,.28),rgba(201,168,106,.1));color:var(--gold-2);font-size:15px;border:1px solid rgba(201,168,106,.3)}
+.hc-t b{display:block;font-family:var(--serif);font-size:15.5px;font-weight:700;color:var(--gold-2);letter-spacing:.06em}
+.hc-t i{display:block;font-style:normal;font-size:10.5px;letter-spacing:.22em;color:var(--txt-dim);margin-top:3px}
+.hc-mail .hc-t b{font-size:17px}
 .scroll-cue{position:absolute;right:48px;bottom:9vh;z-index:2;writing-mode:vertical-rl;font-size:11px;letter-spacing:.5em;color:var(--txt-dim);display:flex;align-items:center;gap:14px}
 .scroll-cue::after{content:"";width:1px;height:64px;background:linear-gradient(var(--gold),transparent);animation:cue 1.8s ease-in-out infinite}
 @keyframes cue{0%,100%{opacity:.3}50%{opacity:1}}
@@ -303,7 +306,7 @@ nav ul a:hover::after{width:100%}
 @media (max-width:820px){.ai-grid{grid-template-columns:1fr}.pub{padding:90px 0}.ai{padding:90px 0}.pub-photos img{width:62%}}
 
 /* ---------- 页脚 ---------- */
-footer{border-top:1px solid rgba(201,168,106,.15);background:var(--ink-2);padding:80px 0 50px;text-align:center}
+footer{border-top:1px solid rgba(201,168,106,.15);background:var(--ink-2);padding:50px 0 42px;text-align:center}
 footer .h2{margin-bottom:14px}
 footer p{color:var(--txt-dim);font-size:14px;letter-spacing:.1em;line-height:2.2}
 footer .mail{color:var(--gold-2);font-size:20px;font-family:var(--serif);letter-spacing:.08em}
@@ -362,7 +365,7 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
   <ul>
     <li><a href="#resume">关于我</a></li>
     <li><a href="#book">作品集</a></li>
-    <li><a href="#contact">联系我</a></li>
+    <li><a href="mailto:669407416@qq.com">联系我</a></li>
   </ul>
 </nav>
 
@@ -380,9 +383,18 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
       <span>《米小圈》系列主创</span>
     </div>
     <div class="hero-contact">
-      <a href="mailto:669407416@qq.com">669407416@qq.com</a>
-      <span>电话 173-1050-2220</span>
-      <span>现居北京</span>
+      <a class="hc-mail" href="mailto:669407416@qq.com">
+        <span class="hc-ic">✉</span>
+        <span class="hc-t"><b>669407416@qq.com</b><i>邮箱 · 点击直达</i></span>
+      </a>
+      <div class="hc-item">
+        <span class="hc-ic">☎</span>
+        <span class="hc-t"><b>173-1050-2220</b><i>电话</i></span>
+      </div>
+      <div class="hc-item">
+        <span class="hc-ic">◎</span>
+        <span class="hc-t"><b>北京</b><i>现居</i></span>
+      </div>
     </div>
   </div>
   <div class="scroll-cue">向下探索</div>
@@ -852,12 +864,8 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
 <!-- ================= 页脚 ================= -->
 <footer id="contact">
   <div class="wrap">
-    <div class="kicker reveal">CONTACT</div>
-    <h2 class="h2 reveal">期待与您聊聊</h2>
-    <p class="reveal">教育内容产品 · AI 课程设计 · IP 与剧本创作<br><br>
-    <span class="mail">669407416@qq.com</span><br>
-    电话 173-1050-2220 · 现居北京</p>
-    <div class="fine">© 2026 TAI KEXIN · DESIGNED WITH CARE</div>
+    <div class="fine" style="letter-spacing:.2em;color:#8b8fa5">邰可心 · TAI KEXIN —— 教育内容产品 · AI 课程设计 · IP 与剧本创作</div>
+    <div class="fine" style="margin-top:14px">© 2026 TAI KEXIN · DESIGNED WITH CARE</div>
   </div>
 </footer>
 

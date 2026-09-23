@@ -190,6 +190,42 @@ nav ul a:hover::after{width:100%}
 .doubao-body p b{color:var(--gold-2)}
 .doubao-body img{border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.5)}
 
+/* ---------- 出版著作 ---------- */
+.pub{padding:140px 0;background:linear-gradient(180deg,var(--ink) 0%,#0e1220 100%)}
+.pub-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:70px;align-items:center;margin-top:60px}
+.pub-photos{position:relative;display:flex;justify-content:center}
+.pub-photos img{width:56%;border-radius:8px;box-shadow:0 30px 70px rgba(0,0,0,.6);transition:.5s}
+.pub-photos .p1{transform:rotate(-5deg);z-index:1}
+.pub-photos .p2{transform:rotate(4deg) translateX(-14%);margin-top:9%}
+.pub-photos:hover .p1{transform:rotate(-2deg)}
+.pub-photos:hover .p2{transform:rotate(2deg) translateX(-10%)}
+.pub-info .en{font-size:12px;letter-spacing:.4em;color:var(--gold);margin-bottom:14px}
+.pub-info h3{font-family:var(--serif);font-size:clamp(24px,2.6vw,34px);line-height:1.35;color:var(--gold-2)}
+.pub-info h3 small{display:block;font-size:.55em;color:var(--txt);margin-top:8px;letter-spacing:.05em}
+.pub-meta{margin:22px 0;font-size:14px;line-height:2.1;color:#c6c2b8}
+.pub-meta b{color:var(--gold-2);font-weight:600}
+.pub-tags .tag{display:inline-block;font-size:11px;letter-spacing:.2em;color:var(--gold);border:1px solid rgba(201,168,106,.4);border-radius:999px;padding:5px 14px;margin:0 10px 10px 0}
+.pub-quote{margin-top:24px;border-left:2px solid var(--gold);padding-left:18px;font-family:var(--serif);font-size:15px;color:var(--txt-dim);line-height:1.9}
+
+/* ---------- AI 实战案例 ---------- */
+.ai{padding:140px 0}
+.ai-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
+.ai-head p{max-width:520px;font-size:14px;line-height:2;color:var(--txt-dim)}
+.ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.ai-card{position:relative;display:block;background:var(--ink-3);border:1px solid rgba(201,168,106,.14);border-radius:16px;padding:30px 28px 26px;transition:.45s;overflow:hidden}
+.ai-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:.45s}
+.ai-card:hover{transform:translateY(-6px);border-color:rgba(201,168,106,.45);box-shadow:0 26px 60px rgba(0,0,0,.5)}
+.ai-card:hover::before{opacity:1}
+.ai-num{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.15em}
+.ai-card h3{font-family:var(--serif);font-size:20px;color:var(--gold-2);margin:12px 0 10px}
+.ai-card p{font-size:13px;line-height:1.9;color:var(--txt-dim);min-height:72px}
+.ai-foot{margin-top:16px;display:flex;justify-content:space-between;align-items:center}
+.ai-foot .tag{font-size:11px;letter-spacing:.15em;color:var(--gold);border:1px solid rgba(201,168,106,.35);border-radius:999px;padding:4px 12px}
+.ai-foot .go{font-size:12px;color:var(--gold-2);letter-spacing:.1em}
+.ai-note{margin-top:26px;font-size:12px;color:var(--txt-dim);letter-spacing:.05em}
+@media (max-width:1100px){.pub-grid{grid-template-columns:1fr;gap:44px}.ai-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:820px){.ai-grid{grid-template-columns:1fr}.pub{padding:90px 0}.ai{padding:90px 0}.pub-photos img{width:62%}}
+
 /* ---------- 页脚 ---------- */
 footer{border-top:1px solid rgba(201,168,106,.15);background:var(--ink-2);padding:80px 0 50px;text-align:center}
 footer .h2{margin-bottom:14px}
@@ -247,6 +283,8 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
     <li><a href="#resume">关于我</a></li>
     <li><a href="#book">作品集</a></li>
     <li><a href="#works">更多作品</a></li>
+    <li><a href="#pub">出版著作</a></li>
+    <li><a href="#ai">AI 实战</a></li>
     <li><a href="#contact">联系我</a></li>
   </ul>
 </nav>
@@ -539,6 +577,84 @@ footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
         <img src="assets/img/doubao-page.jpg" alt="豆包爱学项目展示页">
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ================= 出版著作 ================= -->
+<section class="pub" id="pub">
+  <div class="wrap">
+    <div class="kicker reveal">PUBLISHED BOOK</div>
+    <h2 class="h2 reveal">出版著作</h2>
+    <div class="pub-grid">
+      <div class="pub-photos reveal">
+        <img class="p1" src="assets/img/book-cover.jpg" alt="《人工智能 AIGC少年创客指南》封面">
+        <img class="p2" src="assets/img/book-titlepage.jpg" alt="《人工智能 AIGC少年创客指南》扉页·编委署名">
+      </div>
+      <div class="pub-info reveal">
+        <div class="en">写给孩子的人工智能启蒙读本</div>
+        <h3>《人工智能 · AIGC 少年创客指南》<small>—— 你的第一个 AI 助手</small></h3>
+        <div class="pub-meta">
+          主编：小鹿 AI 编程研究院<br>
+          编委：何山 · <b>邰可心</b> · 黄晶晶<br>
+          出版：安徽师范大学出版社
+        </div>
+        <div class="pub-tags">
+          <span class="tag">正式出版</span><span class="tag">少儿 AI 启蒙</span><span class="tag">编委</span>
+        </div>
+        <div class="pub-quote">把前沿的 AI 能力，翻译成孩子能听懂、能上手的第一课——这与我做课程的初心一脉相承。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AI 实战案例 ================= -->
+<section class="ai" id="ai">
+  <div class="wrap">
+    <div class="ai-head">
+      <div>
+        <div class="kicker reveal">AI IN PRACTICE</div>
+        <h2 class="h2 reveal">AI 实战案例</h2>
+      </div>
+      <p class="reveal">以下每一个站点，都是从需求策划、提示词设计到页面上线，由 AI 全流程协同完成的完整产品——AI 不只是工具，而是我的生产线。</p>
+    </div>
+    <div class="ai-grid">
+      <a class="ai-card reveal" href="https://d8a24945763442c18102a0b1f158461a.app.workbuddy.link/" target="_blank" rel="noopener">
+        <div class="ai-num">CASE 01</div>
+        <h3>超实用 AI 指令卡</h3>
+        <p>场景化提示词卡片系统：整段指令一键复制，填入真实信息即可让任一 AI 产出可用初稿，把「会问」变成「拿来就用」。</p>
+        <div class="ai-foot"><span class="tag">提示词工程</span><span class="go">在线体验 ↗</span></div>
+      </a>
+      <a class="ai-card reveal" href="https://34e3387d446640c4a8fda00509926e0e.app.workbuddy.link/" target="_blank" rel="noopener">
+        <div class="ai-num">CASE 02</div>
+        <h3>小红书实战弹药库</h3>
+        <p>从一段真实经历出发，用 AI 快速搭出可继续修改的笔记、标题、评论与选品思路——先有真实，才有共鸣。</p>
+        <div class="ai-foot"><span class="tag">内容运营</span><span class="go">在线体验 ↗</span></div>
+      </a>
+      <a class="ai-card reveal" href="https://9d6152dc111248e095bc7b54f6ae588b.app.workbuddy.link/" target="_blank" rel="noopener">
+        <div class="ai-num">CASE 03</div>
+        <h3>AI 投资数据分析库</h3>
+        <p>标的拆箱、仓位体检、收盘情报局三大工作流：让 AI 整理证据、标注口径与来源，把市场噪音变成可核验的数据。</p>
+        <div class="ai-foot"><span class="tag">数据工作流</span><span class="go">在线体验 ↗</span></div>
+      </a>
+      <a class="ai-card reveal" href="https://6c4b47e7f2744fb397f03707c147720b.app.workbuddy.link/" target="_blank" rel="noopener">
+        <div class="ai-num">CASE 04</div>
+        <h3>AI 闲鱼运营助手</h3>
+        <p>从「卖什么」到「怎么回复」：五张提示词卡覆盖选品、上架、沟通与营销自动化草稿，运营动作全部可复用。</p>
+        <div class="ai-foot"><span class="tag">电商运营</span><span class="go">在线体验 ↗</span></div>
+      </a>
+      <a class="ai-card reveal" href="https://simayan-zitie-v3-20260805.netlify.app/" target="_blank" rel="noopener">
+        <div class="ai-num">CASE 05</div>
+        <h3>司马彦字帖 · 商品宣传册</h3>
+        <p>AI 设计的品牌提案型画册：1180 款 SKU 翻译为「品类→分类→系列」三级目录与多维筛选，C 端选购与 B 端渠道合作一站打通。</p>
+        <div class="ai-foot"><span class="tag">品牌画册</span><span class="go">在线体验 ↗</span></div>
+      </a>
+      <div class="ai-card reveal" style="display:flex;flex-direction:column;justify-content:center;background:linear-gradient(150deg,var(--ink-3),var(--ink-2))">
+        <div class="ai-num">MORE</div>
+        <h3>更多 AI 产品，持续生产中</h3>
+        <p style="min-height:0">提示词体系 × 工作流设计 × 全栈上线——这套方法论，可以复制到任何一个业务场景。</p>
+      </div>
+    </div>
+    <div class="ai-note reveal">注：案例演示页为独立站点，微信内如提示请在浏览器中打开。</div>
   </div>
 </section>
 

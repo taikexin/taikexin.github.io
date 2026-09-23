@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扇形几何工坊 - 五站探索完整体验版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a2a 0%, #1a1a3a 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00f3ff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0ff;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00f3ff, #00ff9d);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+        
+        .modules {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .module {
+            width: 180px;
+            height: 180px;
+            background: rgba(30, 30, 60, 0.7);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 243, 255, 0.3);
+            border-color: #00f3ff;
+        }
+        
+        .module.active {
+            border-color: #00ff9d;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+        }
+        
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .module-title {
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .content-area {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            min-height: 500px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.1);
+        }
+        
+        .content {
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #00ff9d;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .knowledge-panel {
+            background: rgba(40, 40, 80, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #00f3ff;
+        }
+        
+        .interactive-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .canvas-container {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        canvas {
+            background: rgba(10, 10, 30, 0.7);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .controls {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .control-group {
+            background: rgba(40, 40, 80, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .slider-container label {
+            min-width: 100px;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            height: 10px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00f3ff;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.7);
+        }
+        
+        .value-display {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            min-width: 80px;
+            text-align: center;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+        
+        button {
+            padding: 12px 20px;
+            background: linear-gradient(90deg, #00f3ff, #00ff9d);
+            color: #0a0a2a;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 243, 255, 0.4);
+        }
+        
+        .problem-container {
+            background: rgba(40, 40, 80, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .option {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .option:hover {
+            border-color: #00f3ff;
+            transform: translateY(-3px);
+        }
+        
+        .option.correct {
+            border-color: #00ff9d;
+            background: rgba(0, 255, 157, 0.1);
+        }
+        
+        .option.incorrect {
+            border-color: #ff4d4d;
+            background: rgba(255, 77, 77, 0.1);
+        }
+        
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(0, 255, 157, 0.2);
+            color: #00ff9d;
+            border: 2px solid #00ff9d;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(255, 77, 77, 0.2);
+            color: #ff4d4d;
+            border: 2px solid #ff4d4d;
+            display: block;
+        }
+        
+        .achievement {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(90deg, #00f3ff, #00ff9d);
+            color: #0a0a2a;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            z-index: 100;
+        }
+        
+        .achievement.show {
+            transform: translateX(0);
+        }
+        
+        .floating-shape {
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0.1;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+        
+        .shape-3 {
+            bottom: 15%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .stat-card {
+            background: rgba(30, 30, 60, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            min-width: 150px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00f3ff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #a0a0ff;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .module {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .module-icon {
+                font-size: 2.5rem;
+            }
+            
+            .interactive-area {
+                flex-direction: column;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 游戏化增强样式 */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff0;
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        .level-up {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(45deg, #ff0, #f0f);
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #000;
+            z-index: 1001;
+            animation: levelUp 1s ease-out forwards;
+            display: none;
+        }
+        
+        @keyframes levelUp {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        .progress-star {
+            display: inline-block;
+            font-size: 2rem;
+            margin: 0 5px;
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+        
+        .progress-star.earned {
+            opacity: 1;
+            color: gold;
+            text-shadow: 0 0 10px gold;
+        }
+        
+        .game-mission {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid gold;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .mission-title {
+            color: gold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .mission-progress {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .mission-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, gold, orange);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .reward-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #4a00e0, #8e2de2);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+            display: none;
+        }
+        
+        .reward-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .reward-description {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        
+        .reward-coins {
+            font-size: 3rem;
+            color: gold;
+            margin: 15px 0;
+        }
+    </style>
+    <link rel="stylesheet" href="../_shared/体验增强.css">
+</head>
+<body>
+    <!-- 浮动形状背景 -->
+    <div class="floating-shape shape-1">◔</div>
+    <div class="floating-shape shape-2">◑</div>
+    <div class="floating-shape shape-3">◕</div>
+    
+    <!-- 庆祝效果 -->
+    <div class="celebration" id="celebration"></div>
+    <div class="level-up" id="levelUp">等级提升!</div>
+    
+    <!-- 奖励弹窗 -->
+    <div class="reward-popup" id="rewardPopup">
+        <div class="reward-title">任务完成!</div>
+        <div class="reward-description" id="rewardDescription">你成功完成了任务!</div>
+        <div class="reward-coins">+<span id="rewardCoins">50</span> 金币</div>
+        <button onclick="document.getElementById('rewardPopup').style.display = 'none'">继续</button>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>扇形几何工坊</h1>
+            <p class="subtitle">小学六年级数学互动学习平台 - 探索扇形的奥秘</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="playerScore">0</div>
+                    <div class="stat-label">探索积分</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" id="playerLevel">初学者</div>
+                    <div class="stat-label">探索等级</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" id="completedModules">0/5</div>
+                    <div class="stat-label">完成模块</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value">
+                        <span class="progress-star" id="star1">☆</span>
+                        <span class="progress-star" id="star2">☆</span>
+                        <span class="progress-star" id="star3">☆</span>
+                    </div>
+                    <div class="stat-label">任务星级</div>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="globalProgress"></div>
+            </div>
+            
+            <div class="game-mission">
+                <div class="mission-title">当前任务: <span id="currentMission">认识扇形</span></div>
+                <div class="mission-progress">
+                    <div class="mission-progress-fill" id="missionProgress"></div>
+                </div>
+                <div>任务进度: <span id="missionPercent">0</span>%</div>
+            </div>
+        </header>
+        
+        <!-- 模块选择 -->
+        <div class="modules">
+            <div class="module active" data-module="1">
+                <div class="module-icon">🔍</div>
+                <div class="module-title">认识扇形</div>
+            </div>
+            
+            <div class="module" data-module="2">
+                <div class="module-icon">📏</div>
+                <div class="module-title">扇形周长</div>
+            </div>
+            
+            <div class="module" data-module="3">
+                <div class="module-icon">📐</div>
+                <div class="module-title">扇形面积</div>
+            </div>
+            
+            <div class="module" data-module="4">
+                <div class="module-icon">🌍</div>
+                <div class="module-title">实际应用</div>
+            </div>
+            
+            <div class="module" data-module="5">
+                <div class="module-icon">🏆</div>
+                <div class="module-title">终极挑战</div>
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content-area">
+            <!-- 模块1: 认识扇形 -->
+            <div class="content active" id="module1Content">
+                <h2>模块1: 认识扇形</h2>
+                
+                <div class="knowledge-panel">
+                    <h3>什么是扇形？</h3>
+                    <p>扇形是由<strong>圆心角的两条半径</strong>和它所对的<strong>弧</strong>围成的图形。</p>
+                    <p>扇形是圆的一部分，就像切下来的一块蛋糕！</p>
+                    
+                    <div style="margin-top: 15px;">
+                        <p><strong>扇形的组成部分：</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>圆心</strong>：扇形的顶点，也是所在圆的中心</li>
+                            <li><strong>半径</strong>：从圆心到圆弧的线段</li>
+                            <li><strong>弧</strong>：圆上两点之间的部分</li>
+                            <li><strong>圆心角</strong>：两条半径所夹的角</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="canvas-container">
+                        <canvas id="sectorCanvas1" width="400" height="400"></canvas>
+                        <div class="value-display">
+                            圆心角: <span id="angleValue1">60</span>°
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="control-group">
+                            <h3>调整扇形</h3>
+                            <div class="slider-container">
+                                <label>圆心角:</label>
+                                <input type="range" id="angleSlider1" min="1" max="360" value="60">
+                                <div class="value-display" id="angleValueDisplay1">60°</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>半径:</label>
+                                <input type="range" id="radiusSlider1" min="1" max="10" value="5" step="0.1">
+                                <div class="value-display" id="radiusValueDisplay1">5 米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h3>扇形与圆的关系</h3>
+                            <p>当圆心角为360°时，扇形就变成了一个完整的圆。</p>
+                            <p>当圆心角为180°时，扇形就是半圆。</p>
+                            <p>当圆心角为90°时，扇形是四分之一圆。</p>
+                        </div>
+                        
+                        <button id="checkModule1">完成学习</button>
+                        
+                        <div class="feedback hidden" id="module1Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块2: 扇形周长 -->
+            <div class="content" id="module2Content">
+                <h2>模块2: 扇形周长</h2>
+                
+                <div class="knowledge-panel">
+                    <h3>扇形周长的计算</h3>
+                    <p>扇形周长 = 弧长 + 两条半径</p>
+                    <p>弧长公式：弧长 = (圆心角度数/360) × 圆的周长</p>
+                    <p>圆的周长公式：C = 2πr</p>
+                    <p>所以，扇形周长 = (n/360) × 2πr + 2r</p>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="canvas-container">
+                        <canvas id="sectorCanvas2" width="400" height="400"></canvas>
+                        <div class="value-display">
+                            弧长: <span id="arcLengthValue">0</span> 米
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="control-group">
+                            <h3>计算扇形周长</h3>
+                            <div class="slider-container">
+                                <label>圆心角:</label>
+                                <input type="range" id="angleSlider2" min="1" max="360" value="90">
+                                <div class="value-display" id="angleValueDisplay2">90°</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>半径:</label>
+                                <input type="range" id="radiusSlider2" min="1" max="10" value="5" step="0.1">
+                                <div class="value-display" id="radiusValueDisplay2">5 米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h3>周长计算</h3>
+                            <p>弧长 = (圆心角/360) × 2 × π × 半径</p>
+                            <p>扇形周长 = 弧长 + 2 × 半径</p>
+                            <div class="value-display" style="margin-top: 10px;">
+                                周长: <span id="perimeterValue">0</span> 米
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p><strong>小练习：</strong> 一个扇形的圆心角是120°，半径是5米，它的周长是多少？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">10.47 米</div>
+                                <div class="option" data-correct="true">20.47 米</div>
+                                <div class="option" data-correct="false">15.47 米</div>
+                                <div class="option" data-correct="false">25.47 米</div>
+                            </div>
+                        </div>
+                        
+                        <button id="checkModule2">完成学习</button>
+                        
+                        <div class="feedback hidden" id="module2Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块3: 扇形面积 -->
+            <div class="content" id="module3Content">
+                <h2>模块3: 扇形面积</h2>
+                
+                <div class="knowledge-panel">
+                    <h3>扇形面积的计算</h3>
+                    <p>扇形面积 = (圆心角度数/360) × 圆的面积</p>
+                    <p>圆的面积公式：S = πr²</p>
+                    <p>所以，扇形面积 = (n/360) × πr²</p>
+                    <p>扇形面积的另一种表示：S = 1/2 × 弧长 × 半径</p>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="canvas-container">
+                        <canvas id="sectorCanvas3" width="400" height="400"></canvas>
+                        <div class="value-display">
+                            面积: <span id="areaValue">0</span> 平方米
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="control-group">
+                            <h3>计算扇形面积</h3>
+                            <div class="slider-container">
+                                <label>圆心角:</label>
+                                <input type="range" id="angleSlider3" min="1" max="360" value="120">
+                                <div class="value-display" id="angleValueDisplay3">120°</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>半径:</label>
+                                <input type="range" id="radiusSlider3" min="1" max="10" value="5" step="0.1">
+                                <div class="value-display" id="radiusValueDisplay3">5 米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h3>面积计算</h3>
+                            <p>扇形面积 = (圆心角/360) × π × 半径²</p>
+                            <div class="value-display" style="margin-top: 10px;">
+                                面积: <span id="areaResult">0</span> 平方米
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p><strong>小练习：</strong> 一个扇形的圆心角是60°，半径是6米，它的面积是多少？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">6π 平方米</div>
+                                <div class="option" data-correct="false">12π 平方米</div>
+                                <div class="option" data-correct="true">6π 平方米</div>
+                                <div class="option" data-correct="false">3π 平方米</div>
+                            </div>
+                        </div>
+                        
+                        <button id="checkModule3">完成学习</button>
+                        
+                        <div class="feedback hidden" id="module3Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块4: 实际应用 -->
+            <div class="content" id="module4Content">
+                <h2>模块4: 扇形的实际应用</h2>
+                
+                <div class="knowledge-panel">
+                    <h3>扇形在生活中的应用</h3>
+                    <p>扇形在我们的生活中随处可见：</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>扇子、电风扇的叶片</li>
+                        <li>比萨饼、蛋糕的切块</li>
+                        <li>雷达扫描区域</li>
+                        <li>圆形花坛的扇形区域</li>
+                        <li>体育场看台的扇形座位区</li>
+                    </ul>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="canvas-container">
+                        <canvas id="sectorCanvas4" width="400" height="400"></canvas>
+                        <div class="value-display">
+                            扇形花坛面积: <span id="gardenArea">0</span> 平方米
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="control-group">
+                            <h3>设计扇形花坛</h3>
+                            <p>你要设计一个扇形花坛，半径是5米。</p>
+                            <div class="slider-container">
+                                <label>圆心角:</label>
+                                <input type="range" id="angleSlider4" min="1" max="360" value="90">
+                                <div class="value-display" id="angleValueDisplay4">90°</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>半径:</label>
+                                <input type="range" id="radiusSlider4" min="1" max="10" value="5" step="0.1">
+                                <div class="value-display" id="radiusValueDisplay4">5 米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h3>花坛信息</h3>
+                            <p>花坛面积: <span id="gardenAreaResult">0</span> 平方米</p>
+                            <p>围栏长度: <span id="fenceLength">0</span> 米</p>
+                            <p>需要花草: <span id="plantsNeeded">0</span> 株 (每平方米5株)</p>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p><strong>实际问题：</strong> 一个圆形广场的半径为20米，要在其中划出一个圆心角为120°的扇形区域作为表演区，这个表演区的面积是多少？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">100π 平方米</div>
+                                <div class="option" data-correct="false">200π 平方米</div>
+                                <div class="option" data-correct="true">400π/3 平方米</div>
+                                <div class="option" data-correct="false">300π 平方米</div>
+                            </div>
+                        </div>
+                        
+                        <button id="checkModule4">完成学习</button>
+                        
+                        <div class="feedback hidden" id="module4Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块5: 终极挑战 -->
+            <div class="content" id="module5Content">
+                <h2>模块5: 终极挑战</h2>
+                
+                <div class="knowledge-panel">
+                    <h3>综合应用挑战</h3>
+                    <p>你已经学习了扇形的相关知识，现在来挑战一些综合问题吧！</p>
+                    <p>这些问题将综合运用你所学的知识，检验你的掌握程度。</p>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="canvas-container">
+                        <canvas id="sectorCanvas5" width="400" height="400"></canvas>
+                        <div class="value-display">
+                            阴影面积: <span id="shadowArea">0</span> 平方米
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="control-group">
+                            <h3>挑战问题1</h3>
+                            <p>如图，一个半径为10米的圆中，有一个圆心角为90°的扇形和一个正方形，正方形的顶点在圆弧上。求阴影部分的面积。</p>
+                            
+                            <div class="slider-container">
+                                <label>正方形边长:</label>
+                                <input type="range" id="squareSlider" min="1" max="14" value="7" step="0.1">
+                                <div class="value-display" id="squareValue">7 米</div>
+                            </div>
+                            
+                            <div class="value-display" style="margin-top: 10px;">
+                                阴影面积: <span id="challenge1Result">0</span> 平方米
+                            </div>
+                            
+                            <button id="checkChallenge1">检查答案</button>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h3>挑战问题2</h3>
+                            <p>一个扇形的周长是28.56米，半径是6米，求这个扇形的圆心角是多少度？(π取3.14)</p>
+                            
+                            <div class="slider-container">
+                                <label>圆心角:</label>
+                                <input type="range" id="challenge2Slider" min="1" max="360" value="90">
+                                <div class="value-display" id="challenge2Value">90°</div>
+                            </div>
+                            
+                            <button id="checkChallenge2">检查答案</button>
+                        </div>
+                        
+                        <div class="feedback hidden" id="module5Feedback"></div>
+                        
+                        <button id="completeChallenge" style="background: linear-gradient(90deg, #ff9d00, #ff4d4d);">完成终极挑战</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 成就徽章 -->
+    <div class="achievement" id="achievement">
+        <span>🏆</span>
+        <span id="badgeText">成就解锁!</span>
+    </div>
+
+    <script>
+        // 游戏状态
+        const gameState = {
+            currentModule: 1,
+            score: 0,
+            level: "初学者",
+            completed: 0,
+            moduleProgress: [0, 0, 0, 0, 0],
+            stars: 0
+        };
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化事件监听器
+            initEventListeners();
+            
+            // 初始化画布
+            initCanvases();
+            
+            // 更新游戏状态显示
+            updateGameState();
+        });
+        
+        // 初始化事件监听器
+        function initEventListeners() {
+            // 模块选择
+            document.querySelectorAll('.module').forEach(module => {
+                module.addEventListener('click', function() {
+                    switchModule(parseInt(this.dataset.module));
+                });
+            });
+            
+            // 模块1事件
+            document.getElementById('angleSlider1').addEventListener('input', updateSector1);
+            document.getElementById('radiusSlider1').addEventListener('input', updateSector1);
+            document.getElementById('checkModule1').addEventListener('click', function() {
+                completeModule(1);
+            });
+            
+            // 模块2事件
+            document.getElementById('angleSlider2').addEventListener('input', updateSector2);
+            document.getElementById('radiusSlider2').addEventListener('input', updateSector2);
+            document.getElementById('checkModule2').addEventListener('click', function() {
+                completeModule(2);
+            });
+            
+            // 模块3事件
+            document.getElementById('angleSlider3').addEventListener('input', updateSector3);
+            document.getElementById('radiusSlider3').addEventListener('input', updateSector3);
+            document.getElementById('checkModule3').addEventListener('click', function() {
+                completeModule(3);
+            });
+            
+            // 模块4事件
+            document.getElementById('angleSlider4').addEventListener('input', updateSector4);
+            document.getElementById('radiusSlider4').addEventListener('input', updateSector4);
+            document.getElementById('checkModule4').addEventListener('click', function() {
+                completeModule(4);
+            });
+            
+            // 模块5事件
+            document.getElementById('squareSlider').addEventListener('input', updateChallenge1);
+            document.getElementById('challenge2Slider').addEventListener('input', updateChallenge2);
+            document.getElementById('checkChallenge1').addEventListener('click', checkChallenge1);
+            document.getElementById('checkChallenge2').addEventListener('click', checkChallenge2);
+            document.getElementById('completeChallenge').addEventListener('click', function() {
+                completeModule(5);
+            });
+            
+            // 选项点击事件
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    handleOptionClick(this);
+                });
+            });
+        }
+        
+        // 初始化画布
+        function initCanvases() {
+            updateSector1();
+            updateSector2();
+            updateSector3();
+            updateSector4();
+            updateChallenge1();
+            updateChallenge2();
+        }
+        
+        // 切换模块
+        function switchModule(module) {
+            // 更新模块激活状态
+            document.querySelectorAll('.module').forEach(m => {
+                m.classList.remove('active');
+            });
+            document.querySelector(`.module[data-module="${module}"]`).classList.add('active');
+            
+            // 隐藏所有内容
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 显示目标模块内容
+            document.getElementById(`module${module}Content`).classList.add('active');
+            
+            // 更新当前模块
+            gameState.currentModule = module;
+            
+            // 更新任务标题
+            updateMissionTitle(module);
+        }
+        
+        // 更新任务标题
+        function updateMissionTitle(module) {
+            const missions = [
+                "认识扇形",
+                "计算扇形周长", 
+                "计算扇形面积",
+                "扇形实际应用",
+                "终极挑战"
+            ];
+            document.getElementById('currentMission').textContent = missions[module-1];
+        }
+        
+        // 更新模块1的扇形
+        function updateSector1() {
+            const angle = parseInt(document.getElementById('angleSlider1').value);
+            const radius = parseFloat(document.getElementById('radiusSlider1').value);
+            
+            document.getElementById('angleValueDisplay1').textContent = angle + '°';
+            document.getElementById('radiusValueDisplay1').textContent = radius + ' 米';
+            document.getElementById('angleValue1').textContent = angle;
+            
+            const canvas = document.getElementById('sectorCanvas1');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 缩放因子：1米 = 20像素
+            const scale = 20;
+            const scaledRadius = radius * scale;
+            
+            // 绘制完整的圆
+            ctx.beginPath();
+            ctx.arc(200, 200, scaledRadius, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.stroke();
+            
+            // 绘制扇形
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+            ctx.arc(200, 200, scaledRadius, 0, angle * Math.PI / 180);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(0, 243, 255, 0.5)';
+            ctx.fill();
+            ctx.strokeStyle = '#00f3ff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 绘制半径
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+            ctx.lineTo(200 + scaledRadius, 200);
+            ctx.strokeStyle = '#00ff9d';
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+            ctx.lineTo(200 + scaledRadius * Math.cos(angle * Math.PI / 180), 200 + scaledRadius * Math.sin(angle * Math.PI / 180));
+            ctx.strokeStyle = '#00ff9d';
+            ctx.stroke();
+            
+            // 绘制圆心角
+            ctx.beginPath();
+            ctx.arc(200, 200, 30, 0, angle * Math.PI / 180);
+            ctx.strokeStyle = '#ff9d00';
+            ctx.stroke();
+            
+            // 标注各部分
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px Arial';
+            ctx.fillText('圆心', 190, 190);
+            ctx.fillText('半径', 200 + scaledRadius/2, 190);
+            ctx.fillText('半径', 200 + scaledRadius/2 * Math.cos(angle * Math.PI / 180) - 20, 200 + scaledRadius/2 * Math.sin(angle * Math.PI / 180));
+            ctx.fillText('弧', 200 + scaledRadius * Math.cos(angle/2 * Math.PI / 180) + 10, 200 + scaledRadius * Math.sin(angle/2 * Math.PI / 180));
+            ctx.fillText('圆心角', 200 + 40 * Math.cos(angle/2 * Math.PI / 180), 200 + 40 * Math.sin(angle/2 * Math.PI / 180));
+            
+            // 更新任务进度
+            updateMissionProgress(1, 25);
+        }
+        
+        // 更新模块2的扇形和周长计算
+        function updateSector2() {
+            const angle = parseInt(document.getElementById('angleSlider2').value);
+            const radius = parseFloat(document.getElementById('radiusSlider2').value);
+            
+            document.getElementById('angleValueDisplay2').textContent = angle + '°';
+            document.getElementById('radiusValueDisplay2').textContent = radius + ' 米';
+            
+            // 计算弧长和周长（单位：米）
+            const arcLength = (angle / 360) * 2 * Math.PI * radius;
+            const perimeter = arcLength + 2 * radius;
+            
+            document.getElementById('arcLengthValue').textContent = arcLength.toFixed(2);
+            document.getElementById('perimeterValue').textContent = perimeter.toFixed(2);
+            
+            const canvas = document.getElementById('sectorCanvas2');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 缩放因子：1米 = 20像素
+            const scale = 20;
+            const scaledRadius = radius * scale;
+            
+            // 绘制扇形
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+            ctx.arc(200, 200, scaledRadius, 0, angle * Math.PI / 180);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(0, 243, 255, 0.5)';
+            ctx.fill();
+            ctx.strokeStyle = '#00f3ff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 标注弧长
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px Arial';
+            ctx.fillText('弧长: ' + arcLength.toFixed(2) + ' 米', 100, 50);
+            
+            // 绘制弧长指示线
+            if (angle < 180) {
+                ctx.beginPath();
+                ctx.arc(200, 200, scaledRadius + 20, 0, angle * Math.PI / 180);
+                ctx.strokeStyle = '#ff9d00';
+                ctx.setLineDash([5, 5]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            // 更新任务进度
+            updateMissionProgress(2, 25);
+        }
+        
+        // 更新模块3的扇形和面积计算
+        function updateSector3() {
+            const angle = parseInt(document.getElementById('angleSlider3').value);
+            const radius = parseFloat(document.getElementById('radiusSlider3').value);
+            
+            document.getElementById('angleValueDisplay3').textContent = angle + '°';
+            document.getElementById('radiusValueDisplay3').textContent = radius + ' 米';
+            
+            // 计算面积（单位：平方米）
+            const area = (angle / 360) * Math.PI * radius * radius;
+            
+            document.getElementById('areaValue').textContent = area.toFixed(2);
+            document.getElementById('areaResult').textContent = area.toFixed(2);
+            
+            const canvas = document.getElementById('sectorCanvas3');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 缩放因子：1米 = 20像素
+            const scale = 20;
+            const scaledRadius = radius * scale;
+            
+            // 绘制扇形
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+            ctx.arc(200, 200, scaledRadius, 0, angle * Math.PI / 180);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(0, 243, 255, 0.5)';
+            ctx.fill();
+            ctx.strokeStyle = '#00f3ff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 标注面积
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px Arial';
+            ctx.fillText('面积: ' + area.toFixed(2) + ' 平方米', 100, 50);
+            
+            // 更新任务进度
+            updateMissionProgress(3, 25);
+        }
+        
+        // 更新模块4的扇形花坛
+        function updateSector4() {
+            const angle = parseInt(document.getElementById('angleSlider4').value);
+            const radius = parseFloat(document.getElementById('radiusSlider4').value);
+            
+            document.getElementById('angleValueDisplay4').textContent = angle + '°';
+            document.getElementById('radiusValueDisplay4').textContent = radius + ' 米';
+            
+            // 计算花坛信息（单位：米）
+            const area = (angle / 360) * Math.PI * radius * radius;
+            const arcLength = (angle / 360) * 2 * Math.PI * radius;
+            const fenceLength = arcLength + 2 * radius;
+            const plantsNeeded = Math.ceil(area * 5);
+            
+            document.getElementById('gardenArea').textContent = area.toFixed(2);
+            document.getElementById('gardenAreaResult').textContent = area.toFixed(2);
+            document.getElementById('fenceLength').textContent = fenceLength.toFixed(2);
+            document.getElementById('plantsNeeded').textContent = plantsNeeded;
+            
+            const canvas = document.getElementById('sectorCanvas4');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 缩放因子：1米 = 10像素（花坛较大，缩小比例）
+            const scale = 10;
+            const scaledRadius = radius * scale;
+            
+            // 绘制扇形花坛
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+            ctx.arc(200, 200, scaledRadius, 0, angle * Math.PI / 180);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(0, 255, 157, 0.5)';
+            ctx.fill();
+            ctx.strokeStyle = '#00ff9d';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 标注
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px Arial';
+            ctx.fillText('扇形花坛', 150, 50);
+            ctx.fillText('半径: ' + radius + ' 米', 150, 70);
+            ctx.fillText('圆心角: ' + angle + '°', 150, 90);
+            
+            // 更新任务进度
+            updateMissionProgress(4, 25);
+        }
+        
+        // 更新挑战1
+        function updateChallenge1() {
+            const squareSide = parseFloat(document.getElementById('squareSlider').value);
+            document.getElementById('squareValue').textContent = squareSide + ' 米';
+            
+            const radius = 10; // 固定半径10米
+            const angle = 90; // 固定圆心角90°
+            
+            // 计算阴影面积 = 扇形面积 - 正方形面积（单位：平方米）
+            const sectorArea = (angle / 360) * Math.PI * radius * radius;
+            const squareArea = squareSide * squareSide;
+            const shadowArea = sectorArea - squareArea;
+            
+            document.getElementById('shadowArea').textContent = shadowArea.toFixed(2);
+            document.getElementById('challenge1Result').textContent = shadowArea.toFixed(2);
+            
+            const canvas = document.getElementById('sectorCanvas5');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 缩放因子：1米 = 15像素
+            const scale = 15;
+            const scaledRadius = radius * scale;
+            
+            // 绘制扇形
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+            ctx.arc(200, 200, scaledRadius, 0, angle * Math.PI / 180);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(0, 243, 255, 0.3)';
+            ctx.fill();
+            ctx.strokeStyle = '#00f3ff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 绘制正方形
+            const squareX = 200 + (scaledRadius - squareSide * scale / Math.sqrt(2)) * Math.cos(45 * Math.PI / 180);
+            const squareY = 200 + (scaledRadius - squareSide * scale / Math.sqrt(2)) * Math.sin(45 * Math.PI / 180);
+            
+            ctx.save();
+            ctx.translate(squareX, squareY);
+            ctx.rotate(45 * Math.PI / 180);
+            ctx.fillStyle = 'rgba(255, 77, 77, 0.5)';
+            ctx.fillRect(-squareSide * scale / 2, -squareSide * scale / 2, squareSide * scale, squareSide * scale);
+            ctx.strokeStyle = '#ff4d4d';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(-squareSide * scale / 2, -squareSide * scale / 2, squareSide * scale, squareSide * scale);
+            ctx.restore();
+            
+            // 标注
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px Arial';
+            ctx.fillText('阴影面积: ' + shadowArea.toFixed(2) + ' 平方米', 150, 50);
+            
+            // 更新任务进度
+            updateMissionProgress(5, 25);
+        }
+        
+        // 更新挑战2
+        function updateChallenge2() {
+            const angle = parseInt(document.getElementById('challenge2Slider').value);
+            document.getElementById('challenge2Value').textContent = angle + '°';
+        }
+        
+        // 检查挑战1答案
+        function checkChallenge1() {
+            const squareSide = parseFloat(document.getElementById('squareSlider').value);
+            const radius = 10; // 固定半径10米
+            const angle = 90; // 固定圆心角90°
+            
+            const sectorArea = (angle / 360) * Math.PI * radius * radius;
+            const squareArea = squareSide * squareSide;
+            const shadowArea = sectorArea - squareArea;
+            
+            // 正确答案是正方形边长为7.07米时的阴影面积
+            const correctSquareSide = 10 / Math.sqrt(2); // 约7.07米
+            const correctShadowArea = (90 / 360) * Math.PI * 10 * 10 - correctSquareSide * correctSquareSide;
+            
+            const feedback = document.getElementById('module5Feedback');
+            
+            if (Math.abs(squareSide - correctSquareSide) < 0.1) {
+                feedback.textContent = '正确！正方形边长应该是7.07米，阴影面积是' + correctShadowArea.toFixed(2) + '平方米';
+                feedback.className = 'feedback correct';
+                gameState.score += 20;
+                showCelebration();
+            } else {
+                feedback.textContent = '再试试！注意正方形的对角线应该等于半径。';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.classList.remove('hidden');
+            updateGameState();
+        }
+        
+        // 检查挑战2答案
+        function checkChallenge2() {
+            const angle = parseInt(document.getElementById('challenge2Slider').value);
+            
+            // 周长 = 弧长 + 2*半径 = (角度/360)*2*π*6 + 2*6 = 28.56
+            // 所以 (角度/360)*2*3.14*6 = 28.56 - 12 = 16.56
+            // 角度 = (16.56 * 360) / (2*3.14*6) = 158.4°
+            const correctAngle = 158.4;
+            
+            const feedback = document.getElementById('module5Feedback');
+            
+            if (Math.abs(angle - correctAngle) < 2) {
+                feedback.textContent = '正确！扇形的圆心角是158.4°';
+                feedback.className = 'feedback correct';
+                gameState.score += 20;
+                showCelebration();
+            } else {
+                feedback.textContent = '再试试！根据周长公式反推圆心角。';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.classList.remove('hidden');
+            updateGameState();
+        }
+        
+        // 处理选项点击
+        function handleOptionClick(option) {
+            const isCorrect = option.dataset.correct === 'true';
+            const options = option.parentElement.querySelectorAll('.option');
+            
+            // 移除同一问题中所有选项的选中状态
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // 为当前点击的选项添加选中状态
+            option.classList.add('selected');
+            
+            // 显示所有选项的正确/错误状态
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                if (opt.dataset.correct === 'true') {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            if (isCorrect) {
+                gameState.score += 10;
+                showCelebration();
+                updateGameState();
+            }
+        }
+        
+        // 完成模块
+        function completeModule(module) {
+            if (gameState.moduleProgress[module-1] < 100) {
+                gameState.moduleProgress[module-1] = 100;
+                gameState.score += 30;
+                gameState.completed = gameState.moduleProgress.filter(p => p === 100).length;
+                
+                // 奖励星星
+                if (gameState.stars < 5) {
+                    gameState.stars++;
+                    updateStars();
+                }
+                
+                updateGameState();
+                
+                showAchievement(`完成${getModuleName(module)}模块！`);
+                showRewardPopup(module);
+                
+                // 切换到下一个模块
+                if (module < 5) {
+                    setTimeout(() => {
+                        switchModule(module+1);
+                    }, 2000);
+                } else {
+                    // 所有模块完成
+                    showLevelUp();
+                }
+            }
+        }
+        
+        // 显示庆祝效果
+        function showCelebration() {
+            const celebration = document.getElementById('celebration');
+            celebration.style.display = 'block';
+            
+            // 创建彩色纸屑
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                celebration.appendChild(confetti);
+            }
+            
+            setTimeout(() => {
+                celebration.style.display = 'none';
+                celebration.innerHTML = '';
+            }, 3000);
+        }
+        
+        // 显示等级提升
+        function showLevelUp() {
+            const levelUp = document.getElementById('levelUp');
+            levelUp.style.display = 'block';
+            
+            setTimeout(() => {
+                levelUp.style.display = 'none';
+            }, 2000);
+        }
+        
+        // 显示奖励弹窗
+        function showRewardPopup(module) {
+            const rewards = {
+                1: "你已经能辨认扇形的基本要素。",
+                2: "你发现了弧长和圆心角、半径的关系。",
+                3: "你会把两条半径和一段弧合成扇形周长。",
+                4: "你会用公式解释扇形面积的变化。",
+                5: "五站探索完成，扇形知识已经连成一张图。"
+            };
+            if (window.learningToast) window.learningToast(rewards[module], 'success');
+        }
+        
+        // 更新星星显示
+        function updateStars() {
+            for (let i = 1; i <= 3; i++) {
+                const star = document.getElementById(`star${i}`);
+                if (i <= gameState.stars) {
+                    star.classList.add('earned');
+                    star.textContent = '★';
+                } else {
+                    star.classList.remove('earned');
+                    star.textContent = '☆';
+                }
+            }
+        }
+        
+        // 更新任务进度
+        function updateMissionProgress(module, progress) {
+            gameState.moduleProgress[module-1] = Math.max(gameState.moduleProgress[module-1], progress);
+            const totalProgress = gameState.moduleProgress.reduce((a, b) => a + b, 0) / 5;
+            
+            document.getElementById('missionProgress').style.width = `${totalProgress}%`;
+            document.getElementById('missionPercent').textContent = Math.round(totalProgress);
+            document.getElementById('globalProgress').style.width = `${totalProgress}%`;
+        }
+        
+        // 获取模块名称
+        function getModuleName(module) {
+            const names = {
+                1: '认识扇形',
+                2: '扇形周长',
+                3: '扇形面积',
+                4: '实际应用',
+                5: '终极挑战'
+            };
+            return names[module];
+        }
+        
+        // 显示成就
+        function showAchievement(message) {
+            const badge = document.getElementById('achievement');
+            const badgeText = document.getElementById('badgeText');
+            
+            badgeText.textContent = message;
+            badge.classList.add('show');
+            
+            // 3秒后隐藏成就
+            setTimeout(() => {
+                badge.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 更新游戏状态
+        function updateGameState() {
+            // 更新积分
+            document.getElementById('playerScore').textContent = gameState.score;
+            
+            // 更新等级
+            if (gameState.score >= 100) {
+                gameState.level = "扇形大师";
+            } else if (gameState.score >= 50) {
+                gameState.level = "进阶学者";
+            } else if (gameState.score >= 20) {
+                gameState.level = "初学者";
+            }
+            document.getElementById('playerLevel').textContent = gameState.level;
+            
+            // 更新完成模块
+            document.getElementById('completedModules').textContent = `${gameState.completed}/5`;
+            
+            // 更新进度
+            const totalProgress = gameState.moduleProgress.reduce((a, b) => a + b, 0) / 5;
+            document.getElementById('globalProgress').style.width = `${totalProgress}%`;
+        }
+    </script>
+    <script src="../_shared/体验增强.js"></script>
+</body>
+</html>

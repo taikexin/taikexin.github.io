@@ -1,0 +1,101 @@
+.comic-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(43, 38, 32, 0.25);
+  cursor: pointer;
+}
+.comic-frame.no-img { cursor: default; border: none; }
+
+.comic-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.comic-img.kenburns { animation: kenburns 14s var(--ease) both; }
+@keyframes kenburns {
+  from { transform: scale(1.12) translate(2%, 1%); }
+  to { transform: scale(1); }
+}
+
+.comic-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(33, 28, 22, 0.8);
+  padding: 0.55rem 1rem;
+}
+.comic-frame.no-img .comic-caption {
+  position: static;
+  background: var(--paper-deep);
+  border: 1px solid rgba(43, 38, 32, 0.15);
+}
+
+.comic-caption-text {
+  margin: 0;
+  color: #f4eddd;
+  font-size: 0.96rem;
+  line-height: 1.8;
+  min-height: 1.8em;
+}
+.comic-frame.no-img .comic-caption-text { color: var(--ink); }
+.comic-frame.typing .comic-caption-text::after {
+  content: "▌";
+  animation: caretBlink 0.9s steps(1) infinite;
+}
+@keyframes caretBlink { 50% { opacity: 0; } }
+
+.skip-hint {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: #f4eddd;
+  background: rgba(33, 28, 22, 0.65);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.comic-bubble {
+  position: relative;
+  margin: var(--space-md) 0 0;
+  padding: 0.7rem 1rem;
+  background: #fffdf6;
+  border: 1.5px solid var(--ink-soft);
+  border-radius: 10px;
+  animation: rise 320ms var(--ease) both;
+}
+.comic-bubble::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 36px;
+  width: 14px;
+  height: 14px;
+  background: #fffdf6;
+  border-left: 1.5px solid var(--ink-soft);
+  border-top: 1.5px solid var(--ink-soft);
+  transform: rotate(45deg);
+}
+.bubble-speaker {
+  display: inline-block;
+  background: var(--bamboo);
+  color: var(--paper);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  padding: 0 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.comic-bubble p { margin: 0; }
+
+.comic-choices { animation: rise 360ms var(--ease) 120ms both; }
+.comic-choices .speak-btn { float: right; margin: 0.5rem 0 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .comic-img.kenburns, .comic-bubble, .comic-choices, .comic-frame.typing .comic-caption-text::after {
+    animation: none !important;
+  }
+}

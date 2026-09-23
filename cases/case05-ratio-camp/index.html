@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>比和比例任务营 - 五站实践完整体验版</title>
+    <style>
+        /* 漫威主题配色 */
+        :root {
+            --marvel-red: #e23636;
+            --marvel-blue: #518cca;
+            --marvel-gold: #f0e14a;
+            --marvel-dark: #2c2c2c;
+            --marvel-light: #f5f5f5;
+            --shield-blue: #1a5099;
+            --ironman-red: #c41e3a;
+            --captain-blue: #3d5a9c;
+            --hulk-green: #5d9b4a;
+            --thor-yellow: #f2c230;
+            --blackwidow-silver: #5d5d5d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Bangers', 'Marvel', 'Arial Black', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c2e 0%, #1a1a3e 50%, #2d2d5e 100%);
+            color: var(--marvel-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(226, 54, 54, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(81, 140, 202, 0.1) 0%, transparent 50%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 漫威风格头部 */
+        .marvel-header {
+            background: linear-gradient(135deg, var(--marvel-red), #b31b1b);
+            border: 5px solid var(--marvel-gold);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .marvel-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--marvel-gold);
+            animation: headerGlow 3s infinite;
+        }
+        
+        @keyframes headerGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: var(--marvel-gold);
+            text-shadow: 4px 4px 0 var(--marvel-red), 8px 8px 0 rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--marvel-light);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 var(--marvel-dark);
+        }
+        
+        /* 玩家状态 - 漫威风格 */
+        .player-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .player-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .stat-card {
+            background: rgba(30, 30, 50, 0.7);
+            border: 2px solid var(--marvel-gold);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--marvel-red);
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--marvel-gold);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* 进度条 - 漫威风格 */
+        .progress-container {
+            background: rgba(30, 30, 50, 0.7);
+            border: 2px solid var(--marvel-blue);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: var(--marvel-dark);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--marvel-red), var(--marvel-blue));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progressShine 2s infinite;
+        }
+        
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* 导师选择区域 */
+        .hero-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .hero-card {
+            width: 120px;
+            height: 160px;
+            background: rgba(30, 30, 50, 0.7);
+            border: 3px solid transparent;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(226, 54, 54, 0.3);
+        }
+        
+        .hero-card.active {
+            border-color: var(--marvel-gold);
+            box-shadow: 0 0 20px var(--marvel-gold);
+        }
+        
+        .hero-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .hero-name {
+            font-size: 1rem;
+            text-align: center;
+            color: var(--marvel-light);
+        }
+        
+        /* 模块区域 */
+        .modules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .module-card {
+            background: rgba(30, 30, 50, 0.7);
+            border: 3px solid;
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .module-card.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .module-card.locked::after {
+            content: "🔒";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            z-index: 2;
+        }
+        
+        .module-header {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid;
+        }
+        
+        .module-content {
+            padding: 20px;
+            min-height: 200px;
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .module-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .module-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .progress-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: conic-gradient(var(--marvel-gold) 0% 0%, #333 0% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+        }
+        
+        /* 为每个模块设置不同的颜色 */
+        .module-1 {
+            border-color: var(--ironman-red);
+        }
+        
+        .module-1 .module-header {
+            background: linear-gradient(135deg, var(--ironman-red), #a00);
+            border-bottom-color: var(--ironman-red);
+        }
+        
+        .module-2 {
+            border-color: var(--captain-blue);
+        }
+        
+        .module-2 .module-header {
+            background: linear-gradient(135deg, var(--captain-blue), #2a4a8c);
+            border-bottom-color: var(--captain-blue);
+        }
+        
+        .module-3 {
+            border-color: var(--hulk-green);
+        }
+        
+        .module-3 .module-header {
+            background: linear-gradient(135deg, var(--hulk-green), #3d7a2a);
+            border-bottom-color: var(--hulk-green);
+        }
+        
+        .module-4 {
+            border-color: var(--thor-yellow);
+        }
+        
+        .module-4 .module-header {
+            background: linear-gradient(135deg, var(--thor-yellow), #d4a620);
+            border-bottom-color: var(--thor-yellow);
+        }
+        
+        .module-5 {
+            border-color: var(--shield-blue);
+        }
+        
+        .module-5 .module-header {
+            background: linear-gradient(135deg, var(--shield-blue), #0f2c5c);
+            border-bottom-color: var(--shield-blue);
+        }
+        
+        /* 内容区域 */
+        .content-area {
+            background: rgba(20, 20, 40, 0.9);
+            border: 3px solid var(--marvel-gold);
+            border-radius: 15px;
+            padding: 0;
+            margin-top: 30px;
+            min-height: 500px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .content-header {
+            background: linear-gradient(135deg, var(--marvel-red), var(--marvel-blue));
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--marvel-gold);
+        }
+        
+        .content-body {
+            padding: 30px;
+            display: none;
+        }
+        
+        .content-body.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 知识讲解样式 */
+        .knowledge-panel {
+            background: rgba(40, 40, 60, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--marvel-gold);
+        }
+        
+        .concept-title {
+            color: var(--marvel-gold);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--marvel-red);
+            padding-bottom: 10px;
+        }
+        
+        .concept-desc {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .example {
+            background: rgba(226, 54, 54, 0.1);
+            border-left: 4px solid var(--marvel-red);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        /* 交互游戏样式 */
+        .game-panel {
+            background: rgba(40, 40, 60, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid var(--marvel-blue);
+        }
+        
+        .game-title {
+            color: var(--marvel-gold);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        /* 调配游戏 */
+        .potion-game {
+            text-align: center;
+        }
+        
+        .potion-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .potion-bottle {
+            width: 100px;
+            height: 150px;
+            background: rgba(81, 140, 202, 0.3);
+            border: 5px solid var(--marvel-blue);
+            border-radius: 10px 10px 50px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .potion-liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, var(--marvel-red), #ff6b6b);
+            transition: height 0.5s;
+        }
+        
+        .potion-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .slider-container label {
+            min-width: 120px;
+            text-align: right;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            height: 10px;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, var(--marvel-red), var(--marvel-blue));
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--marvel-gold);
+            cursor: pointer;
+            border: 3px solid var(--marvel-dark);
+            box-shadow: 0 0 10px rgba(240, 225, 74, 0.7);
+        }
+        
+        .value-display {
+            background: rgba(30, 30, 50, 0.7);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            min-width: 100px;
+            text-align: center;
+            border: 2px solid var(--marvel-gold);
+        }
+        
+        /* 转换游戏样式 */
+        .conversion-game {
+            text-align: center;
+        }
+        
+        .conversion-machine {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .conversion-inputs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .conversion-inputs input, .conversion-inputs select {
+            padding: 10px;
+            border: 2px solid var(--marvel-blue);
+            border-radius: 5px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .conversion-outputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .conversion-output {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px dashed var(--marvel-blue);
+        }
+        
+        .conversion-output .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .conversion-output .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--marvel-blue);
+        }
+        
+        /* 应用题游戏样式 */
+        .application-game {
+            text-align: center;
+        }
+        
+        .problem-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .problem-statement {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            color: #333;
+        }
+        
+        .option:hover {
+            border-color: var(--marvel-blue);
+            transform: translateY(-3px);
+        }
+        
+        .option.correct {
+            border-color: var(--hulk-green);
+            background: rgba(93, 155, 74, 0.1);
+        }
+        
+        .option.incorrect {
+            border-color: var(--marvel-red);
+            background: rgba(226, 54, 54, 0.1);
+        }
+        
+        .option.selected {
+            box-shadow: 0 0 0 3px var(--marvel-blue);
+        }
+        
+        /* 生活应用游戏样式 */
+        .life-game {
+            text-align: center;
+        }
+        
+        .store-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: #f1f2f6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .discount-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .discount-slider {
+            flex: 1;
+        }
+        
+        .price-calculation {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f1f2f6;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* 挑战游戏样式 */
+        .challenge-game {
+            text-align: center;
+        }
+        
+        .challenge-question {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .challenge-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .challenge-input {
+            padding: 10px;
+            border: 2px solid var(--marvel-blue);
+            border-radius: 5px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+        
+        /* 反馈消息 */
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(93, 155, 74, 0.2);
+            color: var(--hulk-green);
+            border: 2px solid var(--hulk-green);
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(226, 54, 54, 0.2);
+            color: var(--marvel-red);
+            border: 2px solid var(--marvel-red);
+            display: block;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* 导航按钮 */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--marvel-red), #b31b1b);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+            border: 2px solid var(--marvel-gold);
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #ff4d4d, var(--marvel-red));
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(226, 54, 54, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--hulk-green), #3d7a2a);
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #6bbf4a, var(--hulk-green));
+        }
+        
+        /* 成就徽章 */
+        .achievement {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--marvel-gold), #d4b82a);
+            color: var(--marvel-dark);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            z-index: 100;
+            border: 2px solid var(--marvel-red);
+        }
+        
+        .achievement.show {
+            transform: translateX(0);
+        }
+        
+        /* 漫威角色动画 */
+        .floating-hero {
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0.1;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .hero-1 {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .hero-2 {
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+        
+        .hero-3 {
+            bottom: 15%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .player-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .modules-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-selector {
+                gap: 10px;
+            }
+            
+            .hero-card {
+                width: 100px;
+                height: 130px;
+            }
+            
+            .hero-icon {
+                font-size: 2.5rem;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .conversion-outputs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../_shared/体验增强.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="marvel-header">
+            <h1>比和比例任务营</h1>
+            <p class="subtitle">比和比例学习大冒险 - 进入任务营，掌握比例思维！</p>
+            
+            <div class="player-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" id="playerScore">0</div>
+                    <div class="stat-label">学习积分</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🛡️</div>
+                    <div class="stat-value" id="playerLevel">入门探索者</div>
+                    <div class="stat-label">探索等级</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🔓</div>
+                    <div class="stat-value" id="unlockedModules">1/5</div>
+                    <div class="stat-label">已解锁任务</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value" id="playerEnergy">100%</div>
+                    <div class="stat-label">专注度</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>任务进度:</span>
+                    <span id="progressText">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="globalProgress"></div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- 导师选择 -->
+        <div class="hero-selector">
+            <div class="hero-card active" data-hero="ironman">
+                <div class="hero-icon">🧱</div>
+                <div class="hero-name">工程导师<br>结构观察</div>
+            </div>
+            
+            <div class="hero-card" data-hero="captain">
+                <div class="hero-icon">🔄</div>
+                <div class="hero-name">转换导师<br>数形互化</div>
+            </div>
+            
+            <div class="hero-card" data-hero="hulk">
+                <div class="hero-icon">🔍</div>
+                <div class="hero-name">推理导师<br>单位1专家</div>
+            </div>
+            
+            <div class="hero-card" data-hero="thor">
+                <div class="hero-icon">🛒</div>
+                <div class="hero-name">生活导师<br>应用建模</div>
+            </div>
+            
+            <div class="hero-card" data-hero="blackwidow">
+                <div class="hero-icon">🧩</div>
+                <div class="hero-name">挑战导师<br>综合闯关</div>
+            </div>
+        </div>
+        
+        <!-- 任务模块 -->
+        <div class="modules-container">
+            <!-- 模块1: 概念海湾 -->
+            <div class="module-card module-1 active" data-module="1">
+                <div class="module-header">
+                    <div class="module-title">任务1: 概念海湾</div>
+                    <div class="module-desc">比的意义和性质</div>
+                </div>
+                <div class="module-content">
+                    <p>跟随工程导师，学习比的基本概念，掌握比例关系！</p>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module1Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块2: 转换峡谷 -->
+            <div class="module-card module-2" data-module="2">
+                <div class="module-header">
+                    <div class="module-title">任务2: 转换峡谷</div>
+                    <div class="module-desc">比、分数、小数、百分数互化</div>
+                </div>
+                <div class="module-content">
+                    <p>跟随转换导师，掌握比、分数、小数、百分数互化技巧！</p>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module2Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块3: 应用山脉 -->
+            <div class="module-card module-3" data-module="3">
+                <div class="module-header">
+                    <div class="module-title">任务3: 应用山脉</div>
+                    <div class="module-desc">找单位"1"和比例应用题</div>
+                </div>
+                <div class="module-content">
+                    <p>跟随推理导师解决实际比例问题！</p>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module3Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块4: 生活海洋 -->
+            <div class="module-card module-4" data-module="4">
+                <div class="module-header">
+                    <div class="module-title">任务4: 生活海洋</div>
+                    <div class="module-desc">比例的实际应用</div>
+                </div>
+                <div class="module-content">
+                    <p>跟随生活导师探索比例在生活中的应用！</p>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module4Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块5: 挑战火山 -->
+            <div class="module-card module-5" data-module="5">
+                <div class="module-header">
+                    <div class="module-title">任务5: 挑战火山</div>
+                    <div class="module-desc">综合测试</div>
+                </div>
+                <div class="module-content">
+                    <p>最终挑战！证明你已经掌握比例思维！</p>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module5Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content-area">
+            <div class="content-header">
+                <h2 id="contentTitle">任务1: 概念海湾 - 比的意义和性质</h2>
+                <p id="contentSubtitle">跟随工程导师学习比的基本概念</p>
+            </div>
+            
+            <!-- 模块1内容 -->
+            <div class="content-body active" id="module1Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">什么是比？</h3>
+                    <p class="concept-desc">比表示<strong>两个数量之间的关系</strong>。比如，男生和女生人数的比是3:2，表示男生人数是女生的1.5倍。</p>
+                    
+                    <div class="example">
+                        <p><strong>比的读法：</strong> 3:2 读作"3比2"</p>
+                        <p><strong>比的各部分名称：</strong> 前项(3) : 后项(2) = 比值(1.5)</p>
+                    </div>
+                    
+                    <h3 class="concept-title">比的基本性质</h3>
+                    <p class="concept-desc">比的前项和后项同时乘或除以相同的数（0除外），比值不变。</p>
+                    
+                    <div class="example">
+                        <p>3:2 = (3×2):(2×2) = 6:4</p>
+                        <p>15:10 = (15÷5):(10÷5) = 3:2</p>
+                    </div>
+                </div>
+                
+                <div class="game-panel">
+                    <div class="potion-game">
+                        <h3 class="game-title">工程导师的比例材料调配挑战</h3>
+                        <p>按目标比调配红蓝材料，观察数量关系如何保持不变！</p>
+                        
+                        <div class="potion-container">
+                            <div class="potion-bottle">
+                                <div class="potion-liquid" id="potionLiquid" style="height: 0%"></div>
+                            </div>
+                            
+                            <div class="value-display">
+                                目标比例: <span id="targetRatio">3:2</span>
+                            </div>
+                        </div>
+                        
+                        <div class="potion-controls">
+                            <div class="slider-container">
+                                <label>红色材料份数:</label>
+                                <input type="range" id="redSlider" min="0" max="20" value="0">
+                                <div class="value-display" id="redValue">0</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>蓝色材料份数:</label>
+                                <input type="range" id="blueSlider" min="0" max="20" value="0">
+                                <div class="value-display" id="blueValue">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="value-display">
+                            当前比例: <span id="currentRatio">0:0</span>
+                        </div>
+                        
+                        <button class="btn" id="checkPotion">检查调配</button>
+                        <button class="btn btn-success" id="nextModule1">完成任务</button>
+                        
+                        <div class="feedback hidden" id="module1Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块2内容 -->
+            <div class="content-body" id="module2Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">比、分数、小数和百分数的关系</h3>
+                    <p class="concept-desc">比、分数、小数和百分数都可以表示数量之间的关系，它们之间可以互相转换。</p>
+                    
+                    <div class="example">
+                        <p><strong>转换关系：</strong> 3:2 = 3/2 = 1.5 = 150%</p>
+                        <p><strong>转换方法：</strong></p>
+                        <p>• 比转分数：前项/后项</p>
+                        <p>• 分数转小数：分子÷分母</p>
+                        <p>• 小数转百分数：小数×100%</p>
+                    </div>
+                    
+                    <h3 class="concept-title">转换技巧</h3>
+                    <p class="concept-desc">掌握这些转换技巧可以帮助你在不同情境下灵活运用比例知识。</p>
+                </div>
+                
+                <div class="game-panel">
+                    <div class="conversion-game">
+                        <h3 class="game-title">转换导师的数字转换器</h3>
+                        <p>把同一个数量关系改写成不同形式，建立互化感觉！</p>
+                        
+                        <div class="conversion-machine">
+                            <div class="conversion-inputs">
+                                <input type="text" id="conversionInput" placeholder="输入数值" value="50">
+                                <select id="inputType">
+                                    <option value="percent">百分数 %</option>
+                                    <option value="decimal">小数</option>
+                                    <option value="fraction">分数</option>
+                                    <option value="ratio">比</option>
+                                </select>
+                                <button class="btn" id="convertBtn">转换</button>
+                            </div>
+                            
+                            <div class="conversion-outputs">
+                                <div class="conversion-output">
+                                    <div class="label">百分数</div>
+                                    <div class="value" id="outputPercent">50%</div>
+                                </div>
+                                <div class="conversion-output">
+                                    <div class="label">小数</div>
+                                    <div class="value" id="outputDecimal">0.5</div>
+                                </div>
+                                <div class="conversion-output">
+                                    <div class="label">分数</div>
+                                    <div class="value" id="outputFraction">1/2</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <div class="problem-statement">
+                                <p>练习：将 75% 转换为小数和分数。</p>
+                            </div>
+                            
+                            <div class="options">
+                                <div class="option" data-correct="false">小数: 7.5, 分数: 75/10</div>
+                                <div class="option" data-correct="true">小数: 0.75, 分数: 3/4</div>
+                                <div class="option" data-correct="false">小数: 0.075, 分数: 75/1000</div>
+                                <div class="option" data-correct="false">小数: 75.0, 分数: 75/1</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success" id="nextModule2">完成任务</button>
+                        
+                        <div class="feedback hidden" id="module2Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块3内容 -->
+            <div class="content-body" id="module3Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">找单位"1"</h3>
+                    <p class="concept-desc">在百分数应用题中，找到单位"1"是解决问题的关键。单位"1"是作为比较基准的量。</p>
+                    
+                    <div class="example">
+                        <p><strong>例题：</strong> 男生有25人，女生有20人。</p>
+                        <p>问题1：男生人数是女生人数的百分之几？</p>
+                        <p>单位"1"是女生人数，所以是25÷20×100%=125%</p>
+                    </div>
+                    
+                    <h3 class="concept-title">比例应用题解题步骤</h3>
+                    <p class="concept-desc">1. 找出单位"1"的量</p>
+                    <p class="concept-desc">2. 判断单位"1"是已知还是未知</p>
+                    <p class="concept-desc">3. 根据百分数的意义列出算式</p>
+                    <p class="concept-desc">4. 计算并解答</p>
+                </div>
+                
+                <div class="game-panel">
+                    <div class="application-game">
+                        <h3 class="game-title">推理导师的比例侦探所</h3>
+                        <p>找准单位“1”和对应关系，解决这些比例应用题！</p>
+                        
+                        <div class="problem-container">
+                            <div class="problem-statement">
+                                <p><strong>问题1：</strong> 男生有25人，女生有20人。男生人数是女生人数的百分之几？</p>
+                            </div>
+                            
+                            <div class="options">
+                                <div class="option" data-correct="false">(25-20) ÷ 20 × 100% = 25%</div>
+                                <div class="option" data-correct="true">25 ÷ 20 × 100% = 125%</div>
+                                <div class="option" data-correct="false">20 ÷ 25 × 100% = 80%</div>
+                                <div class="option" data-correct="false">(25-20) ÷ 25 × 100% = 20%</div>
+                            </div>
+                            
+                            <div class="problem-statement">
+                                <p><strong>问题2：</strong> 女生人数比男生人数少百分之几？</p>
+                            </div>
+                            
+                            <div class="options">
+                                <div class="option" data-correct="false">(25-20) ÷ 20 × 100% = 25%</div>
+                                <div class="option" data-correct="true">(25-20) ÷ 25 × 100% = 20%</div>
+                                <div class="option" data-correct="false">20 ÷ 25 × 100% = 80%</div>
+                                <div class="option" data-correct="false">25 ÷ 20 × 100% = 125%</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success" id="nextModule3">完成任务</button>
+                        
+                        <div class="feedback hidden" id="module3Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块4内容 -->
+            <div class="content-body" id="module4Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">百分数在生活中的应用</h3>
+                    <p class="concept-desc">百分数在生活中有广泛的应用，比如折扣、成数、税率、利率等。</p>
+                    
+                    <div class="example">
+                        <p><strong>折扣：</strong> 商品打8折就是按原价的80%出售。</p>
+                        <p><strong>成数：</strong> 农业收成增加二成就是增加20%。</p>
+                        <p><strong>税率：</strong> 按收入的一定百分比缴纳所得税。</p>
+                        <p><strong>利率：</strong> 银行存款和贷款的利息计算。</p>
+                    </div>
+                    
+                    <h3 class="concept-title">解决实际问题的步骤</h3>
+                    <p class="concept-desc">1. 理解问题，找出关键信息</p>
+                    <p class="concept-desc">2. 确定单位"1"</p>
+                    <p class="concept-desc">3. 选择正确的运算方法</p>
+                    <p class="concept-desc">4. 计算并验证结果</p>
+                </div>
+                
+                <div class="game-panel">
+                    <div class="life-game">
+                        <h3 class="game-title">生活导师的生活应用商店</h3>
+                        <p>用折扣、价格和配比解决真实生活中的比例问题！</p>
+                        
+                        <div class="store-item">
+                            <div class="item-image">📚</div>
+                            <div class="item-details">
+                                <div class="item-name">数学参考书</div>
+                                <div class="item-price">原价: ¥<span id="originalPrice">100</span></div>
+                                
+                                <div class="discount-controls">
+                                    <span>折扣:</span>
+                                    <input type="range" class="discount-slider" id="discountSlider" min="0" max="100" value="20">
+                                    <span class="discount-value" id="discountValue">20% off</span>
+                                </div>
+                                
+                                <div class="price-calculation">
+                                    现价 = 100 × (1 - <span id="priceDiscount1">20</span>%) = ¥<span class="final-price" id="finalPrice">80.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="store-item">
+                            <div class="item-image">✏️</div>
+                            <div class="item-details">
+                                <div class="item-name">文具套装</div>
+                                <div class="item-price">原价: ¥<span id="originalPrice2">50</span></div>
+                                
+                                <div class="discount-controls">
+                                    <span>折扣:</span>
+                                    <input type="range" class="discount-slider" id="discountSlider2" min="0" max="100" value="10">
+                                    <span class="discount-value" id="discountValue2">10% off</span>
+                                </div>
+                                
+                                <div class="price-calculation">
+                                    现价 = 50 × (1 - <span id="priceDiscount2">10</span>%) = ¥<span class="final-price2" id="finalPrice2">45.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success" id="nextModule4">完成任务</button>
+                        
+                        <div class="feedback hidden" id="module4Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 模块5内容 -->
+            <div class="content-body" id="module5Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">综合应用挑战</h3>
+                    <p class="concept-desc">你已经学习了比和比例的基本概念和应用，现在来挑战一下综合测试吧！</p>
+                    
+                    <div class="example">
+                        <p>这些问题将综合运用你所学的知识，包括：</p>
+                        <p>• 比的意义和性质</p>
+                        <p>• 比例的意义和性质</p>
+                        <p>• 正反比例的判断</p>
+                        <p>• 比例的应用</p>
+                    </div>
+                    
+                    <h3 class="concept-title">挑战规则</h3>
+                    <p class="concept-desc">完成所有挑战可以获得"比例大师"称号！</p>
+                    <p class="concept-desc">每个挑战都可以反复尝试，答错会得到提示，不会扣分。</p>
+                </div>
+                
+                <div class="game-panel">
+                    <div class="challenge-game">
+                        <h3 class="game-title">挑战导师的综合挑战</h3>
+                        <p>完成综合应用题，证明你能用比例解决问题！</p>
+                        
+                        <div class="challenge-question">
+                            <p>一个长方形的周长是40厘米，长和宽的比是3:2，求长和宽各是多少厘米？</p>
+                        </div>
+                        
+                        <div class="challenge-inputs">
+                            <input type="number" class="challenge-input" id="lengthAnswer" placeholder="长的长度（厘米）">
+                            <input type="number" class="challenge-input" id="widthAnswer" placeholder="宽的长度（厘米）">
+                        </div>
+                        
+                        <button class="btn" id="checkChallenge">提交答案</button>
+                        
+                        <div class="feedback hidden" id="module5Feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 成就徽章 -->
+    <div class="achievement" id="achievement">
+        <span>🏆</span>
+        <span id="badgeText">成就解锁!</span>
+    </div>
+
+    <script>
+        // 游戏状态
+        const gameState = {
+            currentModule: 1,
+            score: 0,
+            level: "入门探索者",
+            unlocked: 1,
+            energy: 100,
+            hero: "ironman",
+            moduleProgress: [0, 0, 0, 0, 0]
+        };
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化事件监听器
+            initEventListeners();
+            
+            // 初始化第一个模块
+            initModule1();
+            
+            // 更新游戏状态显示
+            updateGameState();
+        });
+        
+        // 初始化事件监听器
+        function initEventListeners() {
+            // 导师选择
+            document.querySelectorAll('.hero-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    selectHero(this.dataset.hero);
+                });
+            });
+            
+            // 模块选择
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    switchModule(parseInt(this.dataset.module));
+                });
+            });
+            
+            // 模块1事件
+            document.getElementById('redSlider').addEventListener('input', updatePotion);
+            document.getElementById('blueSlider').addEventListener('input', updatePotion);
+            document.getElementById('checkPotion').addEventListener('click', checkPotion);
+            document.getElementById('nextModule1').addEventListener('click', function() {
+                completeModule(1);
+            });
+            
+            // 模块2事件
+            document.getElementById('convertBtn').addEventListener('click', performConversion);
+            document.getElementById('nextModule2').addEventListener('click', function() {
+                completeModule(2);
+            });
+            
+            // 模块3事件
+            document.querySelectorAll('#module3Content .option').forEach(option => {
+                option.addEventListener('click', function() {
+                    handleOptionClick(this, 3);
+                });
+            });
+            document.getElementById('nextModule3').addEventListener('click', function() {
+                completeModule(3);
+            });
+            
+            // 模块4事件
+            document.getElementById('discountSlider').addEventListener('input', updateStore);
+            document.getElementById('discountSlider2').addEventListener('input', updateStore);
+            document.getElementById('nextModule4').addEventListener('click', function() {
+                completeModule(4);
+            });
+            
+            // 模块5事件
+            document.getElementById('checkChallenge').addEventListener('click', checkChallenge);
+        }
+        
+        // 选择导师
+        function selectHero(hero) {
+            // 更新导师卡片状态
+            document.querySelectorAll('.hero-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`.hero-card[data-hero="${hero}"]`).classList.add('active');
+            
+            // 更新游戏状态
+            gameState.hero = hero;
+        }
+        
+        // 切换模块
+        function switchModule(module) {
+            // 隐藏所有内容
+            document.querySelectorAll('.content-body').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 显示目标模块内容
+            document.getElementById(`module${module}Content`).classList.add('active');
+            
+            // 更新当前模块
+            gameState.currentModule = module;
+            
+            // 更新内容标题
+            updateContentTitle(module);
+        }
+        
+        // 更新内容标题
+        function updateContentTitle(module) {
+            const titles = [
+                "任务1: 概念海湾 - 比的意义和性质",
+                "任务2: 转换峡谷 - 比、分数、小数、百分数互化", 
+                "任务3: 应用山脉 - 找单位'1'和比例应用题",
+                "任务4: 生活海洋 - 比例的实际应用",
+                "任务5: 挑战火山 - 综合测试"
+            ];
+            
+            const subtitles = [
+                "跟随工程导师学习比的基本概念",
+                "跟随转换导师掌握数字形态转换技巧",
+                "跟随推理导师解决实际的比例问题",
+                "跟随生活导师探索比例在生活中的应用",
+                "证明你已经掌握比例思维！"
+            ];
+            
+            document.getElementById('contentTitle').textContent = titles[module-1];
+            document.getElementById('contentSubtitle').textContent = subtitles[module-1];
+        }
+        
+        // 初始化模块1
+        function initModule1() {
+            // 固定目标，避免刷新后题目变化造成认知中断。
+            const target = { red: 3, blue: 2 };
+            document.getElementById('targetRatio').textContent = `${target.red}:${target.blue}`;
+            document.getElementById('targetRatio').dataset.red = target.red;
+            document.getElementById('targetRatio').dataset.blue = target.blue;
+            
+            // 重置滑块
+            document.getElementById('redSlider').value = 0;
+            document.getElementById('blueSlider').value = 0;
+            updatePotion();
+            
+            // 清除反馈
+            document.getElementById('module1Feedback').classList.add('hidden');
+        }
+        
+        // 更新调配结果
+        function updatePotion() {
+            const red = parseInt(document.getElementById('redSlider').value);
+            const blue = parseInt(document.getElementById('blueSlider').value);
+            
+            document.getElementById('redValue').textContent = red;
+            document.getElementById('blueValue').textContent = blue;
+            document.getElementById('currentRatio').textContent = `${red}:${blue}`;
+            
+            // 更新材料填充
+            const total = red + blue;
+            const fillPercentage = total > 0 ? Math.min(100, (total / 40) * 100) : 0;
+            document.getElementById('potionLiquid').style.height = `${fillPercentage}%`;
+            
+            // 更新材料颜色
+            const redPercent = total > 0 ? (red / total) * 100 : 0;
+            const bluePercent = total > 0 ? (blue / total) * 100 : 0;
+            
+            document.getElementById('potionLiquid').style.background = 
+                `linear-gradient(to top, var(--marvel-red) ${redPercent}%, var(--marvel-blue) ${redPercent}% ${redPercent + bluePercent}%)`;
+        }
+        
+        // 检查调配结果
+        function checkPotion() {
+            const red = parseInt(document.getElementById('redSlider').value);
+            const blue = parseInt(document.getElementById('blueSlider').value);
+            const targetRed = parseInt(document.getElementById('targetRatio').dataset.red);
+            const targetBlue = parseInt(document.getElementById('targetRatio').dataset.blue);
+            
+            const feedback = document.getElementById('module1Feedback');
+            
+            // 检查比例是否匹配
+            if (red === 0 && blue === 0) {
+                feedback.textContent = '请先添加一些材料！';
+                feedback.className = 'feedback incorrect';
+            } else if (red/blue === targetRed/targetBlue) {
+                feedback.textContent = '完美！比例材料调配成功！+10 学习积分';
+                feedback.className = 'feedback correct';
+                gameState.score += 10;
+                gameState.energy = Math.min(100, gameState.energy + 10);
+                
+                // 更新模块进度
+                gameState.moduleProgress[0] = Math.max(gameState.moduleProgress[0], 50);
+                updateModuleProgress(1, gameState.moduleProgress[0]);
+                
+                showAchievement('比例材料调配专家！');
+            } else {
+                feedback.textContent = '比例不对，再试试看！';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.classList.remove('hidden');
+            updateGameState();
+        }
+        
+        // 执行转换
+        function performConversion() {
+            const input = document.getElementById('conversionInput').value;
+            const type = document.getElementById('inputType').value;
+            
+            if (!input || isNaN(parseFloat(input))) {
+                showFeedback('module2Feedback', '请输入有效的数值!', false);
+                return;
+            }
+            
+            const value = parseFloat(input);
+            let percent, decimal, fraction;
+            
+            switch(type) {
+                case 'percent':
+                    percent = value;
+                    decimal = value / 100;
+                    fraction = simplifyFraction(value, 100);
+                    break;
+                case 'decimal':
+                    percent = value * 100;
+                    decimal = value;
+                    fraction = simplifyFraction(Math.round(value * 100), 100);
+                    break;
+                case 'fraction':
+                    // 简单处理分数输入，如 "1/2"
+                    const parts = input.split('/');
+                    if (parts.length === 2) {
+                        const num = parseFloat(parts[0]);
+                        const den = parseFloat(parts[1]);
+                        if (den !== 0) {
+                            decimal = num / den;
+                            percent = decimal * 100;
+                            fraction = simplifyFraction(num, den);
+                        }
+                    }
+                    break;
+            }
+            
+            if (percent !== undefined) {
+                document.getElementById('outputPercent').textContent = `${percent.toFixed(2)}%`;
+                document.getElementById('outputDecimal').textContent = decimal.toFixed(4);
+                document.getElementById('outputFraction').textContent = fraction;
+                showFeedback('module2Feedback', '转换成功!', true);
+                gameState.score += 5;
+            } else {
+                showFeedback('module2Feedback', '请输入有效的分数格式 (如 1/2)', false);
+            }
+            
+            updateGameState();
+        }
+        
+        // 简化分数
+        function simplifyFraction(numerator, denominator) {
+            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+            const divisor = gcd(numerator, denominator);
+            return `${numerator/divisor}/${denominator/divisor}`;
+        }
+        
+        // 处理选项点击
+        function handleOptionClick(option, module) {
+            const isCorrect = option.dataset.correct === 'true';
+            const options = option.parentElement.querySelectorAll('.option');
+            
+            // 移除同一问题中所有选项的selected类
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // 为当前点击的选项添加selected类
+            option.classList.add('selected');
+            
+            // 显示所有选项的正确/错误状态
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                if (opt.dataset.correct === 'true') {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            const feedbackId = `module${module}Feedback`;
+            
+            if (isCorrect) {
+                showFeedback(feedbackId, '回答正确! 👍', true);
+                
+                // 更新学习进度
+                gameState.moduleProgress[module-1] = Math.max(gameState.moduleProgress[module-1], 50);
+                updateModuleProgress(module, gameState.moduleProgress[module-1]);
+                
+                // 显示成就
+                if (module === 3) {
+                    showAchievement('比例侦探大师！');
+                }
+            } else {
+                showFeedback(feedbackId, '再想想看... 🤔', false);
+            }
+            
+            updateGameState();
+        }
+        
+        // 更新商店显示
+        function updateStore() {
+            // 第一个商品
+            const discount1 = parseInt(document.getElementById('discountSlider').value);
+            const originalPrice1 = 100;
+            
+            document.getElementById('discountValue').textContent = `${discount1}% off`;
+            document.getElementById('priceDiscount1').textContent = discount1;
+            document.getElementById('finalPrice').textContent = (originalPrice1 * (1 - discount1/100)).toFixed(2);
+            
+            // 第二个商品
+            const discount2 = parseInt(document.getElementById('discountSlider2').value);
+            const originalPrice2 = 50;
+            
+            document.getElementById('discountValue2').textContent = `${discount2}% off`;
+            document.getElementById('priceDiscount2').textContent = discount2;
+            document.getElementById('finalPrice2').textContent = (originalPrice2 * (1 - discount2/100)).toFixed(2);
+            
+            updateGameState();
+        }
+        
+        // 检查挑战
+        function checkChallenge() {
+            const length = parseInt(document.getElementById('lengthAnswer').value);
+            const width = parseInt(document.getElementById('widthAnswer').value);
+            const feedback = document.getElementById('module5Feedback');
+            
+            // 周长40厘米，长宽比3:2
+            // 长+宽=20厘米，长:宽=3:2
+            // 长=20×3/5=12厘米，宽=20×2/5=8厘米
+            
+            if (isNaN(length) || isNaN(width)) {
+                feedback.textContent = '请输入有效的数字！';
+                feedback.className = 'feedback incorrect';
+            } else if (length === 12 && width === 8) {
+                feedback.textContent = '太棒了！你完成了所有挑战！+50 学习积分';
+                feedback.className = 'feedback correct';
+                gameState.score += 50;
+                gameState.moduleProgress[4] = 100;
+                updateModuleProgress(5, 100);
+                showAchievement('恭喜！你已成为比例大师！');
+            } else {
+                feedback.textContent = '再想一想：半周长是20厘米，长和宽一共占5份。';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.classList.remove('hidden');
+            updateGameState();
+        }
+        
+        // 完成模块
+        function completeModule(module) {
+            if (gameState.moduleProgress[module-1] < 100) {
+                gameState.moduleProgress[module-1] = 100;
+                gameState.score += 30;
+                gameState.unlocked = Math.max(gameState.unlocked, module+1);
+                
+                // 解锁下一个模块
+                if (module < 5) {
+                    document.querySelector(`.module-card[data-module="${module+1}"]`).classList.remove('locked');
+                }
+                
+                updateModuleProgress(module, 100);
+                updateGameState();
+                
+                showAchievement(`完成${getModuleName(module)}任务！`);
+                
+                // 切换到下一个模块
+                if (module < 5) {
+                    setTimeout(() => {
+                        switchModule(module+1);
+                    }, 2000);
+                }
+            }
+        }
+        
+        // 获取模块名称
+        function getModuleName(module) {
+            const names = {
+                1: '概念海湾',
+                2: '转换峡谷',
+                3: '应用山脉',
+                4: '生活海洋',
+                5: '挑战火山'
+            };
+            return names[module];
+        }
+        
+        // 显示反馈
+        function showFeedback(elementId, message, isCorrect) {
+            const feedback = document.getElementById(elementId);
+            feedback.textContent = message;
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.classList.remove('hidden');
+            
+            // 3秒后隐藏反馈
+            setTimeout(() => {
+                feedback.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // 显示成就
+        function showAchievement(message) {
+            const badge = document.getElementById('achievement');
+            const badgeText = document.getElementById('badgeText');
+            
+            badgeText.textContent = message;
+            badge.classList.add('show');
+            
+            // 3秒后隐藏成就
+            setTimeout(() => {
+                badge.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 更新模块进度
+        function updateModuleProgress(module, progress) {
+            const progressCircle = document.getElementById(`module${module}Progress`);
+            progressCircle.textContent = `${progress}%`;
+            progressCircle.style.background = `conic-gradient(var(--marvel-gold) 0% ${progress}%, #333 ${progress}% 100%)`;
+        }
+        
+        // 更新游戏状态
+        function updateGameState() {
+            // 更新积分
+            document.getElementById('playerScore').textContent = gameState.score;
+            
+            // 更新等级
+            if (gameState.score >= 100) {
+                gameState.level = "比例达人";
+            } else if (gameState.score >= 50) {
+                gameState.level = "进阶探索者";
+            } else if (gameState.score >= 20) {
+                gameState.level = "入门探索者";
+            }
+            document.getElementById('playerLevel').textContent = gameState.level;
+            
+            // 更新解锁模块
+            document.getElementById('unlockedModules').textContent = `${gameState.unlocked}/5`;
+            
+            // 更新能量
+            document.getElementById('playerEnergy').textContent = `${gameState.energy}%`;
+            
+            // 更新进度
+            const totalProgress = gameState.moduleProgress.reduce((a, b) => a + b, 0) / 5;
+            document.getElementById('globalProgress').style.width = `${totalProgress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(totalProgress)}%`;
+        }
+    </script>
+    <script src="../_shared/体验增强.js"></script>
+</body>
+</html>

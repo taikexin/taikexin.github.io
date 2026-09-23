@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>缠绳线段图实验室 - 三步推理完整体验版</title>
+  <style>
+    :root {
+      --ink: #26323a;
+      --muted: #607078;
+      --paper: #ffffff;
+      --bg: #eef5f1;
+      --green: #27856b;
+      --blue: #2868c7;
+      --coral: #e85d4a;
+      --yellow: #f2c94c;
+      --line: #d4e0db;
+      --shadow: 0 10px 26px rgba(35, 55, 48, .1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    button { font: inherit; }
+
+    .top-band {
+      border-bottom: 4px solid var(--yellow);
+      background: #fff;
+      box-shadow: 0 5px 18px rgba(35, 55, 48, .08);
+    }
+
+    .top-inner {
+      width: min(940px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 18px 0 14px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #24564b;
+      font-size: 30px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .reset-btn {
+      flex: 0 0 auto;
+      min-height: 42px;
+      border: 1px solid #c4d4cd;
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: #f7faf8;
+      color: #355148;
+      cursor: pointer;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .route-step {
+      border-top: 6px solid #dbe4e0;
+      padding-top: 6px;
+      color: #74817b;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .route-step.current {
+      border-color: var(--blue);
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .route-step.done {
+      border-color: var(--green);
+      color: #236c58;
+      font-weight: 800;
+    }
+
+    main {
+      width: min(940px, calc(100% - 28px));
+      margin: 18px auto 36px;
+    }
+
+    .coach {
+      display: grid;
+      grid-template-columns: 56px minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .coach-mark {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #e8f5ef;
+      color: #246750;
+      font-size: 26px;
+      font-weight: 900;
+    }
+
+    .coach b { display: block; color: #24564b; }
+    .coach p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+
+    .stage {
+      display: none;
+      min-height: 530px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .stage.active { display: block; }
+
+    .stage-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .stage-heading h2 {
+      margin: 0;
+      color: #24564b;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .stage-heading p { margin: 5px 0 0; color: var(--muted); }
+
+    .stage-count {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: #eaf2ff;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .observe-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .bottle-scene {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 300px;
+      overflow: hidden;
+      border: 1px solid #cfe0d9;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #e8f6f2 0 72%, #f4dcae 72% 100%);
+    }
+
+    .bottle {
+      position: relative;
+      width: 112px;
+      height: 198px;
+      border: 4px solid #31515e;
+      border-radius: 22px 22px 28px 28px;
+      background: linear-gradient(90deg, #9dd9d1, #e8fbf8 45%, #83c4bb);
+      box-shadow: inset 14px 0 22px rgba(255, 255, 255, .45);
+    }
+
+    .bottle::before {
+      content: "";
+      position: absolute;
+      left: 25px;
+      top: -36px;
+      width: 54px;
+      height: 34px;
+      border: 4px solid #31515e;
+      border-bottom: 0;
+      border-radius: 8px 8px 0 0;
+      background: #d9f1ed;
+    }
+
+    .rope-ring {
+      position: absolute;
+      left: 50%;
+      width: 154px;
+      height: 55px;
+      border: 7px solid var(--coral);
+      border-radius: 50%;
+      opacity: 0;
+      transform: translateX(-50%) scale(.8);
+      transition: opacity .2s ease, transform .25s ease;
+      box-shadow: 0 4px 8px rgba(112, 45, 36, .15);
+    }
+
+    .rope-ring:nth-of-type(1) { top: 91px; }
+    .rope-ring:nth-of-type(2) { top: 142px; }
+    .rope-ring:nth-of-type(3) { top: 193px; }
+    .bottle-scene.show-2 .rope-ring:nth-of-type(-n+2),
+    .bottle-scene.show-3 .rope-ring { opacity: 1; transform: translateX(-50%) scale(1); }
+    .bottle-scene.show-2 .rope-ring { border-color: var(--green); }
+
+    .rope-tag {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      border-radius: 8px;
+      padding: 7px 9px;
+      background: rgba(255,255,255,.92);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .task-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .task-panel h3 { margin: 0 0 8px; font-size: 18px; }
+    .task-panel p { margin: 0 0 12px; color: var(--muted); }
+
+    .action-row,
+    .choice-list,
+    .piece-list,
+    .bottom-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .action-btn,
+    .choice-btn,
+    .piece-btn,
+    .next-btn,
+    .secondary-btn {
+      min-height: 48px;
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 16px;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .action-btn { background: var(--blue); box-shadow: 0 3px 0 #174b93; }
+    .action-btn.viewed { background: var(--green); box-shadow: 0 3px 0 #1d624d; }
+
+    .question-box {
+      margin-top: 16px;
+      border-left: 5px solid var(--yellow);
+      border-radius: 8px;
+      padding: 13px;
+      background: #fff9df;
+    }
+
+    .question-box[hidden] { display: none; }
+    .question-box strong { display: block; margin-bottom: 9px; }
+
+    .choice-btn {
+      flex: 1 1 180px;
+      border: 2px solid #c8d6d0;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: none;
+      text-align: left;
+    }
+
+    .choice-btn.correct { border-color: var(--green); background: #e8f7f1; color: #1f654f; }
+    .choice-btn.wrong { border-color: #e9a094; background: #fff2ef; color: #8b3c30; }
+
+    .feedback {
+      min-height: 46px;
+      margin-top: 12px;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #f2f6f4;
+      color: var(--muted);
+    }
+
+    .feedback.success { background: #e8f7f1; color: #1f654f; }
+    .feedback.hint { background: #fff2ef; color: #8b3c30; }
+
+    .bottom-actions {
+      justify-content: flex-end;
+      margin-top: 18px;
+    }
+
+    .next-btn { background: var(--green); box-shadow: 0 3px 0 #1d624d; }
+    .secondary-btn { border: 1px solid #c6d5cf; background: #fff; color: #355148; }
+    button:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+
+    .bar-board {
+      overflow: hidden;
+      border: 1px solid #d1ded8;
+      border-radius: 8px;
+      padding: 18px;
+      background: #f8fbfa;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 68px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .bar-label { font-weight: 800; }
+
+    .segments {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .segment {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      height: 52px;
+      border: 2px solid #216f5b;
+      border-radius: 6px;
+      background: #63bda3;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .segment.missing {
+      border-style: dashed;
+      border-color: var(--coral);
+      background: #fff2ef;
+      color: #9a4437;
+    }
+
+    .segment.extra {
+      border-color: #206c58;
+      background: #dff4eb;
+      color: #246750;
+    }
+
+    .segments.two { grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(0, .6fr); }
+
+    .diagram-note {
+      margin: 14px 0 0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #eaf2ff;
+      color: #24558f;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .puzzle-board {
+      border: 1px solid #d1ded8;
+      border-radius: 8px;
+      padding: 20px;
+      background: #f8fbfa;
+    }
+
+    .equation {
+      display: grid;
+      grid-template-columns: minmax(88px, 1fr) 34px minmax(88px, 1fr) 34px minmax(100px, 1.2fr);
+      align-items: center;
+      gap: 8px;
+      margin: 14px auto 20px;
+      max-width: 680px;
+    }
+
+    .slot,
+    .result-slot {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      min-height: 70px;
+      border: 3px dashed #b9c8c1;
+      border-radius: 8px;
+      background: #fff;
+      color: #78847f;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .slot.filled { border-style: solid; border-color: var(--green); background: #e8f7f1; color: #1f654f; }
+    .result-slot { border-style: solid; border-color: var(--yellow); color: #775c0b; }
+    .operator { text-align: center; font-size: 26px; font-weight: 900; }
+
+    .piece-list { justify-content: center; }
+    .piece-btn { background: var(--blue); box-shadow: 0 3px 0 #174b93; }
+    .piece-btn[data-piece="3"] { background: var(--green); box-shadow: 0 3px 0 #1d624d; }
+    .piece-btn[data-piece="5"] { background: #65737b; box-shadow: 0 3px 0 #3d484e; }
+    .piece-btn.selected { opacity: .45; box-shadow: none; }
+
+    .result-panel {
+      margin-top: 18px;
+      border: 2px solid var(--green);
+      border-radius: 8px;
+      padding: 18px;
+      background: linear-gradient(145deg, #e8f7f1, #fff8d9);
+      text-align: center;
+    }
+
+    .result-panel[hidden] { display: none; }
+    .result-panel h3 { margin: 0 0 6px; color: #236c58; font-size: 24px; }
+    .result-panel p { margin: 5px 0; }
+
+    .confetti {
+      position: fixed;
+      z-index: 999;
+      top: -12px;
+      width: 9px;
+      height: 14px;
+      animation: fall 1.5s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(105vh) rotate(520deg); opacity: .2; }
+    }
+
+    @media (max-width: 720px) {
+      .top-inner, main { width: calc(100% - 20px); }
+      h1 { font-size: 25px; }
+      .title-row { align-items: center; }
+      .reset-btn { width: 42px; overflow: hidden; padding: 6px; font-size: 0; }
+      .reset-btn::after { content: "↻"; font-size: 20px; }
+      .route-step { font-size: 11px; }
+      .stage { min-height: 0; padding: 14px 12px; }
+      .stage-heading { display: block; }
+      .stage-count { display: inline-block; margin-top: 8px; }
+      .observe-grid { grid-template-columns: minmax(0, 1fr); }
+      .bottle-scene { min-height: 270px; }
+      .bar-board, .puzzle-board { padding: 12px 9px; }
+      .bar-row { grid-template-columns: 56px minmax(0, 1fr); gap: 6px; }
+      .segment { height: 48px; font-size: 11px; }
+      .equation { grid-template-columns: minmax(68px, 1fr) 24px minmax(68px, 1fr); }
+      .equation .result-slot { grid-column: 1 / -1; }
+      .equation .equals { display: none; }
+      .slot, .result-slot { min-height: 62px; }
+      .action-row > *, .bottom-actions > * { flex: 1 1 150px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    }
+  </style>
+  <link rel="stylesheet" href="../_shared/体验增强.css">
+</head>
+<body>
+  <header class="top-band">
+    <div class="top-inner">
+      <div class="title-row">
+        <div>
+          <h1>缠绳线段图实验室</h1>
+          <p class="subtitle">把“多一点、少一点”画直，就能找到一圈的长度</p>
+        </div>
+        <button class="reset-btn" id="resetButton" type="button">重新开始</button>
+      </div>
+      <div class="route" aria-label="三步学习进度">
+        <span class="route-step" data-route="1">1. 比较两次缠绳</span>
+        <span class="route-step" data-route="2">2. 拉直成线段图</span>
+        <span class="route-step" data-route="3">3. 拼出一圈长度</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="coach" aria-live="polite">
+      <div class="coach-mark">?</div>
+      <div><b id="coachTitle">先观察两次缠绳</b><p id="coachText">分别试一试绕 3 圈和绕 2 圈，找到“少 2 厘米”和“多 3 厘米”。</p></div>
+    </section>
+
+    <section class="stage" id="stage1" data-stage="1">
+      <div class="stage-heading">
+        <div><h2>比较两次缠绳</h2><p>同一根绳子绕同一个瓶子，圈数变化会带来什么差别？</p></div>
+        <span class="stage-count">第 1 步 / 3</span>
+      </div>
+      <div class="observe-grid">
+        <div class="bottle-scene" id="bottleScene" aria-label="瓶子缠绳示意图">
+          <div class="bottle"></div>
+          <div class="rope-ring"></div><div class="rope-ring"></div><div class="rope-ring"></div>
+          <div class="rope-tag" id="ropeTag">等待观察</div>
+        </div>
+        <div class="task-panel">
+          <h3>分别观察两种情况</h3>
+          <p>按钮可以重复点击。两种情况都看过后，会出现一个小问题。</p>
+          <div class="action-row">
+            <button class="action-btn" id="showThree" type="button">绕 3 圈</button>
+            <button class="action-btn" id="showTwo" type="button">绕 2 圈</button>
+          </div>
+          <div class="question-box" id="compareQuestion" hidden>
+            <strong>两次缠绳相比，哪一部分最值得画出来？</strong>
+            <div class="choice-list">
+              <button class="choice-btn" type="button" data-step1="false">两次都有的 2 圈</button>
+              <button class="choice-btn" type="button" data-step1="true">3 圈比 2 圈多出的 1 圈</button>
+            </div>
+          </div>
+          <div class="feedback" id="feedback1">先完成两次观察。</div>
+        </div>
+      </div>
+      <div class="bottom-actions"><button class="next-btn" id="toStage2" type="button" disabled>进入线段图</button></div>
+    </section>
+
+    <section class="stage" id="stage2" data-stage="2">
+      <div class="stage-heading">
+        <div><h2>把绳子拉直比较</h2><p>相同的两圈可以上下对齐，剩下的差别就是完整的一圈。</p></div>
+        <span class="stage-count">第 2 步 / 3</span>
+      </div>
+      <div class="bar-board">
+        <div class="bar-row"><div class="bar-label">绕 3 圈</div><div class="segments"><span class="segment">第1圈</span><span class="segment">第2圈</span><span class="segment missing">第3圈<br>还少2cm</span></div></div>
+        <div class="bar-row"><div class="bar-label">绕 2 圈</div><div class="segments two"><span class="segment">第1圈</span><span class="segment">第2圈</span><span class="segment extra">多3cm</span></div></div>
+        <div class="diagram-note" id="diagramNote">先点“突出相差的一圈”，再回答下面的问题。</div>
+      </div>
+      <div class="bottom-actions" style="justify-content:flex-start"><button class="action-btn" id="revealDifference" type="button">突出相差的一圈</button></div>
+      <div class="question-box" id="diagramQuestion" hidden>
+        <strong>怎样把“多 3 厘米”和“少 2 厘米”合成完整的一圈？</strong>
+        <div class="choice-list">
+          <button class="choice-btn" type="button" data-step2="false">3 - 2，先把少的减掉</button>
+          <button class="choice-btn" type="button" data-step2="true">3 + 2，把多出的和缺少的合起来</button>
+        </div>
+      </div>
+      <div class="feedback" id="feedback2">观察两行线段中没有对齐的部分。</div>
+      <div class="bottom-actions"><button class="secondary-btn" id="backTo1" type="button">返回观察</button><button class="next-btn" id="toStage3" type="button" disabled>去拼出一圈</button></div>
+    </section>
+
+    <section class="stage" id="stage3" data-stage="3">
+      <div class="stage-heading">
+        <div><h2>拼出完整的一圈</h2><p>选择组成“第 3 圈”的两段线段。干扰项点错也可以继续。</p></div>
+        <span class="stage-count">第 3 步 / 3</span>
+      </div>
+      <div class="puzzle-board">
+        <div class="equation" aria-label="一圈长度拼图">
+          <div class="slot" id="slotA">选择第一段</div><div class="operator">+</div><div class="slot" id="slotB">选择第二段</div><div class="operator equals">=</div><div class="result-slot" id="resultSlot">完整的 1 圈</div>
+        </div>
+        <div class="piece-list">
+          <button class="piece-btn" type="button" data-piece="3">多出的 3 厘米</button>
+          <button class="piece-btn" type="button" data-piece="2">缺少的 2 厘米</button>
+          <button class="piece-btn" type="button" data-piece="5">直接选 5 厘米</button>
+        </div>
+      </div>
+      <div class="feedback" id="feedback3">从题目中已有的两个差量开始拼。</div>
+      <div class="result-panel" id="resultPanel" hidden>
+        <h3>一圈长 5 厘米</h3>
+        <p><b>多出的 3 厘米 + 缺少的 2 厘米 = 完整的 1 圈</b></p>
+        <p>遇到“多几、少几”的缠绳题，先对齐相同圈数，再把两个差量合起来。</p>
+      </div>
+      <div class="bottom-actions"><button class="secondary-btn" id="backTo2" type="button">返回线段图</button><button class="next-btn" id="playAgain" type="button" hidden>再练一次</button></div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+      const STORAGE_KEY = "rope-line-model-complete-v2";
+      const defaults = { stage: 1, sawThree: false, sawTwo: false, step1: false, revealed: false, step2: false, pieces: [], complete: false };
+      let state = loadState();
+
+      const coachTitle = document.getElementById("coachTitle");
+      const coachText = document.getElementById("coachText");
+      const bottleScene = document.getElementById("bottleScene");
+      const ropeTag = document.getElementById("ropeTag");
+      const feedback1 = document.getElementById("feedback1");
+      const feedback2 = document.getElementById("feedback2");
+      const feedback3 = document.getElementById("feedback3");
+
+      document.getElementById("showThree").addEventListener("click", () => observe(3));
+      document.getElementById("showTwo").addEventListener("click", () => observe(2));
+      document.querySelectorAll("[data-step1]").forEach(button => button.addEventListener("click", () => answerStep1(button)));
+      document.getElementById("toStage2").addEventListener("click", () => goStage(2));
+      document.getElementById("revealDifference").addEventListener("click", revealDifference);
+      document.querySelectorAll("[data-step2]").forEach(button => button.addEventListener("click", () => answerStep2(button)));
+      document.getElementById("toStage3").addEventListener("click", () => goStage(3));
+      document.getElementById("backTo1").addEventListener("click", () => goStage(1));
+      document.getElementById("backTo2").addEventListener("click", () => goStage(2));
+      document.querySelectorAll("[data-piece]").forEach(button => button.addEventListener("click", () => choosePiece(button)));
+      document.getElementById("resetButton").addEventListener("click", showResetDialog);
+      document.getElementById("playAgain").addEventListener("click", resetProgress);
+
+      render();
+
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          return saved ? { ...defaults, ...saved, pieces: Array.isArray(saved.pieces) ? saved.pieces : [] } : { ...defaults };
+        } catch (error) {
+          return { ...defaults };
+        }
+      }
+
+      function saveState() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (error) {}
+      }
+
+      function observe(loops) {
+        bottleScene.classList.remove("show-2", "show-3");
+        bottleScene.classList.add("show-" + loops);
+        if (loops === 3) {
+          state.sawThree = true;
+          ropeTag.textContent = "绕 3 圈：少 2 厘米";
+          feedback1.textContent = "绕 3 圈时绳子还差 2 厘米。";
+          document.getElementById("showThree").classList.add("viewed");
+        } else {
+          state.sawTwo = true;
+          ropeTag.textContent = "绕 2 圈：多 3 厘米";
+          feedback1.textContent = "绕 2 圈时绳子多出 3 厘米。";
+          document.getElementById("showTwo").classList.add("viewed");
+        }
+        if (state.sawThree && state.sawTwo) {
+          document.getElementById("compareQuestion").hidden = false;
+          feedback1.textContent = "两种情况都看到了。找出它们相差的那一圈。";
+        }
+        saveState();
+      }
+
+      function answerStep1(button) {
+        clearChoiceState("[data-step1]");
+        if (button.dataset.step1 === "true") {
+          button.classList.add("correct");
+          state.step1 = true;
+          feedback1.className = "feedback success";
+          feedback1.textContent = "正确。相同的 2 圈可以对齐，重点是多出的第 3 圈。";
+          document.getElementById("toStage2").disabled = false;
+        } else {
+          button.classList.add("wrong");
+          feedback1.className = "feedback hint";
+          feedback1.textContent = "两次都有的 2 圈会互相抵消，再看看哪一圈只在上面出现。";
+        }
+        saveState();
+      }
+
+      function revealDifference() {
+        state.revealed = true;
+        document.getElementById("diagramQuestion").hidden = false;
+        document.getElementById("diagramNote").textContent = "相同的两圈对齐后：上面缺 2 厘米，下面还多 3 厘米。";
+        document.getElementById("revealDifference").classList.add("viewed");
+        feedback2.textContent = "现在把两个差量合起来，想一想它们为什么正好是一圈。";
+        saveState();
+      }
+
+      function answerStep2(button) {
+        clearChoiceState("[data-step2]");
+        if (button.dataset.step2 === "true") {
+          button.classList.add("correct");
+          state.step2 = true;
+          feedback2.className = "feedback success";
+          feedback2.textContent = "正确。多出的 3 厘米补进去后，还要再补 2 厘米才满一圈。";
+          document.getElementById("toStage3").disabled = false;
+        } else {
+          button.classList.add("wrong");
+          feedback2.className = "feedback hint";
+          feedback2.textContent = "这里要把“已有的多出部分”和“仍然缺少的部分”拼在一起，不是互相抵消。";
+        }
+        saveState();
+      }
+
+      function choosePiece(button) {
+        const piece = button.dataset.piece;
+        if (piece === "5") {
+          feedback3.className = "feedback hint";
+          feedback3.textContent = "5 厘米是最后要推出的结果。先选择题目已经告诉我们的 3 厘米和 2 厘米。";
+          return;
+        }
+        if (state.pieces.includes(piece)) return;
+        if (state.pieces.length >= 2) return;
+        state.pieces.push(piece);
+        button.classList.add("selected");
+        button.disabled = true;
+        updatePuzzle();
+        saveState();
+        if (state.pieces.length === 2 && state.pieces.includes("3") && state.pieces.includes("2")) completeLearning();
+      }
+
+      function updatePuzzle() {
+        const labels = { "3": "多出的 3 厘米", "2": "缺少的 2 厘米" };
+        ["slotA", "slotB"].forEach((id, index) => {
+          const slot = document.getElementById(id);
+          const piece = state.pieces[index];
+          slot.textContent = piece ? labels[piece] : (index === 0 ? "选择第一段" : "选择第二段");
+          slot.classList.toggle("filled", !!piece);
+        });
+      }
+
+      function completeLearning() {
+        state.complete = true;
+        state.stage = 3;
+        saveState();
+        document.getElementById("resultSlot").textContent = "5 厘米 = 1 圈";
+        document.getElementById("resultPanel").hidden = false;
+        document.getElementById("playAgain").hidden = false;
+        feedback3.className = "feedback success";
+        feedback3.textContent = "拼图完成：3 + 2 = 5，所以瓶子一圈长 5 厘米。";
+        celebrate();
+        renderRoute();
+      }
+
+      function goStage(stage) {
+        if (stage === 2 && !state.step1) return;
+        if (stage === 3 && !state.step2) return;
+        state.stage = stage;
+        saveState();
+        render();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function render() {
+        document.querySelectorAll(".stage").forEach(section => section.classList.toggle("active", Number(section.dataset.stage) === state.stage));
+        document.getElementById("showThree").classList.toggle("viewed", state.sawThree);
+        document.getElementById("showTwo").classList.toggle("viewed", state.sawTwo);
+        document.getElementById("compareQuestion").hidden = !(state.sawThree && state.sawTwo);
+        document.getElementById("toStage2").disabled = !state.step1;
+        document.getElementById("diagramQuestion").hidden = !state.revealed;
+        document.getElementById("toStage3").disabled = !state.step2;
+        document.getElementById("revealDifference").classList.toggle("viewed", state.revealed);
+        document.querySelectorAll("[data-piece]").forEach(button => {
+          const selected = state.pieces.includes(button.dataset.piece);
+          button.classList.toggle("selected", selected);
+          button.disabled = selected;
+        });
+        updatePuzzle();
+        document.getElementById("resultPanel").hidden = !state.complete;
+        document.getElementById("playAgain").hidden = !state.complete;
+        if (state.complete) {
+          document.getElementById("resultSlot").textContent = "5 厘米 = 1 圈";
+          feedback3.className = "feedback success";
+          feedback3.textContent = "拼图完成：3 + 2 = 5，所以瓶子一圈长 5 厘米。";
+        }
+        renderRoute();
+        renderCoach();
+      }
+
+      function renderRoute() {
+        document.querySelectorAll(".route-step").forEach(step => {
+          const number = Number(step.dataset.route);
+          const done = number < state.stage || (number === 3 && state.complete);
+          step.classList.toggle("done", done);
+          step.classList.toggle("current", number === state.stage && !state.complete);
+          if (done && !step.textContent.startsWith("✓")) step.textContent = "✓ " + step.textContent.replace(/^\d+\.\s*/, "");
+        });
+      }
+
+      function renderCoach() {
+        const copy = {
+          1: ["先观察两次缠绳", "分别试一试绕 3 圈和绕 2 圈，找到“少 2 厘米”和“多 3 厘米”。"],
+          2: ["把相同的圈数对齐", "两次都有的 2 圈可以对齐，只留下与第 3 圈有关的两个差量。"],
+          3: ["用差量拼出一圈", "选择题目中已经给出的两段长度，解释为什么要用加法。"]
+        };
+        const current = state.complete ? ["三步推理完成", "你已经会用线段图解释：多出的 3 厘米和缺少的 2 厘米合起来就是一圈。"] : copy[state.stage];
+        coachTitle.textContent = current[0];
+        coachText.textContent = current[1];
+      }
+
+      function clearChoiceState(selector) {
+        document.querySelectorAll(selector).forEach(button => button.classList.remove("correct", "wrong"));
+      }
+
+      function showResetDialog() {
+        if (document.getElementById("resetDialog")) return;
+        const dialog = document.createElement("div");
+        dialog.id = "resetDialog";
+        dialog.className = "learning-finish";
+        dialog.setAttribute("role", "dialog");
+        dialog.setAttribute("aria-modal", "true");
+        dialog.innerHTML = '<section class="learning-finish__panel"><div class="learning-finish__mark">↻</div><h2>重新开始三步实验？</h2><p>本项目的三步进度会清空，其他项目不会受影响。</p><div class="learning-finish__actions"><button class="secondary" type="button" id="cancelReset">继续学习</button><button type="button" id="confirmReset">清空并开始</button></div></section>';
+        document.body.appendChild(dialog);
+        document.getElementById("cancelReset").addEventListener("click", () => dialog.remove());
+        document.getElementById("confirmReset").addEventListener("click", resetProgress);
+        document.getElementById("cancelReset").focus();
+      }
+
+      function resetProgress() {
+        try { localStorage.removeItem(STORAGE_KEY); } catch (error) {}
+        location.reload();
+      }
+
+      function celebrate() {
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const colors = ["#27856b", "#2868c7", "#e85d4a", "#f2c94c"];
+        for (let i = 0; i < 22; i += 1) {
+          const bit = document.createElement("span");
+          bit.className = "confetti";
+          bit.style.left = Math.random() * 100 + "vw";
+          bit.style.background = colors[i % colors.length];
+          bit.style.animationDelay = Math.random() * .3 + "s";
+          document.body.appendChild(bit);
+          setTimeout(() => bit.remove(), 1900);
+        }
+      }
+    })();
+  </script>
+  <script src="../_shared/体验增强.js"></script>
+</body>
+</html>

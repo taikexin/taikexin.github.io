@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>识字小花园 - 测评学习完整体验版</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="side-panel" aria-label="主导航">
+        <a class="brand" href="#home" data-tab-link="home" aria-label="返回首页">
+          <span class="brand-mark">字</span>
+          <span>
+            <strong>识字小花园</strong>
+            <small>快乐认字记录册</small>
+          </span>
+        </a>
+
+        <div class="profile-card">
+          <label for="childNameInput">孩子昵称</label>
+          <input id="childNameInput" type="text" maxlength="12" autocomplete="off" />
+
+          <label for="childGroupSelect">年龄阶段</label>
+          <select id="childGroupSelect"></select>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-button active" type="button" data-tab="home">
+            <span aria-hidden="true">🏡</span><span>首页</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="assessment">
+            <span aria-hidden="true">🌱</span><span>测评</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="adventure">
+            <span aria-hidden="true">🎮</span><span>冒险</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="idioms">
+            <span aria-hidden="true">📖</span><span>成语</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="library">
+            <span aria-hidden="true">📚</span><span>书架</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="atlas">
+            <span aria-hidden="true">🧭</span><span>图鉴</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="vault">
+            <span aria-hidden="true">📚</span><span>生字库</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="achievements">
+            <span aria-hidden="true">🎖</span><span>成就</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="leaderboard">
+            <span aria-hidden="true">🏆</span><span>排行</span>
+          </button>
+          <button class="nav-button" type="button" data-tab="report">
+            <span aria-hidden="true">📊</span><span>报告</span>
+          </button>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <section class="view active" id="homeView" data-view="home" aria-labelledby="homeTitle">
+          <div class="hero-panel">
+            <div class="hero-copy">
+              <p class="kicker">今日小花园</p>
+              <h1 id="homeTitle">和汉字做朋友</h1>
+              <p class="garden-line" id="welcomeLine">今天也有新叶子发芽了。</p>
+              <div class="hero-actions">
+                <button class="primary-action" type="button" id="quickStartButton">
+                  <span aria-hidden="true">▶</span><span>开始测评</span>
+                </button>
+                <button class="secondary-action" type="button" data-tab-link="vault">
+                  <span aria-hidden="true">＋</span><span>添加生字</span>
+                </button>
+                <button class="secondary-action" type="button" data-tab-link="adventure">
+                  <span aria-hidden="true">🎮</span><span>去闯关</span>
+                </button>
+              </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <img src="./assets/literacy-garden.png" alt="" />
+            </div>
+          </div>
+
+          <div class="stats-grid" id="homeStats"></div>
+
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="kicker">测评阶段</p>
+                <h2>选择一片识字花田</h2>
+              </div>
+              <span class="pill" id="selectedGroupPill">5-7岁</span>
+            </div>
+            <div class="age-grid" id="ageCards"></div>
+          </section>
+
+          <div class="dashboard-grid">
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="kicker">复习篮</p>
+                  <h2>最近生字</h2>
+                </div>
+                <button class="icon-button" type="button" data-tab-link="vault" aria-label="打开生字库">→</button>
+              </div>
+              <div id="reviewPreview" class="word-preview"></div>
+            </section>
+
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="kicker">成长树</p>
+                  <h2>识字进度</h2>
+                </div>
+                <button class="icon-button" type="button" data-tab-link="report" aria-label="打开报告">→</button>
+              </div>
+              <div id="treeProgress" class="tree-progress"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="assessmentView" data-view="assessment" aria-labelledby="assessmentTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">识字测评</p>
+              <h1 id="assessmentTitle">今天认识哪些字</h1>
+            </div>
+            <button class="secondary-action compact" type="button" id="restartAssessmentButton">
+              <span aria-hidden="true">↻</span><span>重开</span>
+            </button>
+          </div>
+          <div id="assessmentMount"></div>
+        </section>
+
+        <section class="view" id="adventureView" data-view="adventure" aria-labelledby="adventureTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">识字大冒险</p>
+              <h1 id="adventureTitle">今天去哪里探险</h1>
+            </div>
+            <span class="pill" id="starPill">0 颗星</span>
+          </div>
+          <div id="adventureMount"></div>
+        </section>
+
+        <section class="view" id="idiomsView" data-view="idioms" aria-labelledby="idiomsTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">成语学习乐园</p>
+              <h1 id="idiomsTitle">把故事装进口袋</h1>
+            </div>
+          </div>
+          <div id="idiomsMount"></div>
+        </section>
+
+        <section class="view" id="libraryView" data-view="library" aria-labelledby="libraryTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">阅读书架</p>
+              <h1 id="libraryTitle">正在读的故事</h1>
+            </div>
+          </div>
+          <div id="libraryMount"></div>
+        </section>
+
+        <section class="view" id="atlasView" data-view="atlas" aria-labelledby="atlasTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">汉字图鉴</p>
+              <h1 id="atlasTitle">收集会开花的汉字</h1>
+            </div>
+          </div>
+          <div id="atlasMount"></div>
+        </section>
+
+        <section class="view" id="vaultView" data-view="vault" aria-labelledby="vaultTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">生字库</p>
+              <h1 id="vaultTitle">需要再见几次的字</h1>
+            </div>
+          </div>
+
+          <form class="add-word-form" id="customWordForm">
+            <label>
+              生字
+              <input id="customWordInput" type="text" maxlength="12" placeholder="如：森 明 晴" autocomplete="off" />
+            </label>
+            <label>
+              拼音
+              <input id="customPinyinInput" type="text" maxlength="32" placeholder="可选" autocomplete="off" />
+            </label>
+            <label>
+              词语
+              <input id="customPhraseInput" type="text" maxlength="32" placeholder="可选" autocomplete="off" />
+            </label>
+            <button class="primary-action" type="submit">
+              <span aria-hidden="true">＋</span><span>加入</span>
+            </button>
+          </form>
+
+          <div class="filter-row" role="group" aria-label="生字筛选">
+            <button class="chip active" type="button" data-vault-filter="all">全部</button>
+            <button class="chip" type="button" data-vault-filter="new">生词</button>
+            <button class="chip" type="button" data-vault-filter="fuzzy">犹豫</button>
+            <button class="chip" type="button" data-vault-filter="mastered">已掌握</button>
+          </div>
+          <div id="vaultList" class="vault-list"></div>
+        </section>
+
+        <section class="view" id="achievementsView" data-view="achievements" aria-labelledby="achievementsTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">成就徽章</p>
+              <h1 id="achievementsTitle">每次坚持都有奖励</h1>
+            </div>
+          </div>
+          <div id="achievementsMount"></div>
+        </section>
+
+        <section class="view" id="leaderboardView" data-view="leaderboard" aria-labelledby="leaderboardTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">识字排行榜</p>
+              <h1 id="leaderboardTitle">谁是今天的小达人</h1>
+            </div>
+          </div>
+          <div id="leaderboardMount"></div>
+        </section>
+
+        <section class="view" id="reportView" data-view="report" aria-labelledby="reportTitle">
+          <div class="page-heading">
+            <div>
+              <p class="kicker">识字报告</p>
+              <h1 id="reportTitle">看见每一次进步</h1>
+            </div>
+            <div class="report-actions">
+              <button class="secondary-action compact" type="button" id="printReportButton">
+                <span aria-hidden="true">⎙</span><span>打印</span>
+              </button>
+              <button class="primary-action compact" type="button" id="exportReportButton">
+                <span aria-hidden="true">⇩</span><span>导出</span>
+              </button>
+            </div>
+          </div>
+          <div id="reportMount"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

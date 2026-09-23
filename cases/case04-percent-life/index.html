@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百分数生活岛 - 五站应用完整体验版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', '楷体', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a89cc, #4a69bd);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            border: 3px solid #e55039;
+            box-shadow: 0 10px 30px rgba(229, 80, 57, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #e55039, #f6b93b, #4a69bd);
+            animation: headerGlow 3s infinite linear;
+        }
+        
+        @keyframes headerGlow {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(100% + 200px) 0; }
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #e55039;
+            text-shadow: 2px 2px 0px #f6b93b;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: #f1f2f6;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a69bd, #6a89cc);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .island-map {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .island {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .island:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+        
+        .island.concept {
+            background: linear-gradient(135deg, #48dbfb, #0abde3);
+        }
+        
+        .island.conversion {
+            background: linear-gradient(135deg, #1dd1a1, #10ac84);
+        }
+        
+        .island.application {
+            background: linear-gradient(135deg, #feca57, #ff9ff3);
+        }
+        
+        .island.life {
+            background: linear-gradient(135deg, #ff9ff3, #f368e0);
+        }
+        
+        .island.challenge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+        
+        .island-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .island-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .island-progress {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.9rem;
+            color: white;
+        }
+        
+        .content-area {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            min-height: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .module-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+        }
+        
+        .concept-module .module-title {
+            border-bottom-color: #0abde3;
+        }
+        
+        .conversion-module .module-title {
+            border-bottom-color: #10ac84;
+        }
+        
+        .application-module .module-title {
+            border-bottom-color: #feca57;
+        }
+        
+        .life-module .module-title {
+            border-bottom-color: #ff9ff3;
+        }
+        
+        .challenge-module .module-title {
+            border-bottom-color: #ff6b6b;
+        }
+        
+        .module-title i {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .module-title h2 {
+            font-size: 1.8rem;
+            color: #333;
+        }
+        
+        .hundred-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border: 2px solid #333;
+            padding: 5px;
+            background: #f1f2f6;
+        }
+        
+        .grid-cell {
+            width: 100%;
+            height: 100%;
+            background: #ddd;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .grid-cell.active {
+            background: #4a69bd;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .slider-container {
+            width: 80%;
+            max-width: 400px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, #e55039, #f6b93b, #4a69bd);
+            border-radius: 10px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(229, 80, 57, 0.7);
+            border: 2px solid #e55039;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #f6b93b;
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(246, 185, 59, 0.9);
+        }
+        
+        .value-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a69bd;
+            background: #f1f2f6;
+            padding: 10px 20px;
+            border-radius: 10px;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .conversion-machine {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f1f2f6;
+            border-radius: 15px;
+        }
+        
+        .conversion-inputs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .conversion-inputs input, .conversion-inputs select {
+            padding: 10px;
+            border: 2px solid #4a69bd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .conversion-outputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .conversion-output {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px dashed #4a69bd;
+        }
+        
+        .conversion-output .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .conversion-output .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4a69bd;
+        }
+        
+        .problem-container {
+            background: #f1f2f6;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .problem-statement {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .option:hover {
+            border-color: #4a69bd;
+            transform: translateY(-3px);
+        }
+        
+        .option.correct {
+            border-color: #1dd1a1;
+            background: rgba(29, 209, 161, 0.1);
+        }
+        
+        .option.incorrect {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+        
+        .store-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: #f1f2f6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .discount-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .discount-slider {
+            flex: 1;
+        }
+        
+        .price-calculation {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f1f2f6;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .feedback.correct {
+            background: rgba(29, 209, 161, 0.2);
+            color: #10ac84;
+            border: 2px solid #1dd1a1;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ee5a52;
+            border: 2px solid #ff6b6b;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #4a69bd, #6a89cc);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 105, 189, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(-1px);
+        }
+        
+        .achievement-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f6b93b;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+        }
+        
+        .achievement-badge.show {
+            transform: translateX(0);
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .bank-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .control-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .control-item label {
+            font-weight: bold;
+        }
+        
+        .result-display {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f1f2f6;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .island {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .island-icon {
+                font-size: 2rem;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .conversion-outputs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../_shared/体验增强.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>百分数生活岛</h1>
+            <p class="subtitle">六年级数学交互学习之旅 - 探索百分数的奥秘</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="globalProgress"></div>
+            </div>
+            <p>学习进度: <span id="progressText">0%</span></p>
+        </header>
+        
+        <div class="island-map">
+            <div class="island concept" data-module="concept">
+                <div class="island-icon">🔍</div>
+                <div class="island-title">概念海湾</div>
+                <div class="island-progress">0% 完成</div>
+            </div>
+            
+            <div class="island conversion" data-module="conversion">
+                <div class="island-icon">🔄</div>
+                <div class="island-title">转换峡谷</div>
+                <div class="island-progress">0% 完成</div>
+            </div>
+            
+            <div class="island application" data-module="application">
+                <div class="island-icon">🏔️</div>
+                <div class="island-title">应用山脉</div>
+                <div class="island-progress">0% 完成</div>
+            </div>
+            
+            <div class="island life" data-module="life">
+                <div class="island-icon">🌊</div>
+                <div class="island-title">生活海洋</div>
+                <div class="island-progress">0% 完成</div>
+            </div>
+            
+            <div class="island challenge" data-module="challenge">
+                <div class="island-icon">🌋</div>
+                <div class="island-title">挑战火山</div>
+                <div class="island-progress">0% 完成</div>
+            </div>
+        </div>
+        
+        <div class="content-area">
+            <!-- 概念海湾模块 -->
+            <div class="module-content concept-module" id="conceptModule">
+                <div class="module-title">
+                    <i>🔍</i>
+                    <h2>概念海湾 - 百分数的意义</h2>
+                </div>
+                
+                <div class="problem-statement">
+                    <p>百分数表示一个数是另一个数的<strong>百分之几</strong>。它表示的是两个数之间的<strong>倍比关系</strong>，而不是具体的数量。</p>
+                    <p>例如：50% 表示把一个整体平均分成100份，取其中的50份。</p>
+                </div>
+                
+                <div class="hundred-grid" id="percentGrid">
+                    <!-- 通过JS生成100个格子 -->
+                </div>
+                
+                <div class="controls">
+                    <div class="slider-container">
+                        <input type="range" id="percentSlider" min="0" max="100" value="50">
+                    </div>
+                    <div class="value-display" id="percentValue">50%</div>
+                    <div class="representations">
+                        <p>分数表示: <span id="fractionRep">50/100 = 1/2</span></p>
+                        <p>小数表示: <span id="decimalRep">0.5</span></p>
+                    </div>
+                </div>
+                
+                <div class="feedback hidden" id="conceptFeedback"></div>
+                
+                <div class="navigation">
+                    <button id="nextConcept">下一步 ➡️</button>
+                </div>
+            </div>
+            
+            <!-- 转换峡谷模块 -->
+            <div class="module-content conversion-module hidden" id="conversionModule">
+                <div class="module-title">
+                    <i>🔄</i>
+                    <h2>转换峡谷 - 百分数互化</h2>
+                </div>
+                
+                <div class="problem-statement">
+                    <p>百分数、小数和分数之间可以互相转换。掌握这些转换技巧是解决百分数问题的基础。</p>
+                </div>
+                
+                <div class="conversion-machine">
+                    <div class="conversion-inputs">
+                        <input type="text" id="conversionInput" placeholder="输入数值" value="50">
+                        <select id="inputType">
+                            <option value="percent">百分数 %</option>
+                            <option value="decimal">小数</option>
+                            <option value="fraction">分数</option>
+                        </select>
+                        <button id="convertBtn">转换</button>
+                    </div>
+                    
+                    <div class="conversion-outputs">
+                        <div class="conversion-output">
+                            <div class="label">百分数</div>
+                            <div class="value" id="outputPercent">50%</div>
+                        </div>
+                        <div class="conversion-output">
+                            <div class="label">小数</div>
+                            <div class="value" id="outputDecimal">0.5</div>
+                        </div>
+                        <div class="conversion-output">
+                            <div class="label">分数</div>
+                            <div class="value" id="outputFraction">1/2</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="problem-container">
+                    <div class="problem-statement">
+                        <p>练习：将 75% 转换为小数和分数。</p>
+                    </div>
+                    
+                    <div class="options">
+                        <div class="option" data-correct="false">小数: 7.5, 分数: 75/10</div>
+                        <div class="option" data-correct="true">小数: 0.75, 分数: 3/4</div>
+                        <div class="option" data-correct="false">小数: 0.075, 分数: 75/1000</div>
+                        <div class="option" data-correct="false">小数: 75.0, 分数: 75/1</div>
+                    </div>
+                </div>
+                
+                <div class="feedback hidden" id="conversionFeedback"></div>
+                
+                <div class="navigation">
+                    <button id="prevConversion">⬅️ 上一步</button>
+                    <button id="nextConversion">下一步 ➡️</button>
+                </div>
+            </div>
+            
+            <!-- 应用山脉模块 -->
+            <div class="module-content application-module hidden" id="applicationModule">
+                <div class="module-title">
+                    <i>🏔️</i>
+                    <h2>应用山脉 - 找单位"1"</h2>
+                </div>
+                
+                <div class="problem-container">
+                    <div class="problem-statement">
+                        <p>男生有25人，女生有20人。请回答以下问题：</p>
+                    </div>
+                    
+                    <div class="problem-statement">
+                        <p><strong>问题1：</strong> 男生人数是女生人数的百分之几？</p>
+                    </div>
+                    
+                    <div class="options">
+                        <div class="option" data-correct="false">(25-20) ÷ 20 × 100% = 25%</div>
+                        <div class="option" data-correct="true">25 ÷ 20 × 100% = 125%</div>
+                        <div class="option" data-correct="false">20 ÷ 25 × 100% = 80%</div>
+                        <div class="option" data-correct="false">(25-20) ÷ 25 × 100% = 20%</div>
+                    </div>
+                    
+                    <div class="problem-statement">
+                        <p><strong>问题2：</strong> 女生人数比男生人数少百分之几？</p>
+                    </div>
+                    
+                    <div class="options">
+                        <div class="option" data-correct="false">(25-20) ÷ 20 × 100% = 25%</div>
+                        <div class="option" data-correct="true">(25-20) ÷ 25 × 100% = 20%</div>
+                        <div class="option" data-correct="false">20 ÷ 25 × 100% = 80%</div>
+                        <div class="option" data-correct="false">25 ÷ 20 × 100% = 125%</div>
+                    </div>
+                </div>
+                
+                <div class="feedback hidden" id="applicationFeedback"></div>
+                
+                <div class="navigation">
+                    <button id="prevApplication">⬅️ 上一步</button>
+                    <button id="nextApplication">下一步 ➡️</button>
+                </div>
+            </div>
+            
+            <!-- 生活海洋模块 -->
+            <div class="module-content life-module hidden" id="lifeModule">
+                <div class="module-title">
+                    <i>🌊</i>
+                    <h2>生活海洋 - 实际应用</h2>
+                </div>
+                
+                <div class="problem-statement">
+                    <p>百分数在生活中有着广泛的应用，比如折扣、利率、成数等。让我们通过实际场景来练习这些应用。</p>
+                </div>
+                
+                <div class="store-item">
+                    <div class="item-image">📚</div>
+                    <div class="item-details">
+                        <div class="item-name">数学参考书</div>
+                        <div class="item-price">原价: ¥<span id="originalPrice">100</span></div>
+                        
+                        <div class="discount-controls">
+                            <span>折扣:</span>
+                            <input type="range" class="discount-slider" id="discountSlider" min="0" max="100" value="20">
+                            <span class="discount-value" id="discountValue">20% off</span>
+                        </div>
+                        
+                        <div class="price-calculation">
+                            现价 = 100 × (1 - 20%) = ¥<span class="final-price" id="finalPrice">80</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="store-item">
+                    <div class="item-image">✏️</div>
+                    <div class="item-details">
+                        <div class="item-name">文具套装</div>
+                        <div class="item-price">原价: ¥<span id="originalPrice2">50</span></div>
+                        
+                        <div class="discount-controls">
+                            <span>折扣:</span>
+                            <input type="range" class="discount-slider" id="discountSlider2" min="0" max="100" value="10">
+                            <span class="discount-value" id="discountValue2">10% off</span>
+                        </div>
+                        
+                        <div class="price-calculation">
+                            现价 = 50 × (1 - 10%) = ¥<span class="final-price2" id="finalPrice2">45</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增银行存款模拟 -->
+                <div class="bank-controls">
+                    <div class="scenario-title">
+                        <span>🏦</span> 银行存款模拟
+                    </div>
+                    
+                    <div class="control-item">
+                        <label>本金 (元):</label>
+                        <input type="number" id="principal" value="1000" min="1">
+                    </div>
+                    
+                    <div class="control-item">
+                        <label>年利率 (%):</label>
+                        <input type="range" id="interestRate" min="1" max="20" value="5">
+                        <span id="rateDisplay">5%</span>
+                    </div>
+                    
+                    <div class="control-item">
+                        <label>存款年限 (年):</label>
+                        <input type="number" id="years" value="1" min="1" max="10">
+                    </div>
+                    
+                    <div class="result-display">
+                        到期本息和 = <span id="principalDisplay">1000</span> × (1 + <span id="ratePercent">5</span>%)<sup id="yearsDisplay">1</sup> = ¥<span id="totalAmount">1050</span>
+                    </div>
+                </div>
+                
+                <div class="feedback hidden" id="lifeFeedback"></div>
+                
+                <div class="navigation">
+                    <button id="prevLife">⬅️ 上一步</button>
+                    <button id="nextLife">下一步 ➡️</button>
+                </div>
+            </div>
+            
+            <!-- 挑战火山模块 -->
+            <div class="module-content challenge-module hidden" id="challengeModule">
+                <div class="module-title">
+                    <i>🌋</i>
+                    <h2>挑战火山 - 综合测试</h2>
+                </div>
+                
+                <div class="problem-container">
+                    <div class="problem-statement">
+                        <p>你已经学习了百分数的基本概念和应用，现在来挑战一下综合测试吧！</p>
+                    </div>
+                    
+                    <div id="challengeQuestions">
+                        <!-- 通过JS动态生成题目 -->
+                    </div>
+                </div>
+                
+                <div class="feedback hidden" id="challengeFeedback"></div>
+                
+                <div class="navigation">
+                    <button id="prevChallenge">⬅️ 上一步</button>
+                    <button id="submitChallenge">提交答案</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="achievement-badge" id="achievementBadge">
+        <span>🏆</span>
+        <span id="badgeText">成就解锁!</span>
+    </div>
+
+    <script>
+        // 学习进度管理
+        const learningProgress = {
+            concept: { completed: false, score: 0 },
+            conversion: { completed: false, score: 0 },
+            application: { completed: false, score: 0 },
+            life: { completed: false, score: 0 },
+            challenge: { completed: false, score: 0 }
+        };
+        
+        let currentModule = 'concept';
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化百分数网格
+            initPercentGrid();
+            
+            // 初始化事件监听器
+            initEventListeners();
+            
+            // 更新进度显示
+            updateProgressDisplay();
+        });
+        
+        // 初始化百分数网格
+        function initPercentGrid() {
+            const grid = document.getElementById('percentGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < 100; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+                cell.dataset.index = i;
+                grid.appendChild(cell);
+            }
+            
+            // 初始化滑块
+            const slider = document.getElementById('percentSlider');
+            slider.addEventListener('input', updatePercentGrid);
+            updatePercentGrid();
+        }
+        
+        // 更新百分数网格显示
+        function updatePercentGrid() {
+            const slider = document.getElementById('percentSlider');
+            const percent = parseInt(slider.value);
+            const cells = document.querySelectorAll('.grid-cell');
+            
+            // 更新显示值
+            document.getElementById('percentValue').textContent = `${percent}%`;
+            document.getElementById('fractionRep').textContent = `${percent}/100${percent > 0 ? ` = ${simplifyFraction(percent, 100)}` : ''}`;
+            document.getElementById('decimalRep').textContent = (percent / 100).toFixed(2);
+            
+            // 更新网格颜色
+            cells.forEach((cell, index) => {
+                if (index < percent) {
+                    cell.classList.add('active');
+                } else {
+                    cell.classList.remove('active');
+                }
+            });
+        }
+        
+        // 简化分数
+        function simplifyFraction(numerator, denominator) {
+            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+            const divisor = gcd(numerator, denominator);
+            return `${numerator/divisor}/${denominator/divisor}`;
+        }
+        
+        // 初始化事件监听器
+        function initEventListeners() {
+            // 岛屿点击事件
+            document.querySelectorAll('.island').forEach(island => {
+                island.addEventListener('click', function() {
+                    const module = this.dataset.module;
+                    switchModule(module);
+                });
+            });
+            
+            // 转换按钮事件
+            document.getElementById('convertBtn').addEventListener('click', performConversion);
+            
+            // 选项点击事件
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    handleOptionClick(this);
+                });
+            });
+            
+            // 折扣滑块事件
+            document.getElementById('discountSlider').addEventListener('input', updateStore);
+            document.getElementById('discountSlider2').addEventListener('input', updateStore);
+            
+            // 银行储蓄控制
+            document.getElementById('interestRate').addEventListener('input', updateBank);
+            document.getElementById('principal').addEventListener('input', updateBank);
+            document.getElementById('years').addEventListener('input', updateBank);
+            
+            // 导航按钮事件 - 添加进度更新
+            document.getElementById('nextConcept').addEventListener('click', function() {
+                learningProgress.concept.completed = true;
+                learningProgress.concept.score = 100;
+                switchModule('conversion');
+                updateProgressDisplay();
+            });
+            
+            document.getElementById('prevConversion').addEventListener('click', function() {
+                switchModule('concept');
+            });
+            
+            document.getElementById('nextConversion').addEventListener('click', function() {
+                learningProgress.conversion.completed = true;
+                learningProgress.conversion.score = 100;
+                switchModule('application');
+                updateProgressDisplay();
+            });
+            
+            document.getElementById('prevApplication').addEventListener('click', function() {
+                switchModule('conversion');
+            });
+            
+            document.getElementById('nextApplication').addEventListener('click', function() {
+                learningProgress.application.completed = true;
+                learningProgress.application.score = 100;
+                switchModule('life');
+                updateProgressDisplay();
+            });
+            
+            document.getElementById('prevLife').addEventListener('click', function() {
+                switchModule('application');
+            });
+            
+            document.getElementById('nextLife').addEventListener('click', function() {
+                learningProgress.life.completed = true;
+                learningProgress.life.score = 100;
+                switchModule('challenge');
+                updateProgressDisplay();
+            });
+            
+            document.getElementById('prevChallenge').addEventListener('click', function() {
+                switchModule('life');
+            });
+            
+            document.getElementById('submitChallenge').addEventListener('click', submitChallenge);
+            
+            // 初始化显示
+            updateStore();
+            updateBank();
+        }
+        
+        // 切换模块
+        function switchModule(module) {
+            // 隐藏所有模块
+            document.querySelectorAll('.module-content').forEach(mod => {
+                mod.classList.add('hidden');
+            });
+            
+            // 显示目标模块
+            document.getElementById(`${module}Module`).classList.remove('hidden');
+            
+            // 更新当前模块
+            currentModule = module;
+            
+            // 如果是挑战模块，初始化题目
+            if (module === 'challenge') {
+                initChallenge();
+            }
+        }
+        
+        // 执行转换
+        function performConversion() {
+            const input = document.getElementById('conversionInput').value;
+            const type = document.getElementById('inputType').value;
+            
+            if (!input || isNaN(parseFloat(input))) {
+                showFeedback('conversionFeedback', '请输入有效的数值!', false);
+                return;
+            }
+            
+            const value = parseFloat(input);
+            let percent, decimal, fraction;
+            
+            switch(type) {
+                case 'percent':
+                    percent = value;
+                    decimal = value / 100;
+                    fraction = simplifyFraction(value, 100);
+                    break;
+                case 'decimal':
+                    percent = value * 100;
+                    decimal = value;
+                    fraction = simplifyFraction(Math.round(value * 100), 100);
+                    break;
+                case 'fraction':
+                    // 简单处理分数输入，如 "1/2"
+                    const parts = input.split('/');
+                    if (parts.length === 2) {
+                        const num = parseFloat(parts[0]);
+                        const den = parseFloat(parts[1]);
+                        if (den !== 0) {
+                            decimal = num / den;
+                            percent = decimal * 100;
+                            fraction = simplifyFraction(num, den);
+                        }
+                    }
+                    break;
+            }
+            
+            if (percent !== undefined) {
+                document.getElementById('outputPercent').textContent = `${percent.toFixed(2)}%`;
+                document.getElementById('outputDecimal').textContent = decimal.toFixed(4);
+                document.getElementById('outputFraction').textContent = fraction;
+                showFeedback('conversionFeedback', '转换成功!', true);
+            } else {
+                showFeedback('conversionFeedback', '请输入有效的分数格式 (如 1/2)', false);
+            }
+        }
+        
+        // 处理选项点击
+        function handleOptionClick(option) {
+            const isCorrect = option.dataset.correct === 'true';
+            const options = option.parentElement.querySelectorAll('.option');
+            
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            option.classList.add('selected');
+            
+            // 显示所有选项的正确/错误状态
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                if (opt.dataset.correct === 'true') {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            const feedback = document.getElementById('applicationFeedback');
+            feedback.classList.remove('hidden');
+            
+            if (isCorrect) {
+                feedback.textContent = '回答正确! 👍';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = '再想想看... 🤔';
+                feedback.className = 'feedback incorrect';
+            }
+        }
+        
+        // 更新商店显示
+        function updateStore() {
+            // 第一个商品
+            const discount1 = parseInt(document.getElementById('discountSlider').value);
+            const originalPrice1 = 100;
+            
+            document.getElementById('discountValue').textContent = `${discount1}% off`;
+            document.getElementById('finalPrice').textContent = (originalPrice1 * (1 - discount1/100)).toFixed(2);
+            
+            // 第二个商品
+            const discount2 = parseInt(document.getElementById('discountSlider2').value);
+            const originalPrice2 = 50;
+            
+            document.getElementById('discountValue2').textContent = `${discount2}% off`;
+            document.getElementById('finalPrice2').textContent = (originalPrice2 * (1 - discount2/100)).toFixed(2);
+        }
+        
+        // 更新银行显示
+        function updateBank() {
+            const rate = parseInt(document.getElementById('interestRate').value);
+            const principal = parseInt(document.getElementById('principal').value);
+            const years = parseInt(document.getElementById('years').value);
+            
+            document.getElementById('rateDisplay').textContent = `${rate}%`;
+            document.getElementById('principalDisplay').textContent = principal;
+            document.getElementById('ratePercent').textContent = rate;
+            document.getElementById('yearsDisplay').textContent = years;
+            
+            const totalAmount = principal * Math.pow(1 + rate/100, years);
+            document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
+        }
+        
+        // 初始化挑战
+        function initChallenge() {
+            const questionsContainer = document.getElementById('challengeQuestions');
+            questionsContainer.innerHTML = '';
+            
+            const questions = [
+                {
+                    question: "75% 等于哪个小数?",
+                    options: ["0.075", "0.75", "7.5", "75.0"],
+                    correct: 1
+                },
+                {
+                    question: "一件商品原价200元，打8折后价格是多少?",
+                    options: ["160元", "180元", "20元", "40元"],
+                    correct: 0
+                },
+                {
+                    question: "班级有40人，男生有24人，女生占全班人数的百分之几?",
+                    options: ["40%", "50%", "60%", "70%"],
+                    correct: 0
+                }
+            ];
+            
+            questions.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'problem-statement';
+                questionElement.innerHTML = `<p><strong>问题${index+1}:</strong> ${q.question}</p>`;
+                
+                const optionsElement = document.createElement('div');
+                optionsElement.className = 'options';
+                
+                q.options.forEach((option, optIndex) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.textContent = option;
+                    optionElement.dataset.correct = optIndex === q.correct ? 'true' : 'false';
+                    optionElement.dataset.question = String(index);
+                    optionElement.addEventListener('click', function() {
+                        handleOptionClick(this);
+                    });
+                    optionsElement.appendChild(optionElement);
+                });
+                
+                questionsContainer.appendChild(questionElement);
+                questionsContainer.appendChild(optionsElement);
+            });
+        }
+        
+        // 提交挑战
+        function submitChallenge() {
+            const questionGroups = document.querySelectorAll('#challengeQuestions .options');
+            const selectedOptions = document.querySelectorAll('#challengeQuestions .option.selected');
+            const selectedCorrect = document.querySelectorAll('#challengeQuestions .option.selected[data-correct="true"]');
+            
+            if (selectedOptions.length < questionGroups.length) {
+                showFeedback('challengeFeedback', '还有题目没有选择，请每题选一个答案。', false);
+                return;
+            }
+            
+            if (selectedCorrect.length === questionGroups.length) {
+                showFeedback('challengeFeedback', '恭喜! 你完成了所有挑战! 🎉', true);
+                learningProgress.challenge.completed = true;
+                learningProgress.challenge.score = 100;
+                updateProgressDisplay();
+                showAchievement('百分数学霸! 你已掌握所有知识点!');
+            } else {
+                showFeedback('challengeFeedback', '还有答案需要检查，请看一看被标出的题目。', false);
+            }
+        }
+        
+        // 显示反馈
+        function showFeedback(elementId, message, isCorrect) {
+            const feedback = document.getElementById(elementId);
+            feedback.textContent = message;
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.classList.remove('hidden');
+            
+            // 3秒后隐藏反馈
+            setTimeout(() => {
+                feedback.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // 显示成就
+        function showAchievement(message) {
+            const badge = document.getElementById('achievementBadge');
+            const badgeText = document.getElementById('badgeText');
+            
+            badgeText.textContent = message;
+            badge.classList.add('show');
+            
+            // 3秒后隐藏成就
+            setTimeout(() => {
+                badge.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 更新进度显示
+        function updateProgressDisplay() {
+            // 计算总进度
+            const totalModules = Object.keys(learningProgress).length;
+            let completedModules = 0;
+            let totalScore = 0;
+            
+            for (const module in learningProgress) {
+                if (learningProgress[module].completed) {
+                    completedModules++;
+                }
+                totalScore += learningProgress[module].score;
+            }
+            
+            const progress = (completedModules / totalModules) * 100;
+            const averageScore = totalScore / totalModules;
+            
+            // 更新进度条
+            document.getElementById('globalProgress').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(progress)}% 完成 (平均分: ${Math.round(averageScore)})`;
+            
+            // 更新各岛屿进度
+            for (const module in learningProgress) {
+                const island = document.querySelector(`.island[data-module="${module}"] .island-progress`);
+                if (island) {
+                    island.textContent = `${learningProgress[module].completed ? '100%' : '0%'} 完成`;
+                }
+            }
+        }
+    </script>
+    <script src="../_shared/体验增强.js"></script>
+</body>
+</html>

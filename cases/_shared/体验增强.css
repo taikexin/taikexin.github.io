@@ -1,0 +1,919 @@
+:root {
+  --kid-ink: #25313b;
+  --kid-muted: #5d6b75;
+  --kid-paper: #ffffff;
+  --kid-bg: #eef5f1;
+  --kid-blue: #2868c7;
+  --kid-green: #2b8a6e;
+  --kid-coral: #e85d4a;
+  --kid-yellow: #f2c94c;
+  --kid-border: #d5e1dc;
+  --kid-shadow: 0 8px 22px rgba(34, 55, 48, .09);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden !important;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+[role="button"],
+.option,
+.module-card,
+.module-btn,
+.module,
+.island {
+  min-height: 46px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+.option:focus-visible,
+.module-card:focus-visible,
+.module-btn:focus-visible,
+.module:focus-visible,
+.island:focus-visible {
+  outline: 3px solid var(--kid-blue) !important;
+  outline-offset: 3px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  min-height: 46px;
+  max-width: 100%;
+  border: 2px solid #b8c9c2 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: var(--kid-ink) !important;
+  padding: 8px 12px !important;
+}
+
+input[type="range"] {
+  width: 100%;
+  min-height: 44px;
+  margin: 2px 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent !important;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  border: 1px solid #b8c9c2;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #7fcdbb, #f2c94c);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 28px;
+  height: 28px;
+  margin-top: -10px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--kid-blue);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .25);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 10px;
+  border: 1px solid #b8c9c2;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #7fcdbb, #f2c94c);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--kid-blue);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .25);
+}
+
+canvas,
+img,
+svg {
+  max-width: 100%;
+}
+
+.learning-guide {
+  display: none;
+}
+
+.learning-hud {
+  position: relative;
+  z-index: 30;
+  width: min(1180px, calc(100% - 28px));
+  margin: 12px auto 18px;
+  border: 1px solid var(--kid-border);
+  border-left: 5px solid var(--kid-green);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .97);
+  box-shadow: var(--kid-shadow);
+  color: var(--kid-ink);
+}
+
+.learning-hud__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 13px 8px;
+}
+
+.learning-hud__title {
+  min-width: 0;
+}
+
+.learning-hud__eyebrow {
+  display: block;
+  color: var(--kid-green);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.learning-hud__title strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.learning-hud__actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.learning-hud__action {
+  min-height: 40px;
+  border: 1px solid #c4d3cd !important;
+  border-radius: 8px !important;
+  padding: 7px 10px !important;
+  background: #f7faf8 !important;
+  color: #355148 !important;
+  box-shadow: none !important;
+  font-size: 13px !important;
+}
+
+.learning-hud__steps {
+  display: grid;
+  grid-template-columns: repeat(var(--step-count), minmax(0, 1fr));
+  gap: 6px;
+  padding: 0 13px 10px;
+}
+
+.learning-hud__step {
+  min-width: 0;
+  border-top: 5px solid #dce5e1;
+  padding-top: 6px;
+  color: #77837e;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.learning-hud__step.is-current {
+  border-color: var(--kid-blue);
+  color: var(--kid-blue);
+  font-weight: 800;
+}
+
+.learning-hud__step.is-done {
+  border-color: var(--kid-green);
+  color: #236c58;
+  font-weight: 800;
+}
+
+.learning-hud__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid #e2eae6;
+  padding: 8px 13px;
+  color: var(--kid-muted);
+  font-size: 13px;
+}
+
+.learning-hud__status b {
+  color: var(--kid-ink);
+}
+
+.learning-hud__save {
+  flex: 0 0 auto;
+  color: #27745f;
+}
+
+.learning-toast {
+  position: fixed;
+  left: 50%;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 99999;
+  width: min(560px, calc(100vw - 28px));
+  transform: translateX(-50%) translateY(18px);
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 8px;
+  padding: 13px 16px;
+  background: #1f2e35;
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .22);
+  font: 14px/1.55 "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.learning-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.learning-toast[data-kind="success"] {
+  background: #226c58;
+}
+
+.learning-toast[data-kind="hint"] {
+  background: #8a4d17;
+}
+
+.learning-complete,
+.module-card.learning-complete,
+.module-btn.learning-complete,
+.island.learning-complete {
+  border-color: var(--kid-green) !important;
+  box-shadow: inset 0 0 0 2px rgba(43, 138, 110, .18) !important;
+}
+
+.learning-ready {
+  box-shadow: 0 0 0 3px rgba(242, 201, 76, .45) !important;
+}
+
+.learning-answer {
+  margin: 14px 0;
+  border: 1px solid #cedbd6;
+  border-left: 5px solid var(--kid-blue);
+  border-radius: 8px;
+  padding: 13px;
+  background: #f8fbfa;
+  color: var(--kid-ink);
+}
+
+.learning-answer label,
+.learning-answer strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.learning-answer__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.learning-answer__row input {
+  width: min(220px, 100%);
+}
+
+.learning-answer__choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.learning-answer__choice {
+  min-height: 48px;
+  border: 2px solid #c9d7d1 !important;
+  border-radius: 8px !important;
+  padding: 9px !important;
+  background: #fff !important;
+  color: var(--kid-ink) !important;
+  box-shadow: none !important;
+}
+
+.learning-answer__choice.is-selected {
+  border-color: var(--kid-blue) !important;
+  background: #eaf2ff !important;
+}
+
+.learning-fallback {
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+  border: 2px dashed #b9cdc4;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #edf8f4, #fff8dc);
+  color: var(--kid-ink);
+  text-align: center;
+}
+
+.learning-fallback canvas {
+  display: block;
+  width: min(100%, 400px) !important;
+  height: auto !important;
+}
+
+.learning-finish {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(25, 38, 43, .72);
+}
+
+.learning-finish__panel {
+  width: min(520px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  border: 4px solid #fff;
+  border-radius: 8px;
+  padding: 24px;
+  background: linear-gradient(155deg, #fff, #f1fbf6 64%, #fff6d8);
+  color: var(--kid-ink);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
+  text-align: center;
+}
+
+.learning-finish__mark {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: var(--kid-green);
+  color: #fff;
+  font-size: 38px;
+}
+
+.learning-finish h2 {
+  margin: 0 0 8px;
+  font-size: 27px;
+  letter-spacing: 0;
+}
+
+.learning-finish p {
+  margin: 0 0 16px;
+  color: var(--kid-muted);
+  line-height: 1.7;
+}
+
+.learning-finish__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.learning-finish button {
+  min-height: 48px;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  background: var(--kid-green) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+}
+
+.learning-finish button.secondary {
+  border: 1px solid #c4d3cd !important;
+  background: #fff !important;
+  color: #355148 !important;
+}
+
+/* Legacy project pages receive a quieter, child-focused presentation. */
+html[data-learning-project="overview"] body,
+html[data-learning-project="cylinder"] body,
+html[data-learning-project="sector"] body,
+html[data-learning-project="percent"] body,
+html[data-learning-project="ratio"] body {
+  padding: 0 !important;
+  background: var(--kid-bg) !important;
+  color: var(--kid-ink) !important;
+  font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif !important;
+  line-height: 1.65;
+}
+
+html[data-learning-project] .container {
+  width: min(1200px, 100%) !important;
+  margin: 0 auto !important;
+  padding: 14px !important;
+}
+
+html[data-learning-project] header,
+html[data-learning-project] .main-header,
+html[data-learning-project] .marvel-header {
+  margin: 0 0 14px !important;
+  border: 0 !important;
+  border-bottom: 4px solid var(--kid-yellow) !important;
+  border-radius: 0 0 8px 8px !important;
+  padding: 20px 16px !important;
+  background: #fff !important;
+  box-shadow: var(--kid-shadow) !important;
+  color: var(--kid-ink) !important;
+}
+
+html[data-learning-project] header::before,
+html[data-learning-project] header::after,
+html[data-learning-project] .main-header::before,
+html[data-learning-project] .main-header::after,
+html[data-learning-project] .marvel-header::before,
+html[data-learning-project] .marvel-header::after {
+  display: none !important;
+}
+
+html[data-learning-project] h1 {
+  margin: 0 0 6px !important;
+  color: #24564b !important;
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+  font-size: 32px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+html[data-learning-project] .subtitle {
+  margin: 0 !important;
+  color: var(--kid-muted) !important;
+  font-size: 15px !important;
+}
+
+html[data-learning-project] .game-stats,
+html[data-learning-project] header > .progress-container,
+html[data-learning-project] .mission-tracker,
+html[data-learning-project] .hero-selection {
+  display: none !important;
+}
+
+html[data-learning-project] .module-selector,
+html[data-learning-project] .modules-container,
+html[data-learning-project] .modules,
+html[data-learning-project] .islands-container {
+  display: grid !important;
+  grid-template-columns: repeat(var(--legacy-module-count, 5), minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+}
+
+html[data-learning-project] .module-btn,
+html[data-learning-project] .module-card,
+html[data-learning-project] .module,
+html[data-learning-project] .island {
+  position: relative !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 72px !important;
+  margin: 0 !important;
+  border: 2px solid #ccd9d3 !important;
+  border-radius: 8px !important;
+  padding: 10px !important;
+  background: #fff !important;
+  color: var(--kid-ink) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: pointer;
+}
+
+html[data-learning-project] .module-card.active,
+html[data-learning-project] .module-btn.active,
+html[data-learning-project] .module.active,
+html[data-learning-project] .island.active {
+  border-color: var(--kid-blue) !important;
+  background: #eaf2ff !important;
+}
+
+html[data-learning-project] .module-card.locked,
+html[data-learning-project] .module.locked,
+html[data-learning-project] .island.locked {
+  opacity: .55 !important;
+  filter: grayscale(.2) !important;
+  cursor: not-allowed !important;
+}
+
+html[data-learning-project] .module-card::before,
+html[data-learning-project] .module-card::after,
+html[data-learning-project] .module::before,
+html[data-learning-project] .module::after,
+html[data-learning-project] .island::before,
+html[data-learning-project] .island::after {
+  display: none !important;
+}
+
+html[data-learning-project] .module-title,
+html[data-learning-project] .island-title {
+  color: var(--kid-ink) !important;
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0 !important;
+}
+
+html[data-learning-project] .module-desc,
+html[data-learning-project] .module-content p,
+html[data-learning-project] .progress-text,
+html[data-learning-project] .island-progress {
+  color: var(--kid-muted) !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+html[data-learning-project] .progress-circle {
+  display: grid !important;
+  place-items: center !important;
+  width: 42px !important;
+  height: 42px !important;
+  color: var(--kid-ink) !important;
+  font-size: 11px !important;
+}
+
+html[data-learning-project] .main-content,
+html[data-learning-project] .content-area,
+html[data-learning-project] .content-body.active {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+html[data-learning-project="overview"] .main-content {
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+  gap: 14px !important;
+}
+
+html[data-learning-project] .panel,
+html[data-learning-project] .content-area,
+html[data-learning-project] .knowledge-panel,
+html[data-learning-project] .game-panel,
+html[data-learning-project] .interactive-area,
+html[data-learning-project] .canvas-container,
+html[data-learning-project] .cylinder-container,
+html[data-learning-project] .problem-container,
+html[data-learning-project] .store-item {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  border-color: var(--kid-border) !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: var(--kid-ink) !important;
+  box-shadow: var(--kid-shadow) !important;
+}
+
+html[data-learning-project] .content-header,
+html[data-learning-project] .panel-title {
+  border-radius: 8px 8px 0 0 !important;
+  background: #e8f4ef !important;
+  color: #24564b !important;
+}
+
+html[data-learning-project] .content-header h2,
+html[data-learning-project] .panel-title h2,
+html[data-learning-project] .concept-title,
+html[data-learning-project] .game-title {
+  color: #24564b !important;
+  letter-spacing: 0 !important;
+}
+
+html[data-learning-project] .concept-desc,
+html[data-learning-project] .content-subtitle,
+html[data-learning-project] p,
+html[data-learning-project] li,
+html[data-learning-project] label {
+  color: var(--kid-ink) !important;
+}
+
+html[data-learning-project] .example,
+html[data-learning-project] .value-display,
+html[data-learning-project] .price-calculation {
+  max-width: 100% !important;
+  border-color: #dbe6e1 !important;
+  background: #f7faf8 !important;
+  color: var(--kid-ink) !important;
+}
+
+html[data-learning-project] .interactive-area {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 14px !important;
+}
+
+html[data-learning-project] .cylinder-wrapper,
+html[data-learning-project] .canvas-container,
+html[data-learning-project] .visualization {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+html[data-learning-project] .cylinder-canvas,
+html[data-learning-project] .canvas-container canvas,
+html[data-learning-project] .visualization canvas {
+  display: block;
+  width: min(100%, 400px) !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  aspect-ratio: 1;
+}
+
+html[data-learning-project] .slider-container,
+html[data-learning-project] .control-group,
+html[data-learning-project] .discount-controls,
+html[data-learning-project] .potion-controls,
+html[data-learning-project] .conversion-inputs,
+html[data-learning-project] .challenge-inputs {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+html[data-learning-project] button,
+html[data-learning-project] .btn {
+  min-height: 46px !important;
+  max-width: 100%;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 10px 16px !important;
+  background: var(--kid-blue) !important;
+  color: #fff !important;
+  box-shadow: 0 3px 0 #174b93 !important;
+  font-family: inherit !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+html[data-learning-project] .btn-success,
+html[data-learning-project] button[id^="next"],
+html[data-learning-project] button[id^="complete"] {
+  background: var(--kid-green) !important;
+  box-shadow: 0 3px 0 #1f664f !important;
+}
+
+html[data-learning-project] .option {
+  min-width: 0 !important;
+  border: 2px solid #cbd8d2 !important;
+  border-radius: 8px !important;
+  padding: 11px !important;
+  background: #fff !important;
+  color: var(--kid-ink) !important;
+  box-shadow: none !important;
+  font-family: inherit !important;
+  letter-spacing: 0 !important;
+}
+
+html[data-learning-project] .option.selected,
+html[data-learning-project] .option.learning-selected {
+  border-color: var(--kid-blue) !important;
+  background: #eaf2ff !important;
+  outline: none !important;
+}
+
+html[data-learning-project] .option.correct {
+  border-color: var(--kid-green) !important;
+  background: #e8f7f1 !important;
+}
+
+html[data-learning-project] .option.incorrect {
+  border-color: #efb4ab !important;
+  background: #fff2ef !important;
+}
+
+html[data-learning-project] .feedback.correct {
+  border-color: var(--kid-green) !important;
+  background: #e8f7f1 !important;
+  color: #1f654f !important;
+}
+
+html[data-learning-project] .feedback.incorrect {
+  border-color: #e9a094 !important;
+  background: #fff2ef !important;
+  color: #8b3c30 !important;
+}
+
+html[data-learning-project="cylinder"] {
+  --legacy-module-count: 6;
+}
+
+html[data-learning-project="sector"] {
+  --legacy-module-count: 5;
+}
+
+html[data-learning-project="percent"] {
+  --legacy-module-count: 5;
+}
+
+html[data-learning-project="ratio"] {
+  --legacy-module-count: 5;
+  --marvel-red: #e85d4a;
+  --marvel-blue: #2868c7;
+  --marvel-gold: #f2c94c;
+  --marvel-dark: #25313b;
+  --marvel-light: #fff;
+  --shield-blue: #2868c7;
+  --ironman-red: #e85d4a;
+  --captain-blue: #2868c7;
+  --hulk-green: #2b8a6e;
+  --thor-yellow: #f2c94c;
+  --blackwidow-silver: #66747d;
+}
+
+html[data-learning-project="ratio"] * {
+  font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif !important;
+}
+
+html[data-learning-project="ratio"] .marvel-header,
+html[data-learning-project="ratio"] .content-header {
+  background: #fff !important;
+}
+
+html[data-learning-project="ratio"] .module-card.locked {
+  pointer-events: auto !important;
+}
+
+@media (max-width: 900px) {
+  html[data-learning-project] .main-content,
+  html[data-learning-project] .interactive-area,
+  html[data-learning-project] .content-body.active,
+  html[data-learning-project="overview"] .main-content {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html[data-learning-project] .module-selector,
+  html[data-learning-project] .modules-container,
+  html[data-learning-project] .modules,
+  html[data-learning-project] .islands-container {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  html[data-learning-project] .cylinder-controls {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px !important;
+  }
+
+  html[data-learning-project] .cylinder-controls .btn:last-child {
+    grid-column: 1 / -1;
+  }
+
+  html[data-learning-project] .container {
+    padding: 10px !important;
+  }
+
+  html[data-learning-project] header,
+  html[data-learning-project] .main-header,
+  html[data-learning-project] .marvel-header {
+    padding: 16px 12px !important;
+  }
+
+  html[data-learning-project] h1 {
+    font-size: 26px !important;
+  }
+
+  .learning-hud {
+    width: calc(100% - 20px);
+    margin: 10px auto 12px;
+  }
+
+  .learning-hud__top {
+    align-items: flex-start;
+    padding: 10px 10px 7px;
+  }
+
+  .learning-hud__title strong {
+    font-size: 14px;
+  }
+
+  .learning-hud__action {
+    width: 44px;
+    min-width: 44px;
+    overflow: hidden;
+    padding: 7px 0 !important;
+    white-space: nowrap;
+    text-indent: -999px;
+  }
+
+  .learning-hud__action::after {
+    content: "↻";
+    display: block;
+    text-indent: 0;
+    font-size: 20px;
+  }
+
+  .learning-hud__steps {
+    grid-template-columns: repeat(var(--step-count), minmax(44px, 1fr));
+    gap: 4px;
+    overflow-x: auto;
+    padding: 0 10px 9px;
+    scrollbar-width: none;
+  }
+
+  .learning-hud__step {
+    font-size: 11px;
+  }
+
+  .learning-hud__status {
+    align-items: flex-start;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .learning-hud__save {
+    font-size: 0;
+  }
+
+  .learning-hud__save::after {
+    content: "已保存";
+    font-size: 12px;
+  }
+
+  html[data-learning-project] .module-selector,
+  html[data-learning-project] .modules-container,
+  html[data-learning-project] .modules,
+  html[data-learning-project] .islands-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+  }
+
+  html[data-learning-project] .module-card,
+  html[data-learning-project] .module-btn,
+  html[data-learning-project] .module,
+  html[data-learning-project] .island {
+    min-height: 62px !important;
+    padding: 8px !important;
+  }
+
+  html[data-learning-project] .knowledge-panel,
+  html[data-learning-project] .game-panel,
+  html[data-learning-project] .interactive-area,
+  html[data-learning-project] .panel,
+  html[data-learning-project] .content-area {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  html[data-learning-project] .conversion-inputs,
+  html[data-learning-project] .challenge-inputs,
+  html[data-learning-project] .discount-controls,
+  html[data-learning-project] .potion-controls,
+  html[data-learning-project] .control-group,
+  .learning-answer__row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  html[data-learning-project] .conversion-inputs > *,
+  html[data-learning-project] .challenge-inputs > *,
+  html[data-learning-project] .control-group > *,
+  .learning-answer__row > * {
+    width: 100% !important;
+  }
+
+  .learning-answer__choices {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .learning-finish__panel {
+    padding: 20px 16px;
+  }
+
+  .learning-finish__actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}

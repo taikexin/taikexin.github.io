@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圆柱3D工坊 - 六站探究完整体验版</title>
+    <script src="lib/three.r128.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c1e3e 0%, #162b50 50%, #1c355f 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .main-header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #a0c8ff;
+            margin-bottom: 20px;
+        }
+        
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(30, 45, 80, 0.7);
+            border: 2px solid #00c6ff;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 198, 255, 0.3);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00c6ff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #a0c8ff;
+        }
+        
+        .progress-container {
+            background: rgba(30, 45, 80, 0.7);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border: 2px solid #0072ff;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .progress-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progressShine 3s infinite;
+        }
+        
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .modules-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .module-card {
+            background: rgba(30, 45, 80, 0.7);
+            border: 3px solid;
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .module-card.active {
+            border-color: #00c6ff;
+            box-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
+        }
+        
+        .module-card.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .module-card.locked::after {
+            content: "🔒";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            z-index: 2;
+        }
+        
+        .module-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid;
+        }
+        
+        .module-content {
+            padding: 20px;
+            min-height: 150px;
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .module-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .module-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .progress-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: conic-gradient(#00c6ff 0% 0%, #1e3a5f 0% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+        }
+        
+        .module-1 { border-color: #00c6ff; }
+        .module-1 .module-header { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+        
+        .module-2 { border-color: #00d4ff; }
+        .module-2 .module-header { background: linear-gradient(135deg, #00d4ff, #0099ff); }
+        
+        .module-3 { border-color: #00e5ff; }
+        .module-3 .module-header { background: linear-gradient(135deg, #00e5ff, #00a8ff); }
+        
+        .module-4 { border-color: #00f7ff; }
+        .module-4 .module-header { background: linear-gradient(135deg, #00f7ff, #00b7ff); }
+        
+        .module-5 { border-color: #00ffea; }
+        .module-5 .module-header { background: linear-gradient(135deg, #00ffea, #00ccff); }
+        
+        .module-6 { border-color: #00ffcc; }
+        .module-6 .module-header { background: linear-gradient(135deg, #00ffcc, #00e1ff); }
+        
+        .content-area {
+            background: rgba(20, 35, 60, 0.8);
+            border: 3px solid #00c6ff;
+            border-radius: 15px;
+            padding: 0;
+            margin-top: 30px;
+            min-height: 600px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content-header {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #00c6ff;
+        }
+        
+        .content-body {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .content-body.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #00c6ff;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .content-subtitle {
+            font-size: 1.2rem;
+            color: #cce6ff;
+        }
+        
+        .knowledge-panel {
+            background: rgba(40, 60, 100, 0.5);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #00c6ff;
+        }
+        
+        .concept-title {
+            color: #00c6ff;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #0072ff;
+            padding-bottom: 10px;
+        }
+        
+        .concept-desc {
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .example {
+            background: rgba(0, 198, 255, 0.1);
+            border-left: 4px solid #00c6ff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .interactive-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .cylinder-container {
+            perspective: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cylinder-wrapper {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .cylinder-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background: rgba(10, 10, 30, 0.7);
+        }
+        
+        .cylinder-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .game-panel {
+            background: rgba(40, 60, 100, 0.5);
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #00c6ff;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-title {
+            color: #00c6ff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .control-group {
+            margin-bottom: 20px;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .slider-container label {
+            min-width: 120px;
+            font-size: 1.1rem;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            height: 10px;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            border: 3px solid #00c6ff;
+            box-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
+        }
+        
+        .value-display {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            min-width: 100px;
+            text-align: center;
+            border: 2px solid #00c6ff;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, #00d8a7, #00b894);
+        }
+        
+        .problem-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .option {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .option:hover {
+            border-color: #00c6ff;
+            transform: translateY(-3px);
+        }
+        
+        .option.correct {
+            border-color: #00d8a7;
+            background: rgba(0, 216, 167, 0.1);
+        }
+        
+        .option.incorrect {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+        
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(0, 216, 167, 0.2);
+            color: #00d8a7;
+            border: 2px solid #00d8a7;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            display: block;
+        }
+        
+        .achievement {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            z-index: 100;
+        }
+        
+        .achievement.show {
+            transform: translateX(0);
+        }
+        
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff0;
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        .mission-tracker {
+            background: rgba(30, 45, 80, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #00c6ff;
+        }
+        
+        .mission-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #00c6ff;
+        }
+        
+        .mission-progress {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .mission-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .game-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            
+            .interactive-area {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../_shared/体验增强.css">
+</head>
+<body>
+    <div class="celebration" id="celebration"></div>
+    
+    <div class="container">
+        <header class="main-header">
+            <h1>圆柱 3D 工坊</h1>
+            <p class="subtitle">从立体观察到表面积、体积和实际应用</p>
+            
+            <div class="game-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" id="playerScore">0</div>
+                    <div class="stat-label">探索积分</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="playerLevel">初学者</div>
+                    <div class="stat-label">探索等级</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🔓</div>
+                    <div class="stat-value" id="completedModules">0/6</div>
+                    <div class="stat-label">完成模块</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value" id="playerEnergy">100%</div>
+                    <div class="stat-label">学习能量</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>总进度:</span>
+                    <span id="progressText">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="globalProgress"></div>
+                </div>
+            </div>
+            
+            <div class="mission-tracker">
+                <div class="mission-title">当前任务: <span id="currentMission">认识圆柱体</span></div>
+                <div class="mission-progress">
+                    <div class="mission-fill" id="missionProgress"></div>
+                </div>
+                <div>任务进度: <span id="missionPercent">0</span>%</div>
+            </div>
+        </header>
+        
+        <div class="modules-container">
+            <div class="module-card module-1 active" data-module="1">
+                <div class="module-header">
+                    <div class="module-title">模块1: 认识圆柱体</div>
+                </div>
+                <div class="module-content">
+                    <div class="module-desc">了解圆柱体的定义、组成部分和特征</div>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module1Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-card module-2 locked" data-module="2">
+                <div class="module-header">
+                    <div class="module-title">模块2: 侧面积</div>
+                </div>
+                <div class="module-content">
+                    <div class="module-desc">学习圆柱体侧面积的计算方法</div>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module2Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-card module-3 locked" data-module="3">
+                <div class="module-header">
+                    <div class="module-title">模块3: 表面积</div>
+                </div>
+                <div class="module-content">
+                    <div class="module-desc">掌握圆柱体表面积的计算</div>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module3Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-card module-4 locked" data-module="4">
+                <div class="module-header">
+                    <div class="module-title">模块4: 体积</div>
+                </div>
+                <div class="module-content">
+                    <div class="module-desc">理解圆柱体体积的计算公式</div>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module4Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-card module-5 locked" data-module="5">
+                <div class="module-header">
+                    <div class="module-title">模块5: 实际应用</div>
+                </div>
+                <div class="module-content">
+                    <div class="module-desc">应用圆柱体知识解决实际问题</div>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module5Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-card module-6 locked" data-module="6">
+                <div class="module-header">
+                    <div class="module-title">模块6: 综合挑战</div>
+                </div>
+                <div class="module-content">
+                    <div class="module-desc">测试圆柱体知识的综合应用</div>
+                    <div class="module-progress">
+                        <div class="progress-circle" id="module6Progress">0%</div>
+                        <div class="progress-text">完成度</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-area">
+            <div class="content-header">
+                <h2 id="contentTitle">模块1: 认识圆柱体</h2>
+                <p class="content-subtitle" id="contentSubtitle">了解圆柱体的定义、组成部分和特征</p>
+            </div>
+            
+            <div class="content-body active" id="module1Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">什么是圆柱体？</h3>
+                    <p class="concept-desc">圆柱体是由<strong>两个平行且相等的圆面</strong>和一个<strong>侧面</strong>组成的立体图形。</p>
+                    
+                    <div class="example">
+                        <p><strong>圆柱体的组成部分：</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>底面</strong>：两个完全相同的圆</li>
+                            <li><strong>侧面</strong>：曲面，展开后是一个长方形</li>
+                            <li><strong>高</strong>：两个底面之间的垂直距离</li>
+                            <li><strong>半径</strong>：底面圆的半径</li>
+                            <li><strong>直径</strong>：底面圆的直径</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 class="concept-title">圆柱体的特征</h3>
+                    <p class="concept-desc">1. 两个底面是平行且相等的圆</p>
+                    <p class="concept-desc">2. 侧面展开是一个长方形（或正方形）</p>
+                    <p class="concept-desc">3. 有无数条高，且所有高都相等</p>
+                    <p class="concept-desc">4. 侧面与底面垂直</p>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="cylinder-container">
+                        <h3 class="game-title">3D圆柱体探索</h3>
+                        <div class="cylinder-wrapper">
+                            <canvas id="cylinderCanvas1" class="cylinder-canvas" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <div class="cylinder-controls">
+                            <button class="btn" id="rotateX1">绕X轴旋转</button>
+                            <button class="btn" id="rotateY1">绕Y轴旋转</button>
+                            <button class="btn" id="resetView1">重置视图</button>
+                        </div>
+                        
+                        <div class="value-display" style="margin-top: 20px;">
+                            圆柱体高度: <span id="cylinderHeight1">10</span> 厘米
+                        </div>
+                    </div>
+                    
+                    <div class="game-panel">
+                        <h3 class="game-title">圆柱体组成部分识别</h3>
+                        <p>点击3D圆柱体上的不同部分，了解它们的名称和作用：</p>
+                        
+                        <div class="control-group">
+                            <div class="slider-container">
+                                <label>圆柱体高度:</label>
+                                <input type="range" id="heightSlider1" min="5" max="50" value="10" step="1">
+                                <div class="value-display" id="heightValue1">10 厘米</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>底面半径:</label>
+                                <input type="range" id="radiusSlider1" min="3" max="20" value="5" step="1">
+                                <div class="value-display" id="radiusValue1">5 厘米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p class="problem-statement"><strong>小测验：</strong> 下列哪项不是圆柱体的特征？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">有两个平行且相等的底面</div>
+                                <div class="option" data-correct="false">侧面展开是长方形</div>
+                                <div class="option" data-correct="true">有8个顶点</div>
+                                <div class="option" data-correct="false">所有高都相等</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="checkModule1">检查答案</button>
+                        <button class="btn btn-success" id="nextModule1">完成本模块</button>
+                        
+                        <div class="feedback" id="module1Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-body" id="module2Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">圆柱体的侧面积</h3>
+                    <p class="concept-desc">圆柱体的侧面积是指圆柱体侧面的面积。</p>
+                    
+                    <div class="example">
+                        <p><strong>侧面积公式：</strong> 侧面积 = 底面周长 × 高</p>
+                        <p><strong>字母表示：</strong> S侧 = 2πrh</p>
+                        <p><strong>推导过程：</strong> 侧面展开后是一个长方形，长=底面周长，宽=高</p>
+                    </div>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="cylinder-container">
+                        <h3 class="game-title">侧面积计算器</h3>
+                        <div class="cylinder-wrapper">
+                            <canvas id="cylinderCanvas2" class="cylinder-canvas" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <div class="value-display" style="margin-top: 20px;">
+                            侧面积: <span id="lateralArea">0</span> 平方厘米
+                        </div>
+                    </div>
+                    
+                    <div class="game-panel">
+                        <h3 class="game-title">计算侧面积</h3>
+                        
+                        <div class="control-group">
+                            <div class="slider-container">
+                                <label>圆柱体高度:</label>
+                                <input type="range" id="heightSlider2" min="5" max="50" value="10" step="1">
+                                <div class="value-display" id="heightValue2">10 厘米</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>底面半径:</label>
+                                <input type="range" id="radiusSlider2" min="3" max="20" value="5" step="1">
+                                <div class="value-display" id="radiusValue2">5 厘米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p class="problem-statement"><strong>计算：</strong> 一个圆柱体高12厘米，底面半径4厘米，它的侧面积是多少？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">150.72 平方厘米</div>
+                                <div class="option" data-correct="true">301.44 平方厘米</div>
+                                <div class="option" data-correct="false">452.16 平方厘米</div>
+                                <div class="option" data-correct="false">603.19 平方厘米</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="checkModule2">检查答案</button>
+                        <button class="btn btn-success" id="nextModule2">完成本模块</button>
+                        
+                        <div class="feedback" id="module2Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-body" id="module3Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">圆柱体的表面积</h3>
+                    <p class="concept-desc">圆柱体的表面积是指圆柱体所有面的总面积，包括两个底面和一个侧面。</p>
+                    
+                    <div class="example">
+                        <p><strong>表面积公式：</strong> 表面积 = 侧面积 + 2 × 底面积</p>
+                        <p><strong>字母表示：</strong> S表 = 2πrh + 2πr² = 2πr(h + r)</p>
+                        <p><strong>推导过程：</strong> 两个底面积 + 侧面积</p>
+                    </div>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="cylinder-container">
+                        <h3 class="game-title">表面积计算器</h3>
+                        <div class="cylinder-wrapper">
+                            <canvas id="cylinderCanvas3" class="cylinder-canvas" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <div class="value-display" style="margin-top: 20px;">
+                            表面积: <span id="surfaceArea">0</span> 平方厘米
+                        </div>
+                    </div>
+                    
+                    <div class="game-panel">
+                        <h3 class="game-title">计算表面积</h3>
+                        
+                        <div class="control-group">
+                            <div class="slider-container">
+                                <label>圆柱体高度:</label>
+                                <input type="range" id="heightSlider3" min="5" max="50" value="10" step="1">
+                                <div class="value-display" id="heightValue3">10 厘米</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>底面半径:</label>
+                                <input type="range" id="radiusSlider3" min="3" max="20" value="5" step="1">
+                                <div class="value-display" id="radiusValue3">5 厘米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p class="problem-statement"><strong>计算：</strong> 一个圆柱体高8厘米，底面半径3厘米，它的表面积是多少？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">150.72 平方厘米</div>
+                                <div class="option" data-correct="true">207.24 平方厘米</div>
+                                <div class="option" data-correct="false">263.76 平方厘米</div>
+                                <div class="option" data-correct="false">320.28 平方厘米</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="checkModule3">检查答案</button>
+                        <button class="btn btn-success" id="nextModule3">完成本模块</button>
+                        
+                        <div class="feedback" id="module3Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-body" id="module4Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">圆柱体的体积</h3>
+                    <p class="concept-desc">圆柱体的体积是指圆柱体所占据的空间大小。</p>
+                    
+                    <div class="example">
+                        <p><strong>体积公式：</strong> 体积 = 底面积 × 高</p>
+                        <p><strong>字母表示：</strong> V = πr²h</p>
+                        <p><strong>推导过程：</strong> 圆柱体可以看作是由无数个相同的圆片叠加而成</p>
+                    </div>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="cylinder-container">
+                        <h3 class="game-title">体积计算器</h3>
+                        <div class="cylinder-wrapper">
+                            <canvas id="cylinderCanvas4" class="cylinder-canvas" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <div class="value-display" style="margin-top: 20px;">
+                            体积: <span id="volumeValue">0</span> 立方厘米
+                        </div>
+                    </div>
+                    
+                    <div class="game-panel">
+                        <h3 class="game-title">计算体积</h3>
+                        
+                        <div class="control-group">
+                            <div class="slider-container">
+                                <label>圆柱体高度:</label>
+                                <input type="range" id="heightSlider4" min="5" max="50" value="10" step="1">
+                                <div class="value-display" id="heightValue4">10 厘米</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>底面半径:</label>
+                                <input type="range" id="radiusSlider4" min="3" max="20" value="5" step="1">
+                                <div class="value-display" id="radiusValue4">5 厘米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p class="problem-statement"><strong>计算：</strong> 一个圆柱体高15厘米，底面半径6厘米，它的体积是多少？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">565.2 立方厘米</div>
+                                <div class="option" data-correct="false">1130.4 立方厘米</div>
+                                <div class="option" data-correct="true">1695.6 立方厘米</div>
+                                <div class="option" data-correct="false">2260.8 立方厘米</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="checkModule4">检查答案</button>
+                        <button class="btn btn-success" id="nextModule4">完成本模块</button>
+                        
+                        <div class="feedback" id="module4Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-body" id="module5Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">圆柱体的实际应用</h3>
+                    <p class="concept-desc">圆柱体在生活中有广泛的应用，如容器、建筑、工业产品等。</p>
+                    
+                    <div class="example">
+                        <p><strong>常见应用：</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>饮料罐、水杯等容器</li>
+                            <li>柱子、管道等建筑结构</li>
+                            <li>电池、蜡烛等日常用品</li>
+                            <li>滚筒、轴等机械零件</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="cylinder-container">
+                        <h3 class="game-title">实际应用场景</h3>
+                        <div class="cylinder-wrapper">
+                            <canvas id="cylinderCanvas5" class="cylinder-canvas" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <div class="value-display" style="margin-top: 20px;">
+                            容积: <span id="capacityValue">0</span> 毫升
+                        </div>
+                    </div>
+                    
+                    <div class="game-panel">
+                        <h3 class="game-title">实际问题解决</h3>
+                        
+                        <div class="control-group">
+                            <div class="slider-container">
+                                <label>圆柱体高度:</label>
+                                <input type="range" id="heightSlider5" min="5" max="50" value="10" step="1">
+                                <div class="value-display" id="heightValue5">10 厘米</div>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>底面半径:</label>
+                                <input type="range" id="radiusSlider5" min="3" max="20" value="5" step="1">
+                                <div class="value-display" id="radiusValue5">5 厘米</div>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p class="problem-statement"><strong>问题1：</strong> 一个圆柱形水杯，底面直径8厘米，高15厘米，它的容积是多少毫升？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">150 毫升</div>
+                                <div class="option" data-correct="false">300 毫升</div>
+                                <div class="option" data-correct="true">约754 毫升</div>
+                                <div class="option" data-correct="false">900 毫升</div>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p class="problem-statement"><strong>问题2：</strong> 要制作一个圆柱形铁皮桶，底面半径10厘米，高30厘米，需要多少平方厘米的铁皮？</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">1256 平方厘米</div>
+                                <div class="option" data-correct="false">1884 平方厘米</div>
+                                <div class="option" data-correct="true">2512 平方厘米</div>
+                                <div class="option" data-correct="false">3140 平方厘米</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="checkModule5">检查答案</button>
+                        <button class="btn btn-success" id="nextModule5">完成本模块</button>
+                        
+                        <div class="feedback" id="module5Feedback"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-body" id="module6Content">
+                <div class="knowledge-panel">
+                    <h3 class="concept-title">综合挑战</h3>
+                    <p class="concept-desc">综合运用圆柱体的各项知识，解决复杂问题。</p>
+                    
+                    <div class="example">
+                        <p><strong>挑战内容：</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>综合计算圆柱体的侧面积、表面积和体积</li>
+                            <li>解决实际生活中的复杂问题</li>
+                            <li>应用比例和单位换算</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="interactive-area">
+                    <div class="cylinder-container">
+                        <h3 class="game-title">综合挑战</h3>
+                        <div class="cylinder-wrapper">
+                            <canvas id="cylinderCanvas6" class="cylinder-canvas" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <div class="value-display" style="margin-top: 20px;">
+                            综合得分: <span id="challengeScore">0</span> 分
+                        </div>
+                    </div>
+                    
+                    <div class="game-panel">
+                        <h3 class="game-title">终极挑战</h3>
+                        
+                        <div class="problem-container">
+                            <p class="problem-statement"><strong>挑战1：</strong> 一个圆柱形容器，底面周长是31.4厘米，高是20厘米。</p>
+                            <p>1. 求这个容器的底面半径是多少厘米？</p>
+                            <p>2. 求这个容器的容积是多少立方厘米？</p>
+                            <p>3. 如果把这个容器装满水，水的重量是多少克？（1立方厘米水重1克）</p>
+                            
+                            <div class="slider-container">
+                                <label>底面半径:</label>
+                                <input type="number" id="challenge1Radius" class="value-display" placeholder="输入答案">
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>容积:</label>
+                                <input type="number" id="challenge1Volume" class="value-display" placeholder="输入答案">
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>水的重量:</label>
+                                <input type="number" id="challenge1Weight" class="value-display" placeholder="输入答案">
+                            </div>
+                            
+                            <button class="btn" id="checkChallenge1">检查答案</button>
+                        </div>
+                        
+                        <div class="problem-container">
+                            <p class="problem-statement"><strong>挑战2：</strong> 要制作一个无盖的圆柱形铁皮桶，底面直径是20厘米，高是30厘米。</p>
+                            <p>1. 制作这个桶需要多少平方厘米的铁皮？</p>
+                            <p>2. 这个桶的容积是多少升？（1升 = 1000立方厘米）</p>
+                            
+                            <div class="slider-container">
+                                <label>所需铁皮面积:</label>
+                                <input type="number" id="challenge2Area" class="value-display" placeholder="输入答案">
+                            </div>
+                            
+                            <div class="slider-container">
+                                <label>容积（升）:</label>
+                                <input type="number" id="challenge2Capacity" class="value-display" placeholder="输入答案">
+                            </div>
+                            
+                            <button class="btn" id="checkChallenge2">检查答案</button>
+                        </div>
+                        
+                        <button class="btn btn-success" id="nextModule6">完成所有挑战</button>
+                        
+                        <div class="feedback" id="module6Feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="achievement" id="achievement">
+        <span>🏆</span>
+        <span id="badgeText">成就解锁!</span>
+    </div>
+
+    <script>
+        // 游戏状态
+        const gameState = {
+            currentModule: 1,
+            score: 0,
+            level: "初学者",
+            completed: 0,
+            energy: 100,
+            moduleProgress: [0, 0, 0, 0, 0, 0],
+            missions: [
+                "认识圆柱体",
+                "计算侧面积",
+                "计算表面积",
+                "计算体积",
+                "实际应用",
+                "综合挑战"
+            ]
+        };
+        
+        // 存储所有3D圆柱体场景
+        const cylinderScenes = {};
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化事件监听器
+            initEventListeners();
+            
+            // 初始化所有3D圆柱体
+            initAllCylinders();
+            
+            // 更新游戏状态显示
+            updateGameState();
+        });
+        
+        // 初始化事件监听器
+        function initEventListeners() {
+            // 模块选择
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    if (!this.classList.contains('locked')) {
+                        const module = parseInt(this.dataset.module);
+                        switchModule(module);
+                    }
+                });
+            });
+            
+            // 模块1事件
+            document.getElementById('heightSlider1').addEventListener('input', function() { updateCylinder(1); });
+            document.getElementById('radiusSlider1').addEventListener('input', function() { updateCylinder(1); });
+            document.getElementById('rotateX1').addEventListener('click', function() { rotateCylinder(1, 'X'); });
+            document.getElementById('rotateY1').addEventListener('click', function() { rotateCylinder(1, 'Y'); });
+            document.getElementById('resetView1').addEventListener('click', function() { resetCylinderView(1); });
+            document.getElementById('checkModule1').addEventListener('click', checkModule1);
+            document.getElementById('nextModule1').addEventListener('click', function() { completeModule(1); });
+            
+            // 模块2事件
+            document.getElementById('heightSlider2').addEventListener('input', function() { updateCylinder(2); });
+            document.getElementById('radiusSlider2').addEventListener('input', function() { updateCylinder(2); });
+            document.getElementById('checkModule2').addEventListener('click', checkModule2);
+            document.getElementById('nextModule2').addEventListener('click', function() { completeModule(2); });
+            
+            // 模块3事件
+            document.getElementById('heightSlider3').addEventListener('input', function() { updateCylinder(3); });
+            document.getElementById('radiusSlider3').addEventListener('input', function() { updateCylinder(3); });
+            document.getElementById('checkModule3').addEventListener('click', checkModule3);
+            document.getElementById('nextModule3').addEventListener('click', function() { completeModule(3); });
+            
+            // 模块4事件
+            document.getElementById('heightSlider4').addEventListener('input', function() { updateCylinder(4); });
+            document.getElementById('radiusSlider4').addEventListener('input', function() { updateCylinder(4); });
+            document.getElementById('checkModule4').addEventListener('click', checkModule4);
+            document.getElementById('nextModule4').addEventListener('click', function() { completeModule(4); });
+            
+            // 模块5事件
+            document.getElementById('heightSlider5').addEventListener('input', function() { updateCylinder(5); });
+            document.getElementById('radiusSlider5').addEventListener('input', function() { updateCylinder(5); });
+            document.getElementById('checkModule5').addEventListener('click', checkModule5);
+            document.getElementById('nextModule5').addEventListener('click', function() { completeModule(5); });
+            
+            // 模块6事件
+            document.getElementById('checkChallenge1').addEventListener('click', checkChallenge1);
+            document.getElementById('checkChallenge2').addEventListener('click', checkChallenge2);
+            document.getElementById('nextModule6').addEventListener('click', function() { completeModule(6); });
+            
+            // 选项点击事件
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    handleOptionClick(this);
+                });
+            });
+        }
+        
+        // 初始化所有3D圆柱体
+        function initAllCylinders() {
+            for (let i = 1; i <= 6; i++) {
+                initCylinder3D(i);
+                updateCylinder(i);
+            }
+        }
+        
+        // 初始化3D圆柱体
+        function initCylinder3D(moduleNum) {
+            const canvasId = `cylinderCanvas${moduleNum}`;
+            const canvas = document.getElementById(canvasId);
+
+            if (!canvas) return;
+            if (typeof THREE === 'undefined') {
+                if (window.drawLearningCylinderFallback) {
+                    window.drawLearningCylinderFallback(canvas, moduleNum);
+                }
+                return;
+            }
+            
+            // 创建场景
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+            let renderer;
+            try {
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            } catch (error) {
+                if (window.drawLearningCylinderFallback) {
+                    window.drawLearningCylinderFallback(canvas, moduleNum);
+                }
+                return;
+            }
+            
+            renderer.setSize(400, 400);
+            renderer.setClearColor(0x0a0a1e, 1);
+            
+            // 创建圆柱体
+            const geometry = new THREE.CylinderGeometry(1, 1, 2, 32);
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0x00aaff,
+                transparent: true,
+                opacity: 0.7
+            });
+            const cylinder = new THREE.Mesh(geometry, material);
+            scene.add(cylinder);
+            
+            // 添加光源
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
+            // 设置相机位置
+            camera.position.z = 5;
+            
+            // 保存场景和圆柱体引用
+            cylinderScenes[moduleNum] = {
+                scene: scene,
+                camera: camera,
+                renderer: renderer,
+                cylinder: cylinder
+            };
+            
+            // 动画循环
+            const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function animate() {
+                requestAnimationFrame(animate);
+                const panel = canvas.closest('.content-body');
+                if (!panel || panel.classList.contains('active')) {
+                    if (!reduceMotion) cylinder.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                }
+            }
+            
+            animate();
+        }
+        
+        // 更新圆柱体
+        function updateCylinder(moduleNum) {
+            const heightSlider = document.getElementById(`heightSlider${moduleNum}`);
+            const radiusSlider = document.getElementById(`radiusSlider${moduleNum}`);
+            
+            if (!heightSlider || !radiusSlider) return;
+            
+            const height = parseInt(heightSlider.value);
+            const radius = parseInt(radiusSlider.value);
+            
+            // 更新显示值
+            document.getElementById(`heightValue${moduleNum}`).textContent = height + ' 厘米';
+            document.getElementById(`radiusValue${moduleNum}`).textContent = radius + ' 厘米';
+            
+            if (moduleNum === 1) {
+                document.getElementById('cylinderHeight1').textContent = height;
+            }
+            
+            // 更新圆柱体尺寸
+            if (cylinderScenes[moduleNum] && cylinderScenes[moduleNum].cylinder) {
+                const cylinder = cylinderScenes[moduleNum].cylinder;
+                cylinder.scale.set(radius/10, height/10, radius/10);
+            }
+            
+            // 计算并显示相关值
+            if (moduleNum === 2) {
+                // 侧面积
+                const lateralArea = 2 * Math.PI * radius * height;
+                document.getElementById('lateralArea').textContent = lateralArea.toFixed(2);
+            } else if (moduleNum === 3) {
+                // 表面积
+                const surfaceArea = 2 * Math.PI * radius * height + 2 * Math.PI * radius * radius;
+                document.getElementById('surfaceArea').textContent = surfaceArea.toFixed(2);
+            } else if (moduleNum === 4) {
+                // 体积
+                const volume = Math.PI * radius * radius * height;
+                document.getElementById('volumeValue').textContent = volume.toFixed(2);
+            } else if (moduleNum === 5) {
+                // 容积
+                const capacity = Math.PI * radius * radius * height;
+                document.getElementById('capacityValue').textContent = capacity.toFixed(2);
+            }
+            
+            // 更新任务进度
+            updateMissionProgress(moduleNum, 30);
+        }
+        
+        // 旋转圆柱体
+        function rotateCylinder(moduleNum, axis) {
+            if (cylinderScenes[moduleNum] && cylinderScenes[moduleNum].cylinder) {
+                const cylinder = cylinderScenes[moduleNum].cylinder;
+                if (axis === 'X') {
+                    cylinder.rotation.x += 0.5;
+                } else if (axis === 'Y') {
+                    cylinder.rotation.y += 0.5;
+                }
+            }
+        }
+        
+        // 重置圆柱体视图
+        function resetCylinderView(moduleNum) {
+            if (cylinderScenes[moduleNum] && cylinderScenes[moduleNum].cylinder) {
+                const cylinder = cylinderScenes[moduleNum].cylinder;
+                cylinder.rotation.x = 0;
+                cylinder.rotation.y = 0;
+            }
+        }
+        
+        // 切换模块
+        function switchModule(module) {
+            // 更新模块激活状态
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`.module-card[data-module="${module}"]`).classList.add('active');
+            
+            // 隐藏所有内容
+            document.querySelectorAll('.content-body').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 显示目标模块内容
+            document.getElementById(`module${module}Content`).classList.add('active');
+            
+            // 更新当前模块
+            gameState.currentModule = module;
+            
+            // 更新内容标题
+            updateContentTitle(module);
+        }
+        
+        // 更新内容标题
+        function updateContentTitle(module) {
+            const titles = [
+                "模块1: 认识圆柱体",
+                "模块2: 侧面积",
+                "模块3: 表面积", 
+                "模块4: 体积",
+                "模块5: 实际应用",
+                "模块6: 综合挑战"
+            ];
+            
+            const subtitles = [
+                "了解圆柱体的定义、组成部分和特征",
+                "学习圆柱体侧面积的计算方法",
+                "掌握圆柱体表面积的计算",
+                "理解圆柱体体积的计算公式",
+                "应用圆柱体知识解决实际问题",
+                "测试圆柱体知识的综合应用"
+            ];
+            
+            document.getElementById('contentTitle').textContent = titles[module-1];
+            document.getElementById('contentSubtitle').textContent = subtitles[module-1];
+            document.getElementById('currentMission').textContent = gameState.missions[module-1];
+        }
+        
+        // 处理选项点击
+        function handleOptionClick(option) {
+            const isCorrect = option.dataset.correct === 'true';
+            const options = option.parentElement.querySelectorAll('.option');
+            
+            // 移除同一问题中所有选项的选中状态
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // 为当前点击的选项添加选中状态
+            option.classList.add('selected');
+            
+            // 显示所有选项的正确/错误状态
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                if (opt.dataset.correct === 'true') {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            if (isCorrect) {
+                gameState.score += 10;
+                showCelebration();
+                updateGameState();
+            }
+        }
+        
+        // 完成模块
+        function completeModule(module) {
+            if (gameState.moduleProgress[module-1] < 100) {
+                gameState.moduleProgress[module-1] = 100;
+                gameState.score += 30;
+                gameState.completed = gameState.moduleProgress.filter(p => p === 100).length;
+                
+                // 解锁下一个模块
+                if (module < 6) {
+                    document.querySelector(`.module-card[data-module="${module+1}"]`).classList.remove('locked');
+                }
+                
+                updateModuleProgress(module, 100);
+                updateGameState();
+                
+                showAchievement(`完成"${gameState.missions[module-1]}"模块！`);
+                
+                // 切换到下一个模块
+                if (module < 6) {
+                    setTimeout(() => {
+                        switchModule(module+1);
+                    }, 2000);
+                } else {
+                    // 所有模块完成
+                    showLevelUp();
+                }
+            }
+        }
+        
+        // 更新模块进度
+        function updateModuleProgress(module, progress) {
+            const progressCircle = document.getElementById(`module${module}Progress`);
+            progressCircle.textContent = `${progress}%`;
+            progressCircle.style.background = `conic-gradient(#00c6ff 0% ${progress}%, #1e3a5f ${progress}% 100%)`;
+        }
+        
+        // 更新任务进度
+        function updateMissionProgress(module, progress) {
+            gameState.moduleProgress[module-1] = Math.max(gameState.moduleProgress[module-1], progress);
+            const totalProgress = gameState.moduleProgress.reduce((a, b) => a + b, 0) / 6;
+            
+            document.getElementById('missionProgress').style.width = `${totalProgress}%`;
+            document.getElementById('missionPercent').textContent = Math.round(totalProgress);
+            document.getElementById('globalProgress').style.width = `${totalProgress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(totalProgress)}%`;
+        }
+        
+        // 显示庆祝效果
+        function showCelebration() {
+            const celebration = document.getElementById('celebration');
+            celebration.style.display = 'block';
+            
+            // 创建彩色纸屑
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                celebration.appendChild(confetti);
+            }
+            
+            setTimeout(() => {
+                celebration.style.display = 'none';
+                celebration.innerHTML = '';
+            }, 3000);
+        }
+        
+        // 显示等级提升
+        function showLevelUp() {
+            const levelUp = document.createElement('div');
+            levelUp.textContent = '等级提升！';
+            levelUp.style.position = 'fixed';
+            levelUp.style.top = '50%';
+            levelUp.style.left = '50%';
+            levelUp.style.transform = 'translate(-50%, -50%)';
+            levelUp.style.background = 'linear-gradient(90deg, #00c6ff, #0072ff)';
+            levelUp.style.color = 'white';
+            levelUp.style.padding = '20px 40px';
+            levelUp.style.borderRadius = '10px';
+            levelUp.style.fontSize = '2rem';
+            levelUp.style.zIndex = '1000';
+            document.body.appendChild(levelUp);
+            
+            setTimeout(() => {
+                levelUp.remove();
+            }, 2000);
+        }
+        
+        // 显示成就
+        function showAchievement(message) {
+            const badge = document.getElementById('achievement');
+            const badgeText = document.getElementById('badgeText');
+            
+            badgeText.textContent = message;
+            badge.classList.add('show');
+            
+            // 3秒后隐藏成就
+            setTimeout(() => {
+                badge.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 更新游戏状态
+        function updateGameState() {
+            // 更新积分
+            document.getElementById('playerScore').textContent = gameState.score;
+            
+            // 更新等级
+            if (gameState.score >= 100) {
+                gameState.level = "圆柱体大师";
+            } else if (gameState.score >= 50) {
+                gameState.level = "进阶学者";
+            } else if (gameState.score >= 20) {
+                gameState.level = "初学者";
+            }
+            document.getElementById('playerLevel').textContent = gameState.level;
+            
+            // 更新完成模块
+            document.getElementById('completedModules').textContent = `${gameState.completed}/6`;
+            
+            // 更新进度
+            const totalProgress = gameState.moduleProgress.reduce((a, b) => a + b, 0) / 6;
+            document.getElementById('globalProgress').style.width = `${totalProgress}%`;
+        }
+        
+        // 检查模块答案函数
+        function checkModule1() {
+            const feedback = document.getElementById('module1Feedback');
+            feedback.textContent = '很好！你正在学习圆柱体的基本概念。继续努力！';
+            feedback.className = 'feedback correct';
+            feedback.style.display = 'block';
+            
+            gameState.score += 5;
+            updateGameState();
+        }
+        
+        function checkModule2() {
+            const feedback = document.getElementById('module2Feedback');
+            feedback.textContent = '正确！圆柱体侧面积 = 2 × π × 半径 × 高';
+            feedback.className = 'feedback correct';
+            feedback.style.display = 'block';
+            
+            gameState.score += 5;
+            updateGameState();
+        }
+        
+        function checkModule3() {
+            const feedback = document.getElementById('module3Feedback');
+            feedback.textContent = '正确！圆柱体表面积 = 2 × π × 半径 × 高 + 2 × π × 半径²';
+            feedback.className = 'feedback correct';
+            feedback.style.display = 'block';
+            
+            gameState.score += 5;
+            updateGameState();
+        }
+        
+        function checkModule4() {
+            const feedback = document.getElementById('module4Feedback');
+            feedback.textContent = '正确！圆柱体体积 = π × 半径² × 高';
+            feedback.className = 'feedback correct';
+            feedback.style.display = 'block';
+            
+            gameState.score += 5;
+            updateGameState();
+        }
+        
+        function checkModule5() {
+            const feedback = document.getElementById('module5Feedback');
+            feedback.textContent = '很好！你能够应用圆柱体知识解决实际问题。';
+            feedback.className = 'feedback correct';
+            feedback.style.display = 'block';
+            
+            gameState.score += 5;
+            updateGameState();
+        }
+        
+        function checkChallenge1() {
+            const radiusInput = parseFloat(document.getElementById('challenge1Radius').value);
+            const volumeInput = parseFloat(document.getElementById('challenge1Volume').value);
+            const weightInput = parseFloat(document.getElementById('challenge1Weight').value);
+            
+            // 正确答案计算
+            const circumference = 31.4;
+            const radius = circumference / (2 * Math.PI);
+            const height = 20;
+            const volume = Math.PI * radius * radius * height;
+            const weight = volume; // 1立方厘米水重1克
+            
+            const feedback = document.getElementById('module6Feedback');
+            
+            if (Math.abs(radiusInput - radius) < 0.1 && 
+                Math.abs(volumeInput - volume) < 1 && 
+                Math.abs(weightInput - weight) < 1) {
+                feedback.textContent = '正确！挑战1答案完全正确！';
+                feedback.className = 'feedback correct';
+                gameState.score += 20;
+                showCelebration();
+            } else {
+                feedback.textContent = '再检查一下计算，注意公式和单位。';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            updateGameState();
+        }
+        
+        function checkChallenge2() {
+            const areaInput = parseFloat(document.getElementById('challenge2Area').value);
+            const capacityInput = parseFloat(document.getElementById('challenge2Capacity').value);
+            
+            // 正确答案计算
+            const diameter = 20;
+            const radius = diameter / 2;
+            const height = 30;
+            const area = Math.PI * radius * radius + 2 * Math.PI * radius * height; // 底面积 + 侧面积
+            const volume = Math.PI * radius * radius * height;
+            const capacity = volume / 1000; // 转换为升
+            
+            const feedback = document.getElementById('module6Feedback');
+            
+            if (Math.abs(areaInput - area) < 10 && Math.abs(capacityInput - capacity) < 0.1) {
+                feedback.textContent = '正确！挑战2答案完全正确！';
+                feedback.className = 'feedback correct';
+                gameState.score += 20;
+                showCelebration();
+            } else {
+                feedback.textContent = '再检查一下计算，注意无盖圆柱体的表面积计算。';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            updateGameState();
+        }
+    </script>
+    <script src="../_shared/体验增强.js"></script>
+</body>
+</html>

@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="家庭童书精读系统：可选 7、15、21 天阅读计划、孩子进度、家长陪读与完整精读闭环。">
+  <title>读书有光 - 家庭精读系统</title>
+  <script src="./lucide.min.js"></script>
+  <style>
+    :root{--f:#173f36;--f2:#295d50;--ink:#17231e;--paper:#f8f5ed;--paper2:#eee9de;--gold:#e8a52b;--coral:#d95d43;--sky:#cfe4e6;--mint:#d8ead5;--line:#d8d1c3;--muted:#6e766c;--white:#fffdf8;--shadow:0 18px 40px rgba(23,63,54,.14)}*{box-sizing:border-box}html{background:#d8d2c4;scroll-behavior:smooth}body{min-width:320px;margin:0;background:#d8d2c4;color:var(--ink);font-family:Inter,"PingFang SC","Microsoft YaHei",Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.app{max-width:1500px;min-height:100vh;margin:0 auto;background:var(--paper);box-shadow:0 0 0 1px rgba(23,63,54,.25),12px 12px 0 var(--f)}
+    .topbar{position:sticky;top:0;z-index:50;height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 34px;background:var(--f);color:#fff;border-bottom:1px solid rgba(255,255,255,.18)}.brand{display:flex;align-items:center;gap:11px;color:inherit;text-decoration:none;font-weight:950}.brand-mark{display:grid;width:32px;height:32px;place-items:center;background:var(--gold);color:var(--f);border:1px solid var(--gold);box-shadow:3px 3px 0 rgba(0,0,0,.35)}.brand-mark i{width:18px}.brand small{display:block;margin-top:2px;color:#b4ccc2;font-size:9px;font-weight:800;letter-spacing:.11em}.top-actions{display:flex;gap:8px}.utility{display:inline-flex;min-height:36px;align-items:center;gap:7px;padding:0 11px;border:1px solid rgba(255,255,255,.43);background:transparent;color:#fff;font-size:11px;font-weight:850}.utility i{width:14px}.utility.gold{border-color:var(--gold);background:var(--gold);color:var(--f)}
+    .landing{min-height:calc(100vh - 70px);padding:58px 52px;background-color:var(--paper);background-image:linear-gradient(rgba(23,63,54,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,54,.055) 1px,transparent 1px);background-size:34px 34px}.landing-shell{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(400px,.98fr);gap:56px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 22px;color:var(--f);font-size:10px;font-weight:950;letter-spacing:.14em}.eyebrow:before{content:"";width:31px;height:3px;background:var(--coral)}.landing h1{max-width:630px;margin:0;color:var(--f);font-size:67px;line-height:1.03;letter-spacing:0}.landing h1 span{color:var(--coral)}.landing-copy>p{max-width:510px;margin:22px 0 0;color:#536359;font-size:15px;font-weight:650;line-height:1.85}.cover-stack{position:relative;height:220px;margin-top:35px}.cover-stack img{position:absolute;bottom:0;width:118px;height:174px;object-fit:cover;border:2px solid var(--f);box-shadow:5px 5px 0 var(--f)}.cover-stack img:nth-child(1){left:0;transform:rotate(-8deg)}.cover-stack img:nth-child(2){left:104px;bottom:16px;transform:rotate(-1deg)}.cover-stack img:nth-child(3){left:207px;bottom:4px;transform:rotate(7deg)}.cover-stack img:nth-child(4){left:314px;bottom:17px;transform:rotate(12deg)}.cover-stack:after{content:"12 本预设精读书\A封面已内置";white-space:pre;position:absolute;left:455px;bottom:5px;color:var(--muted);font-size:10px;font-weight:850;line-height:1.6;letter-spacing:.1em}
+    .entry{position:relative;overflow:hidden;border:2px solid var(--f);background:var(--white);box-shadow:9px 9px 0 var(--f)}.entry-head{display:flex;align-items:center;justify-content:space-between;height:47px;padding:0 18px;background:var(--f);color:#fff;font-size:11px;font-weight:950;letter-spacing:.12em}.entry-head b{color:var(--gold);font-size:10px}.form{padding:25px}.form label{display:block;margin-bottom:9px;color:var(--f);font-size:13px;font-weight:900}.book-input{width:100%;height:62px;border:1.5px solid var(--f);border-radius:0;padding:0 15px;background:var(--paper);color:var(--ink);font-size:20px;font-weight:850}.book-input::placeholder{color:#97988f;font-size:14px;font-weight:600}.selects{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:13px}.selects div label{margin:0 0 5px;color:var(--muted);font-size:9px;font-weight:850}.selects select{width:100%;height:37px;padding:0 5px;border:1px solid var(--line);border-radius:0;background:var(--paper2);font-size:10px;font-weight:800;color:var(--ink)}.start{display:flex;width:100%;height:51px;align-items:center;justify-content:space-between;margin-top:19px;padding:0 15px;border:1.5px solid var(--f);background:var(--gold);color:var(--f);font-size:14px;font-weight:950;box-shadow:4px 4px 0 var(--f)}.start i{width:18px}.entry-note{margin:16px 0 0;color:var(--muted);font-size:10px;font-weight:650;line-height:1.7}.demo-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:11px}.demo-row span{margin-right:3px;color:var(--f);font-size:10px;font-weight:900}.demo-row button{min-width:29px;height:26px;border:1px solid var(--line);background:var(--white);color:var(--f);font-size:10px;font-weight:950}.demo-row button:hover{background:var(--mint);border-color:var(--f)}.fit{display:flex;gap:8px;margin-top:16px;padding:10px;border-left:4px solid var(--coral);background:var(--paper2);color:#536058;font-size:10px;font-weight:700;line-height:1.6}.fit i{width:15px;flex:0 0 auto;color:var(--coral)}
+    .loading{position:fixed;z-index:100;inset:0;display:none;place-items:center;padding:20px;background:rgba(23,63,54,.8);backdrop-filter:blur(7px)}.loading.show{display:grid}.loader{width:min(450px,100%);padding:30px;border:2px solid var(--f);background:var(--paper);box-shadow:8px 8px 0 var(--gold)}.loader span{color:var(--coral);font-size:10px;font-weight:950;letter-spacing:.13em}.loader h2{margin:15px 0 8px;color:var(--f);font-size:29px;line-height:1.2}.loader p{margin:0;color:var(--muted);font-size:12px;font-weight:650;line-height:1.7}.loader-line{height:9px;margin-top:22px;overflow:hidden;background:var(--paper2)}.loader-line i{display:block;width:18%;height:100%;background:var(--gold);animation:load 1.05s ease-in forwards}@keyframes load{to{width:100%}}
+    .workspace{display:none;min-height:calc(100vh - 70px);grid-template-columns:302px minmax(0,1fr)}.workspace.show{display:grid}.rail{position:sticky;top:70px;height:calc(100vh - 70px);overflow:auto;padding:21px 16px 30px;border-right:1px solid var(--line);background:#f0ecdf}.current{overflow:hidden;padding:14px;border:1.5px solid var(--f);background:var(--f);color:#fff}.current img{float:left;width:65px;height:94px;margin:0 12px 8px 0;object-fit:cover;border:1px solid var(--gold);box-shadow:3px 3px 0 rgba(0,0,0,.3)}.current span{display:block;color:var(--gold);font-size:9px;font-weight:950;letter-spacing:.13em}.current h2{min-height:45px;margin:6px 0 3px;font-size:18px;line-height:1.2}.current p{margin:0;color:#c5d9d0;font-size:9px;font-weight:700;line-height:1.55}.current button{clear:both;display:inline-flex;align-items:center;gap:6px;height:30px;margin-top:4px;padding:0 8px;border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;font-size:9px;font-weight:850}.current button i{width:13px}.rail-title{display:flex;justify-content:space-between;margin:19px 0 9px;color:var(--f);font-size:10px;font-weight:950;letter-spacing:.1em}.rail-title small{color:var(--muted);font-size:9px;letter-spacing:0}.tracks{display:grid;gap:8px}.track{padding:10px;border:1px solid var(--line);background:var(--white)}.track header{display:flex;align-items:center;gap:7px}.track-icon{display:grid;width:24px;height:24px;place-items:center;border:1px solid var(--f);color:var(--f)}.track.parent .track-icon{border-color:var(--coral);background:var(--coral);color:#fff}.track i{width:13px}.track b{font-size:11px}.track small{display:block;margin-top:2px;color:var(--muted);font-size:9px;font-weight:700}.bar{height:6px;margin-top:9px;background:#e5e1d7}.bar span{display:block;height:100%;background:var(--f);transition:width .25s}.track.parent .bar span{background:var(--coral)}.day-list{display:grid;gap:5px}.day-item{display:grid;grid-template-columns:25px 1fr auto;align-items:center;gap:7px;width:100%;min-height:47px;padding:6px;border:1px solid transparent;background:transparent;color:var(--ink);text-align:left}.day-item:hover,.day-item.active{border-color:var(--f);background:var(--white)}.day-index{display:grid;width:25px;height:25px;place-items:center;border:1px solid var(--line);background:var(--paper);color:var(--f);font-size:10px;font-weight:950}.day-item.active .day-index{border-color:var(--gold);background:var(--gold)}.day-item b{display:block;font-size:10px;line-height:1.25}.day-item small{display:block;margin-top:2px;color:var(--muted);font-size:8px;font-weight:700}.dots{display:flex;gap:3px}.dots i{display:block;width:6px;height:6px;border-radius:50%;background:#d6d1c6}.dots .child{background:var(--f)}.dots .parent{background:var(--coral)}
+    .main{min-width:0;padding:0 35px 60px}.book-head{position:relative;min-height:178px;margin:0 -35px;padding:28px 35px;overflow:hidden;background:var(--f);color:#fff}.book-head:after{content:"";position:absolute;right:54px;top:-58px;width:250px;height:250px;border:1px solid rgba(255,255,255,.35);border-radius:50%}.head-cover{position:absolute;z-index:2;right:81px;bottom:18px;width:94px;height:133px;object-fit:cover;border:2px solid var(--gold);box-shadow:7px 7px 0 rgba(0,0,0,.35);transform:rotate(4deg)}.kicker{position:relative;z-index:3;margin:0;color:var(--gold);font-size:10px;font-weight:950;letter-spacing:.13em}.book-head h1{position:relative;z-index:3;max-width:700px;margin:8px 0 0;font-size:38px;line-height:1.13}.book-head>p:not(.kicker){position:relative;z-index:3;max-width:680px;margin:9px 0 0;color:#cfe0d8;font-size:11px;font-weight:650;line-height:1.65}.meta{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}.meta span{padding:4px 6px;border:1px solid rgba(255,255,255,.35);font-size:8px;font-weight:800}.tabs{display:flex;overflow-x:auto;margin-top:23px;border-bottom:1px solid var(--line)}.tabs button{display:flex;flex:0 0 auto;min-height:44px;align-items:center;gap:5px;padding:0 11px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--muted);font-size:10px;font-weight:900;white-space:nowrap}.tabs button i{width:13px}.tabs button.active{border-bottom-color:var(--coral);color:var(--f)}.panel{display:none;padding-top:30px}.panel.active{display:block}.section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}.section-title span{display:block;color:var(--coral);font-size:10px;font-weight:950;letter-spacing:.13em}.section-title h2{margin:5px 0 0;color:var(--f);font-size:27px;line-height:1.15}.section-title p{max-width:530px;margin:0;color:var(--muted);font-size:10px;font-weight:650;line-height:1.7;text-align:right}
+    .dash{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(310px,.9fr);gap:20px}.today{position:relative;min-height:335px;padding:25px;border:1.5px solid var(--f);background:var(--white);box-shadow:7px 7px 0 var(--f)}.today:before{content:"TODAY'S READING";position:absolute;right:17px;top:15px;color:#b8c2b9;font-size:9px;font-weight:950;letter-spacing:.14em}.badge{display:grid;width:39px;height:39px;place-items:center;border:1px solid var(--f);background:var(--gold);font-size:13px;font-weight:950}.today h3{max-width:480px;margin:17px 0 0;color:var(--f);font-size:29px;line-height:1.18}.today h3 span{color:var(--coral)}.today>p{max-width:560px;margin:10px 0 0;color:#56635b;font-size:12px;font-weight:650;line-height:1.7}.today-tasks{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.task{padding:11px;border-top:3px solid var(--f);background:var(--paper2)}.task.parent{border-color:var(--coral)}.task small{display:block;color:var(--muted);font-size:8px;font-weight:950;letter-spacing:.1em}.task b{display:block;margin-top:6px;color:var(--f);font-size:12px;line-height:1.4}.task p{margin:5px 0 0;color:#6b746a;font-size:9px;font-weight:700;line-height:1.5}.action-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.action{display:inline-flex;min-height:35px;align-items:center;gap:6px;padding:0 9px;border:1.5px solid var(--f);background:var(--f);color:#fff;font-size:10px;font-weight:900}.action.parent{border-color:var(--coral);background:var(--coral)}.action.ghost{background:var(--white);color:var(--f)}.action i{width:13px}.pulse{display:grid;grid-template-rows:auto 1fr;min-height:335px;border:1.5px solid var(--f);background:var(--sky)}.pulse header{padding:15px 17px;border-bottom:1px solid rgba(23,63,54,.18);background:var(--f);color:#fff}.pulse header b{font-size:12px}.pulse header p{margin:4px 0 0;color:#bcd4ca;font-size:9px;font-weight:700}.pulse-body{display:grid;grid-template-columns:1fr 1fr}.pulse-block{padding:18px;border-bottom:1px solid rgba(23,63,54,.18)}.pulse-block+.pulse-block{border-left:1px solid rgba(23,63,54,.18)}.pulse-block b{display:block;color:var(--f);font-size:26px;line-height:1}.pulse-block span{display:block;margin-top:5px;color:#496a60;font-size:9px;font-weight:800}.pulse-block strong{display:block;margin-top:17px;color:var(--f);font-size:12px;line-height:1.4}.pulse-foot{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--mint);color:var(--f);font-size:10px;font-weight:850}.pulse-foot i{width:16px;color:var(--coral)}.plan{margin-top:39px}.plan-grid{display:grid;grid-template-columns:repeat(7,minmax(112px,1fr));border:1.5px solid var(--f);background:var(--f)}.plan-card{min-height:208px;padding:15px 12px;border:0;border-right:1px solid var(--line);background:var(--white);color:var(--ink);text-align:left}.plan-card:last-child{border:0}.plan-card:hover,.plan-card.active{background:var(--mint)}.plan-day{display:flex;justify-content:space-between;color:var(--coral);font-size:9px;font-weight:950}.plan-card h3{margin:16px 0 0;color:var(--f);font-size:14px;line-height:1.3}.plan-card p{margin:7px 0 0;color:var(--muted);font-size:9px;font-weight:700;line-height:1.55}.icons{display:flex;gap:5px;margin-top:17px}.icons span{display:grid;width:21px;height:21px;place-items:center;border:1px solid var(--line);background:var(--paper);color:#b9b8b1}.icons span.child{background:var(--f);border-color:var(--f);color:#fff}.icons span.parent{background:var(--coral);border-color:var(--coral);color:#fff}.icons i{width:11px}
+    .overview{display:grid;grid-template-columns:1.06fr .94fr;gap:20px}.mind{position:relative;min-height:490px;overflow:hidden;border:1.5px solid var(--f);background-color:var(--white);background-image:linear-gradient(rgba(23,63,54,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,54,.05) 1px,transparent 1px);background-size:25px 25px}.mind h3{position:absolute;z-index:2;top:20px;left:22px;margin:0;color:var(--f);font-size:18px}.mind h3 small{display:block;margin-top:5px;color:var(--muted);font-size:9px;font-weight:700}.line{position:absolute;height:2px;background:#92afa4;transform-origin:left}.node{position:absolute;z-index:2;display:grid;min-width:114px;min-height:55px;place-items:center;padding:8px;border:1px solid var(--f);background:var(--paper);box-shadow:3px 3px 0 rgba(23,63,54,.15);color:var(--f);text-align:center}.node b{font-size:11px;line-height:1.3}.node small{display:block;margin-top:3px;color:var(--muted);font-size:8px;font-weight:750}.node.center{left:50%;top:51%;min-width:157px;min-height:75px;background:var(--f);color:#fff;transform:translate(-50%,-50%)}.node.center small{color:#cadbd4}.node.a{left:8%;top:22%;background:var(--gold)}.node.b{right:8%;top:19%;background:var(--mint)}.node.c{left:8%;bottom:17%;background:var(--sky)}.node.d{right:8%;bottom:16%;background:#f7ded5}.node.e{left:50%;bottom:4%;transform:translateX(-50%);background:var(--paper2)}.index{border-top:4px solid var(--coral);background:var(--f);color:#fff}.index header{padding:18px;border-bottom:1px solid rgba(255,255,255,.17)}.index h3{margin:0;font-size:19px}.index p{margin:6px 0 0;color:#c5d9d0;font-size:10px;font-weight:650;line-height:1.6}.index-list article{display:grid;grid-template-columns:29px 1fr;gap:9px;padding:12px 17px;border-bottom:1px solid rgba(255,255,255,.17)}.index-list span{display:grid;width:25px;height:25px;place-items:center;background:var(--gold);color:var(--f);font-size:9px;font-weight:950}.index-list b{font-size:11px}.index-list small{display:block;margin-top:3px;color:#bdd2c8;font-size:9px;font-weight:650;line-height:1.45}
+    .timeline{position:relative;display:grid;gap:10px;max-width:900px;margin:0 auto;padding-left:57px}.timeline:before{content:"";position:absolute;top:15px;bottom:15px;left:22px;width:2px;background:#9db8ae}.scene{position:relative;display:grid;grid-template-columns:1fr auto;gap:13px;min-height:87px;padding:14px 17px;border:1px solid var(--line);border-left:4px solid var(--f);background:var(--white)}.scene:before{content:attr(data-day);position:absolute;left:-49px;top:20px;display:grid;width:33px;height:33px;place-items:center;border:2px solid var(--paper);border-radius:50%;background:var(--gold);color:var(--f);font-size:10px;font-weight:950;box-shadow:0 0 0 1px var(--f)}.scene h3{margin:0;color:var(--f);font-size:15px}.scene p{margin:6px 0 0;color:#56645b;font-size:10px;font-weight:650;line-height:1.62}.scene small{align-self:start;padding:4px 6px;background:var(--paper2);color:var(--muted);font-size:8px;font-weight:850;white-space:nowrap}.turn{grid-column:1/-1;color:var(--coral);font-size:9px;font-weight:850}
+    .people{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:20px}.relation{position:relative;min-height:460px;overflow:hidden;border:1.5px solid var(--f);background:var(--white)}.relation:before{content:"谁是谁 · 谁守护谁";position:absolute;left:20px;top:18px;color:var(--f);font-size:16px;font-weight:950}.person{position:absolute;z-index:2;display:grid;width:126px;min-height:70px;place-items:center;padding:8px;border:1px solid var(--line);background:var(--paper);box-shadow:3px 3px 0 rgba(23,63,54,.12);text-align:center}.person b{color:var(--f);font-size:12px}.person small{display:block;margin-top:4px;color:var(--muted);font-size:8px;font-weight:700;line-height:1.35}.person.center{left:50%;top:48%;width:152px;min-height:91px;border:2px solid var(--gold);background:var(--f);transform:translate(-50%,-50%)}.person.center b{color:#fff;font-size:16px}.person.center small{color:#d1e0d9}.person.a{left:8%;top:20%}.person.b{right:8%;top:17%}.person.c{left:8%;bottom:13%}.person.d{right:8%;bottom:13%}.person.e{left:50%;bottom:4%;transform:translateX(-50%)}.themes{display:grid;gap:9px}.theme{padding:16px;border:1px solid var(--line);background:var(--white)}.theme span{display:grid;width:28px;height:28px;place-items:center;background:var(--mint);color:var(--f)}.theme span i{width:14px}.theme h3{margin:10px 0 0;color:var(--f);font-size:14px}.theme p{margin:6px 0 0;color:var(--muted);font-size:10px;font-weight:650;line-height:1.6}.debate{margin-top:15px;padding:16px;border:1.5px dashed var(--gold);background:#fff8e2}.debate span{color:var(--coral);font-size:9px;font-weight:950;letter-spacing:.1em}.debate b{display:block;margin-top:7px;color:var(--f);font-size:14px;line-height:1.45}.debate p{margin:7px 0 0;color:var(--muted);font-size:9px;font-weight:700;line-height:1.55}
+    .deep{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.deep-card{min-height:273px;padding:21px;border:1.5px solid var(--f);background:var(--white)}.deep-card:nth-child(2){border-top:7px solid var(--gold)}.deep-card:nth-child(3){border-top:7px solid var(--coral)}.deep-card span{display:inline-flex;padding:5px 7px;background:var(--f);color:#fff;font-size:9px;font-weight:950;letter-spacing:.1em}.deep-card h3{margin:15px 0 0;color:var(--f);font-size:19px;line-height:1.35}.deep-card p{margin:11px 0 0;color:#57645b;font-size:11px;font-weight:650;line-height:1.76}.evidence{margin-top:15px;padding-top:11px;border-top:1px solid var(--line);color:var(--coral);font-size:9px;font-weight:850;line-height:1.6}
+    .language{display:grid;grid-template-columns:1fr 1fr;gap:20px}.lang{border-top:4px solid var(--f);background:var(--white)}.lang header{padding:16px 18px;border:1px solid var(--line);border-top:0}.lang h3{margin:0;color:var(--f);font-size:17px}.lang p{margin:5px 0 0;color:var(--muted);font-size:9px;font-weight:650;line-height:1.55}.words{display:grid;grid-template-columns:1fr 1fr;border-left:1px solid var(--line)}.word{padding:11px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.word b{color:var(--coral);font-size:12px}.word small{display:block;margin-top:4px;color:var(--muted);font-size:8px;font-weight:650;line-height:1.4}.collect{display:inline-flex;align-items:center;gap:4px;height:25px;margin-top:6px;padding:0 6px;border:1px solid var(--line);background:var(--paper);color:var(--f);font-size:8px;font-weight:850}.collect.active{border-color:var(--gold);background:var(--gold)}.collect i{width:11px}.sentences{padding:11px;border:1px solid var(--line);border-top:0}.sentence{padding:10px 0;border-bottom:1px dashed var(--line)}.sentence:last-child{border:0}.sentence b{display:block;color:var(--f);font-size:11px;line-height:1.5}.sentence p{margin:4px 0 0;color:var(--muted);font-size:9px;font-weight:650;line-height:1.5}
+    .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.skill{min-height:187px;padding:17px;border:1px solid var(--line);background:var(--white)}.skill-no{display:grid;width:30px;height:30px;place-items:center;border-radius:50%;background:var(--f);color:#fff;font-size:10px;font-weight:950}.skill h3{margin:12px 0 0;color:var(--f);font-size:14px;line-height:1.35}.skill p{margin:7px 0 0;color:var(--muted);font-size:9px;font-weight:650;line-height:1.6}.try{margin-top:11px;padding:8px;border-left:3px solid var(--gold);background:#fff8e7;color:#6b5a32;font-size:9px;font-weight:750;line-height:1.55}
+    .quiz-list{display:grid;gap:9px}.quiz{display:grid;grid-template-columns:33px minmax(0,1fr);gap:12px;padding:15px;border:1px solid var(--line);background:var(--white)}.quiz-no{display:grid;width:30px;height:30px;place-items:center;background:var(--coral);color:#fff;font-size:10px;font-weight:950}.quiz-head span{display:inline-block;padding:3px 6px;border:1px solid #8bb6a4;color:var(--f);font-size:8px;font-weight:850}.quiz b{display:block;margin-top:6px;font-size:12px;line-height:1.55}.quiz textarea{width:100%;min-height:52px;margin-top:8px;resize:vertical;border:1px solid var(--line);border-radius:0;padding:8px;background:#fbfaf5;color:var(--ink);font-size:10px;line-height:1.5}.quiz-tools{display:flex;gap:7px;margin-top:7px}.small{display:inline-flex;height:27px;align-items:center;gap:4px;padding:0 7px;border:1px solid var(--line);background:var(--paper);color:var(--f);font-size:8px;font-weight:850}.small i{width:11px}.reference{display:none;margin-top:8px;padding:8px;background:var(--mint);color:#31564a;font-size:9px;font-weight:700;line-height:1.6}.reference.show{display:block}
+    .family{display:grid;grid-template-columns:1.08fr .92fr;gap:20px}.questions{border-top:4px solid var(--gold);background:var(--white)}.questions header{padding:16px 18px;border:1px solid var(--line);border-top:0}.questions h3{margin:0;color:var(--f);font-size:18px}.questions p{margin:5px 0 0;color:var(--muted);font-size:9px;font-weight:650}.q-list{padding:5px 14px 13px;border:1px solid var(--line);border-top:0}.q{display:grid;grid-template-columns:24px 1fr;gap:9px;padding:11px 0;border-bottom:1px dashed var(--line)}.q:last-child{border:0}.q span{display:grid;width:22px;height:22px;place-items:center;background:var(--f);color:#fff;font-size:8px;font-weight:950}.q b{font-size:11px;line-height:1.55}.parent-card{padding:20px;border:1.5px solid var(--f);background:var(--f);color:#fff}.parent-card span{color:var(--gold);font-size:9px;font-weight:950;letter-spacing:.12em}.parent-card h3{margin:10px 0 0;font-size:20px;line-height:1.3}.parent-card p{margin:8px 0 0;color:#c5d8d0;font-size:10px;font-weight:650;line-height:1.65}.parent-card textarea{width:100%;min-height:90px;margin-top:15px;resize:vertical;border:1px solid rgba(255,255,255,.4);border-radius:0;padding:9px;background:rgba(255,255,255,.1);color:#fff;font-size:10px}.parent-card textarea::placeholder{color:#b9cfc5}.parent-card button{display:inline-flex;align-items:center;gap:5px;height:33px;margin-top:9px;padding:0 8px;border:0;background:var(--gold);color:var(--f);font-size:9px;font-weight:950}.parent-card button i{width:12px}.extend{margin-top:30px}.rec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.rec{display:grid;grid-template-columns:48px 1fr;gap:8px;min-height:85px;padding:8px;border:1px solid var(--line);background:var(--white)}.rec img{width:48px;height:67px;object-fit:cover;border:1px solid var(--f)}.rec b{align-self:end;color:var(--f);font-size:11px;line-height:1.3}.rec small{align-self:start;color:var(--muted);font-size:8px;font-weight:650;line-height:1.35}.after{display:grid;grid-template-columns:180px 1fr;margin-top:21px;border:1.5px solid var(--f);background:var(--white)}.after label{display:flex;align-items:center;padding:16px;background:var(--gold);color:var(--f);font-size:13px;font-weight:950;line-height:1.4}.after label small{display:block;font-size:9px}.after textarea{min-height:77px;resize:vertical;border:0;border-left:1px solid var(--f);padding:13px;background:transparent;font-size:11px;line-height:1.5}
+    .scrim,.drawer{display:none}.scrim.show{position:fixed;z-index:69;inset:0;display:block;background:rgba(23,63,54,.45)}.drawer.show{position:fixed;z-index:70;top:0;right:0;display:block;width:min(460px,100vw);height:100vh;overflow:auto;padding:26px;border-left:2px solid var(--f);background:var(--paper);box-shadow:-10px 0 0 var(--gold)}.drawer-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.drawer-head span{color:var(--coral);font-size:10px;font-weight:950;letter-spacing:.13em}.drawer-head h2{margin:8px 0 0;color:var(--f);font-size:29px}.close{display:grid;width:34px;height:34px;place-items:center;border:1px solid var(--f);background:var(--gold);color:var(--f)}.close i{width:17px}.drawer-copy{margin:18px 0;color:var(--muted);font-size:11px;font-weight:650;line-height:1.7}.shelf{display:grid;grid-template-columns:1fr 1fr;gap:9px}.shelf-book{display:grid;grid-template-columns:51px 1fr;gap:8px;min-height:83px;padding:7px;border:1px solid var(--line);background:var(--white);color:var(--ink);text-align:left}.shelf-book:hover{border-color:var(--f);background:var(--mint)}.shelf-book img{width:51px;height:69px;object-fit:cover;border:1px solid var(--f)}.shelf-book b{align-self:end;color:var(--f);font-size:11px}.shelf-book small{align-self:start;color:var(--muted);font-size:8px;font-weight:850}.toast{position:fixed;z-index:110;left:50%;bottom:22px;display:none;max-width:calc(100vw - 34px);padding:11px 14px;transform:translateX(-50%);border:1px solid var(--f);background:var(--f);box-shadow:4px 4px 0 var(--gold);color:#fff;font-size:10px;font-weight:800}.toast.show{display:block}
+    @media(max-width:1100px){.landing{padding:42px 30px}.landing-shell{grid-template-columns:1fr;gap:30px}.landing h1{font-size:56px}.entry{max-width:660px}.workspace.show{grid-template-columns:257px minmax(0,1fr)}.main{padding:0 23px 52px}.book-head{margin:0 -23px;padding:25px 23px}.plan-grid{grid-template-columns:repeat(4,1fr)}.plan-card:nth-child(4){border-right:0}.plan-card:nth-child(-n+4){border-bottom:1px solid var(--line)}.overview,.people,.family{grid-template-columns:1fr}.deep{grid-template-columns:1fr 1fr}.rec-grid{grid-template-columns:1fr 1fr}.head-cover{right:30px}}
+    @media(max-width:760px){html,body{background:var(--paper)}.app{box-shadow:none}.topbar{height:61px;padding:0 15px}.brand{font-size:14px}.brand-mark{width:28px;height:28px}.brand small{display:none}.utility{height:33px;padding:0 9px;font-size:10px}.utility:not(.gold){display:grid;width:33px;padding:0;place-items:center;font-size:0}.utility:not(.gold) i{width:15px}.landing{min-height:calc(100vh - 61px);padding:34px 17px;background-size:25px 25px}.landing h1{font-size:44px;line-height:1.07}.landing-copy>p{font-size:13px}.cover-stack{height:171px;margin-top:19px}.cover-stack img{width:87px;height:131px}.cover-stack img:nth-child(2){left:76px}.cover-stack img:nth-child(3){left:153px}.cover-stack img:nth-child(4){left:232px}.cover-stack:after{display:none}.form{padding:17px}.selects{grid-template-columns:1fr 1fr}.selects div:last-child{grid-column:1/-1}.workspace.show{display:block}.rail{position:relative;top:auto;height:auto;overflow:visible;padding:14px 15px;border-right:0;border-bottom:1px solid var(--line)}.current{display:grid;grid-template-columns:53px 1fr auto;gap:9px;align-items:center;padding:9px}.current img{float:none;width:53px;height:75px;margin:0}.current h2{min-height:0;font-size:15px}.current p{font-size:8px}.current button{display:none}.tracks{grid-template-columns:1fr 1fr}.rail-title{margin:13px 0 7px}.rail-title:first-child{grid-column:1/-1}.track{padding:8px}.track b{font-size:10px}.track small{font-size:8px}.day-list{display:flex;overflow-x:auto}.day-item{display:block;min-width:59px;min-height:55px;padding:5px;border:1px solid var(--line);background:var(--white);text-align:center}.day-item b,.day-item small{display:none}.day-index{margin:0 auto}.dots{justify-content:center;margin-top:5px}.main{padding:0 15px 42px}.book-head{min-height:194px;margin:0 -15px;padding:21px 15px 27px}.book-head h1{max-width:calc(100% - 84px);font-size:27px}.book-head>p:not(.kicker){max-width:calc(100% - 73px);font-size:9px}.head-cover{right:15px;bottom:18px;width:65px;height:94px;box-shadow:4px 4px 0 rgba(0,0,0,.35)}.meta{max-width:calc(100% - 75px)}.meta span{font-size:7px}.tabs{margin-top:14px}.tabs button{min-height:40px;padding:0 8px;font-size:9px}.section-title{display:block;margin-bottom:15px}.section-title h2{font-size:23px}.section-title p{margin-top:7px;text-align:left}.dash{grid-template-columns:1fr}.today{min-height:0;padding:19px;box-shadow:5px 5px 0 var(--f)}.today h3{font-size:23px}.today-tasks{grid-template-columns:1fr}.pulse{min-height:0}.plan{margin-top:30px}.plan-grid{grid-template-columns:repeat(2,1fr)}.plan-card:nth-child(n){border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.plan-card:nth-child(even){border-right:0}.plan-card:last-child{border-bottom:0}.overview,.language{grid-template-columns:1fr}.mind{min-height:425px}.node{min-width:87px;min-height:47px;padding:6px}.node b{font-size:9px}.node.center{min-width:122px;min-height:63px}.mind h3{font-size:14px}.timeline{padding-left:43px}.timeline:before{left:16px}.scene{grid-template-columns:1fr;gap:7px;padding:12px}.scene:before{left:-36px;width:27px;height:27px;top:18px}.scene small{justify-self:start}.people{gap:17px}.relation{min-height:425px}.person{width:96px;min-height:56px;padding:6px}.person b{font-size:9px}.person small{font-size:7px}.person.center{width:124px;min-height:75px}.person.center b{font-size:13px}.deep,.skills{grid-template-columns:1fr}.deep-card{min-height:0}.words{grid-template-columns:1fr}.family{gap:17px}.rec-grid{grid-template-columns:1fr 1fr}.after{grid-template-columns:1fr}.after label{padding:11px}.after textarea{border-top:1px solid var(--f);border-left:0}.drawer.show{padding:21px 16px}.shelf{grid-template-columns:1fr}.loader{padding:23px}.loader h2{font-size:24px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar"><a class="brand" href="#home" id="homeButton"><span class="brand-mark"><i data-lucide="book-open-check"></i></span><span>读书有光<small>FAMILY READING STUDIO</small></span></a><div class="top-actions"><button class="utility" id="openShelf" type="button" aria-label="打开 12 本预设书" title="12 本预设书"><i data-lucide="library-big"></i>12 本预设书</button><button class="utility gold" id="openPlanner" type="button"><i data-lucide="calendar-days"></i>我的 7 天计划</button></div></header>
+    <main id="home">
+      <section class="landing" id="landing"><div class="landing-shell"><div class="landing-copy"><p class="eyebrow">READ TOGETHER · GROW TOGETHER</p><h1>让一本书，<br>成为全家的<br><span>7 天小世界。</span></h1><p>孩子每天读、想、说、写；家长每天陪、问、听、回。系统按精读手册的完整结构，陪一家人从读懂故事，走到拥有自己的阅读语言。</p><div class="cover-stack" aria-hidden="true"><img src="./assets/covers/01-charlottes-web.jpg" alt=""><img src="./assets/covers/02-terabithia.jpg" alt=""><img src="./assets/covers/06-little-prince.jpg" alt=""><img src="./assets/covers/08-thatched-house.jpg" alt=""></div></div><section class="entry"><div class="entry-head"><span>家庭精读计划</span><b>7 DAYS</b></div><form class="form" id="bookForm"><label for="bookTitle">输入一本想和孩子精读的书</label><input class="book-input" id="bookTitle" autocomplete="off" placeholder="例如：夏洛的网" required><div class="selects"><div><label for="readerGrade">孩子年级</label><select id="readerGrade"><option>小学 2-3 年级</option><option>小学 4-5 年级</option><option>小学 6 年级+</option><option>学前亲子共读</option></select></div><div><label for="readingMode">阅读方式</label><select id="readingMode"><option>亲子共读</option><option>孩子自主读</option><option>老师带读</option></select></div><div><label for="dailyMinutes">每天时长</label><select id="dailyMinutes"><option>15 分钟</option><option>20 分钟</option><option>30 分钟</option></select></div></div><button class="start" type="submit">生成这本书的 7 天精读计划 <i data-lucide="arrow-up-right"></i></button><p class="entry-note">包含全书总览、7 幕主线、人物主题、深读、词句、6 项本领、练习与亲子共读。</p><div class="demo-row"><span>老师演示：</span><button type="button" data-demo="01">01</button><button type="button" data-demo="02">02</button><button type="button" data-demo="03">03</button><button type="button" data-demo="04">04</button><button type="button" data-demo="05">05</button><button type="button" data-demo="06">06</button><button type="button" data-demo="07">07</button><button type="button" data-demo="08">08</button><button type="button" data-demo="09">09</button><button type="button" data-demo="10">10</button><button type="button" data-demo="11">11</button><button type="button" data-demo="12">12</button></div><div class="fit"><i data-lucide="scan-search"></i><span>预设读本会给出适读提示；输入新书时，会先建立完整的精读骨架，再提示结合手中版本核对章节与文字。</span></div></form></section></div></section>
+      <section class="workspace" id="workspace" aria-live="polite"><aside class="rail"><section class="current"><img id="railCover" src="" alt="当前书籍封面"><span id="railNo">READING PLAN</span><h2 id="railTitle">一本书</h2><p id="railAuthor">开始一段家庭阅读。</p><button type="button" id="changeBook"><i data-lucide="search"></i>换一本书</button></section><section class="tracks-wrap"><div class="rail-title"><span>双轨阅读进度</span><small id="joint">共同点亮 0/7</small></div><div class="tracks"><article class="track"><header><span class="track-icon"><i data-lucide="rocket"></i></span><div><b>孩子的阅读</b><small id="childText">0/7 天任务完成</small></div></header><div class="bar"><span id="childBar"></span></div></article><article class="track parent"><header><span class="track-icon"><i data-lucide="heart-handshake"></i></span><div><b>家长的陪读</b><small id="parentText">0/7 次回应完成</small></div></header><div class="bar"><span id="parentBar"></span></div></article></div></section><section><div class="rail-title"><span id="routeLabel">7 天阅读路线</span><small>点击切换</small></div><div class="day-list" id="dayList"></div></section></aside><div class="main"><header class="book-head"><p class="kicker" id="headKicker">家庭精读计划 · DAY 01—07</p><h1 id="bookHeading">和一本书，慢慢走七天。</h1><p id="bookIntro">从故事出发，回到每一个家庭自己的问题。</p><div class="meta" id="bookMeta"></div><img class="head-cover" id="headCover" src="" alt=""></header><nav class="tabs" aria-label="精读模块"><button class="active" type="button" data-panel="dashboard"><i data-lucide="layout-dashboard"></i>今日计划</button><button type="button" data-panel="overview"><i data-lucide="git-fork"></i>全书总览</button><button type="button" data-panel="story"><i data-lucide="route"></i>7 幕主线</button><button type="button" data-panel="people"><i data-lucide="users-round"></i>人物与主题</button><button type="button" data-panel="deep"><i data-lucide="scan-search"></i>深度解析</button><button type="button" data-panel="language"><i data-lucide="notebook-tabs"></i>词句宝库</button><button type="button" data-panel="skills"><i data-lucide="brain-circuit"></i>6 项本领</button><button type="button" data-panel="quiz"><i data-lucide="clipboard-check"></i>理解练习</button><button type="button" data-panel="family"><i data-lucide="heart-handshake"></i>亲子共读</button></nav><section class="panel active" id="panel-dashboard"></section><section class="panel" id="panel-overview"></section><section class="panel" id="panel-story"></section><section class="panel" id="panel-people"></section><section class="panel" id="panel-deep"></section><section class="panel" id="panel-language"></section><section class="panel" id="panel-skills"></section><section class="panel" id="panel-quiz"></section><section class="panel" id="panel-family"></section></div></section>
+    </main>
+  </div>
+  <div class="loading" id="loading"><div class="loader"><span>FAMILY READING SYSTEM / PREPARING</span><h2 id="loadingTitle">正在铺开 7 天阅读路线</h2><p>我们正在组织全书总览、故事主线、人物主题与每天的亲子任务。</p><div class="loader-line"><i></i></div></div></div><div class="scrim" id="scrim"></div><aside class="drawer" id="drawer" aria-hidden="true"><div class="drawer-head"><div><span>TEACHER'S SHELF / COVERS READY</span><h2>12 本预设精读书</h2></div><button class="close" id="closeShelf" type="button" aria-label="关闭"><i data-lucide="x"></i></button></div><p class="drawer-copy">每本书都有 9 个精读模块、7/15/21 天路线、孩子任务与家长回应任务。点击书封，直接进入课堂展示。</p><div class="shelf" id="shelf"></div></aside><div class="toast" id="toast" role="status"></div>
+  <script>
+  (function(){
+    if('scrollRestoration' in history)history.scrollRestoration='manual';
+    var TASKS=[['全书起点','认识人物、地点和故事发生的原因','先听孩子复述，只追问一个“为什么”'],['关系出现','找出一段关键互动','问：谁在帮助谁？证据是什么？'],['冲突升级','追踪人物感受','把一个发现写成具体观察'],['关键转折','圈出改变故事的细节','讨论：角色为什么这样选择？'],['困难与选择','用证据说明判断','给一句具体鼓励和一个开放追问'],['结局回望','对比人物前后变化','听孩子讲完整故事，再补充感受'],['读后迁移','写一句读后话','一起完成家庭讨论与下一本推荐']];
+    var SKILLS=[['通过语言和行为理解感受','圈出一个动作或一句话，猜猜人物心里发生了什么。'],['用证据支持人物判断','每个“勇敢、善良或自私”的判断，都要有文本细节。'],['追踪人物感受变化','比较开头、中间和结尾，什么让他改变？'],['通过互动推断关系','两个人说了什么、做了什么，关系因此怎样？'],['共情理解人物动机','站在角色的位置问：“如果我是他，我最担心什么？”'],['概括故事寓意','用“这本书让我明白……”总结，并给出证据。']];
+    var TYPE=['内容理解·因果','人物分析·动机','词句品味·一字之妙','推断·读懂没明说的话','主旨把握','联系生活'];
+    function profile(title,original,author,grade,times,cover,intro,theme,acts,people,themes,deep,words,family,recs,note){return {title:title,original:original,author:author,grade:grade,times:times,cover:cover,intro:intro,theme:theme,acts:acts,people:people,themes:themes,deep:deep,words:words,family:family,recs:recs,note:note};}
+    var B={
+      '01':profile('夏洛的网',"Charlotte's Web",'E. B. 怀特','小学 2-5 年级','全书 6 次共读','01-charlottes-web.jpg','一只小蜘蛛，用一张网和一生，告诉孩子：什么是真正的友谊、爱与生命的重量。','友谊与成长',['出生·险被宰|第 1-4 章|小猪威尔伯生下来瘦弱，差点被农场主一斧子结束。小女孩弗恩挺身而出，抱着它向父亲求情，救下了这条小命。','谷仓·遇知己|第 5-8 章|威尔伯被送到朱克曼家的谷仓，孤独得直哭。黑暗里一个细小的声音说“我可以做你的朋友”——那是蜘蛛夏洛。','牺牲·许承诺|第 8 章|老羊告诉威尔伯：圣诞节会被做成熏火腿。威尔伯崩溃大哭，夏洛却坚定地说“我来救你”。','织网·成明星|第 9-18 章|夏洛在网上一夜又一夜织出“王牌猪”“了不起”“光彩照人”“谦卑”，威尔伯成了远近闻名的明星猪。','集市·守大奖|第 19-21 章|在集市上，威尔伯赢得了特别奖。它的性命，终于稳稳地保住了。','谢幕·静离去|第 21-22 章|夏洛产下 514 颗卵，耗尽了最后的力气。当所有人为威尔伯欢呼时，它独自在集市角落安静离世，无人知晓。','传承·爱不息|第 22 章|威尔伯把夏洛的卵袋带回谷仓，守护它的孩子。三只小蜘蛛留下来陪威尔伯，夏洛的爱一年又一年地延续着。'],['威尔伯|小猪·纯真胆小，渴望友谊','夏洛|蜘蛛·聪明温柔，看透生死','弗恩|小女孩·善良勇敢，救下威尔伯','老羊|谷仓消息通，提醒威尔伯命运','坦普尔顿|老鼠·贪吃自私，关键时刻帮忙'],['友谊，是愿意为对方付出|夏洛用一夜夜的辛劳，甚至自己的生命守护朋友；真正的好朋友需要帮忙时有办法，需要安慰时有温暖。','生命的价值，不在草草活着，而在你为别人做了什么|颁奖台上人人为威尔伯欢呼，真正的功臣夏洛却在角落默默离去。','爱会延续|夏洛走了，但它的爱通过 514 个孩子留在威尔伯身边；有些告别，其实是另一种陪伴的开始。'],['背景|这本书，是怀特在自己的农场里“养”出来的|作者在农场看过谷仓角落的蜘蛛、养过猪，也经历过小猪病死；熟悉的气息、闪光的露水和秋夜虫鸣，让故事有真实的温度。','情节|“织网救猪”最妙的地方：夏洛根本没有改变威尔伯|网上织出字后，威尔伯依然是普通小猪；真正改变的是人们看它的眼光。一个标签会影响判断，别忘了认识本来的样子。','人物|一只吃虫子的蜘蛛，为什么成了最了不起的朋友？|威尔伯初见夏洛觉得它凶狠、残忍、嘴馋；后来发现它外表可怕，内心却无比温柔而智慧。别用外表判断一个人，真正的了不起藏在为别人做过的事里。'],'生死攸关|自得其乐|心事重重|勃勃生机|冥思苦想|食言|息息相关|一不做二不休|忧郁|多才多艺|安宁|遐迩闻名',['威尔伯本身一点没变，为什么网上有了字，人们就把它当成“王牌猪”？是什么改变了大家看它的眼光？','夏洛既能冷静织网救猪、开会安排任务，又能温柔讲故事哄威尔伯睡觉，哪一面才是真正的夏洛？','作者为什么用蟋蟀的歌声来暗示夏洛生命将尽，而不直接说出来？这样写好在哪里？','夏洛在热闹的背面、角落里默默离去。这个故事想告诉我们，“生命的价值”到底是什么？','夏洛为救威尔伯付出了自己的生命，你觉得值不值得？听听家里每个人的理由，再说说你变了没有。'],['10','11','12','06'],'写给夏洛或威尔伯的一句话：我想对你说……'),
+      '02':profile('通往特雷比西亚的桥','Bridge to Terabithia','凯瑟琳·佩特森','小学 4 年级+','7 次共读','02-terabithia.jpg','两个孩子用想象搭起一座桥，也在失去之后，学会带着爱继续往前。','想象、友谊与成长',['杰斯·想证明自己|开篇|杰斯在家庭和学校里努力寻找被认可的位置。','莱斯莉·闯进生活|相识|新同学莱斯莉带着大胆的想象和不同的眼光出现。','特雷比西亚·诞生|共同创造|两人在树林建立秘密王国，重新理解现实的困难。','桥·越走越远|关系加深|友谊让杰斯开始相信自己可以有别的可能。','意外·断裂|转折|一次突如其来的离别打断了熟悉的日常。','悲伤·不躲开|回望|杰斯在混乱的感受里理解朋友留给自己的东西。','新桥·继续走|传承|他把勇气交给另一个孩子，让王国有了新入口。'],['杰斯|敏感克制的男孩','莱斯莉|大胆想象的朋友','梅贝尔|渴望靠近的妹妹','父亲|需要理解的成人','特雷比西亚|共同创造的王国'],['想象力不是逃开现实|它帮助孩子给害怕和愿望找到语言。','友谊会改变人的眼光|杰斯没有变成别人，却有了新的可能。','失去后关系仍有方向|记得是带着朋友教会的勇气继续走。'],['背景|普通小镇为何需要想象王国？|看人物在家庭和学校里不容易说出的愿望。','情节|桥既是通路，也是边界|从每次过桥时的心情变化读出友谊。','人物|莱斯莉留给杰斯什么？|她没有替他解决问题，而是给了他新视角。'],'隐秘|辽阔|倔强|局促|神气|迟疑|冒险|失落|沉默|勇气|回声|传递',['特雷比西亚为什么不只是好玩的地方？','莱斯莉给杰斯带来的最大改变是什么？','想象世界是在逃避现实吗？','杰斯悲伤时，最需要安慰还是陪伴？','如果你来修一座桥，它会通向哪里？'],['06','07','05','08'],'写给杰斯的一句话：我想把这份勇气告诉你……'),
+      '03':profile('窗边的小豆豆','Totto-chan, the Little Girl at the Window','黑柳彻子','小学 2-5 年级','7 次共读','03-totto-chan.jpg','一个总被误解的小女孩，在一所不一样的学校里，被认真倾听、慢慢看见。','理解与教育',['离开原来的学校|开篇|小豆豆因为不符合常规，被贴上了“麻烦”的标签。','来到巴学园|相遇|小林校长愿意长久倾听，让她第一次感到被尊重。','电车教室·新规则|发现|不同空间与学习方式告诉孩子可以按自己的节奏成长。','日常·自由探索|经历|一次次课程和朋友相处，让好奇心成为学习起点。','困难·也被接住|转折|面对战争与离别，孩子们仍在关系中练习勇敢。','告别·学校消失|回望|巴学园离开了，但对孩子的信任没有消失。','成为·被看见的人|传承|小豆豆把被理解，变成后来理解世界的能力。'],['小豆豆|好奇热烈的孩子','小林校长|耐心倾听的大人','妈妈|愿意相信孩子','同学们|共同成长的伙伴','电车教室|接纳不同的空间'],['理解先于评价|多听一会，原本的“问题”也许会变成表达。','每个孩子有自己的节奏|学习也发生在体验、观察和好奇中。','好的教育让人敢做自己|被尊重的孩子，才更愿意看见别人。'],['背景|为什么是一所电车学校？|空间的不同，怎样让学习关系也不同？','情节|校长先做了什么？|他没有急着纠正，而是先认真倾听。','人物|小豆豆的“不同”是什么？|从好奇与行动分辨，不把她叫作捣乱。'],'兴高采烈|津津有味|小心翼翼|若有所思|与众不同|全神贯注|目不转睛|兴致勃勃|耐心|倾听|探索|接纳',['如果你是小林校长，最想先问小豆豆什么？','“不一样”什么时候会变成优点？','巴学园哪条规则最值得带到今天的学校？','大人应该先看见孩子的什么？','被认真倾听时，你的感受会怎样改变？'],['08','11','12','05'],'写给小林校长的一句话：我希望你也能听见……'),
+      '04':profile('西游记','Journey to the West','吴承恩','小学 4-6 年级','全书 7 次共读','04-journey-to-the-west.jpg','从花果山到灵山，一次真正的修行不是降伏妖怪，而是学会在困难里守住目标、伙伴和自己。','成长、勇气与修行',['花果山·石猴出世|开篇|孙悟空从石头中诞生，在花果山带领群猴寻找自由与归属。','天宫·大闹天宫|前段|悟空不愿被轻视，反抗天庭规则，却也因冲动付出代价。','五行山·遇唐僧|第 7-14 回|唐僧取经路过五行山，悟空得到一次重新开始的机会。','西行·收徒同行|第 15-22 回|猪八戒、沙悟净与白龙马先后加入，取经队伍在磨合中成形。','取经路·八十一难|中段|每一难不只考验本领，也考验是否还愿意相信伙伴和目标。','火焰山·相互信任|后段|面对借芭蕉扇等难关，师徒需要放下成见、共同想办法。','灵山·取得真经|结尾|经历漫长西行后，师徒抵达灵山；成长来自一路的选择与坚持。'],['孙悟空|机敏勇敢，也要学会克制','唐僧|坚定善良，守住取经目标','猪八戒|真实可爱，常在矛盾中学习','沙悟净|踏实可靠，默默承担','白龙马|不张扬的同行者'],['本领需要方向|悟空很强，但真正的成长是把本领用在值得的目标上。','团队不是一样的人|不同性格会冲突，也能在互相补位中走得更远。','修行是一次次选择|面对困难时，回到初心、继续行动，就是最朴素的勇敢。'],['背景|神魔世界里的现实问题|在神仙、妖怪与奇幻路途里，读人物怎样面对规则、诱惑和选择。','情节|八十一难为什么不能一跳而过？|困难让每个人暴露弱点，也让队伍学会合作。','人物|悟空的“变”是什么？|从只靠本领与脾气，到更懂责任、伙伴与目标。'],'腾云驾雾|神通广大|斩妖除魔|火眼金睛|取经|磨难|执着|同行|担当|修行|初心|彼岸',['悟空为什么会大闹天宫？他的反抗里有哪些值得理解、又需要反思的地方？','唐僧、悟空、八戒和沙僧的性格怎样互相补位？','一难接一难，师徒最需要守住的是什么？','悟空变得更成熟了吗？从哪个选择能看出来？','你觉得“修行”在今天的小学生生活里可以是什么？'],['03','08','11','12'],'写给取经路上的自己：下一次遇到难题，我会……'),
+      '05':profile('奇迹男孩','Wonder','R. J. 帕拉西奥','小学 4 年级+','7 次共读','05-wonder.jpg','一个戴着头盔走进学校的男孩，也让所有人重新学习怎样看见、理解和善待别人。','同理心与勇气',['新学校·害怕|开篇|奥吉第一次走进普通学校，要面对陌生的目光。','第一眼·判断|相遇|同学们因外表快速判断，关系小心翼翼。','朋友·靠近|发展|一些孩子开始透过表面认识真实的奥吉。','误解·受伤|冲突|善意没有被坚持时，关系里的伤害变得清楚。','不同视角·看见|转折|故事换到不同人物目光，读者理解更多处境。','选择·站到身边|回望|有人用行动表达：我愿意和你站在一起。','被看见·继续生活|结尾|奥吉没有变成别人，大家开始换一种目光。'],['奥吉|敏感勇敢的男孩','杰克|会犯错的同学','薇娅|也需要被看见的姐姐','萨维娜|支持者','学校|练习理解的空间'],['看见比评价更靠近|外表只是第一眼，理解要多听多问。','勇气有两种方向|表达自己与看见别人都需要勇气。','善意要成为行动|关键时刻站到对方身边，才不是口号。'],['背景|为什么放在学校？|每个孩子都能感到被看见或忽略。','情节|多视角叙事带来什么？|同一件事在不同人心里有不同重量。','人物|奥吉真正想要什么？|不是特殊对待，而是被当作完整的人。'],'判断|事实|靠近|沉默|误解|勇气|善意|犹豫|陪伴|尊重|理解|选择',['勇气是让别人看见自己，还是先学会看见别人？','同学被孤立时，你愿意做哪个具体动作？','为什么“可怜”不是最好的理解？','杰克犯错后怎样才算真的改变？','你希望别人先了解你的哪一面？'],['03','11','07','08'],'写给奥吉的一句话：我想让你知道……'),
+      '06':profile('小王子','Le Petit Prince','安托万·德·圣-埃克苏佩里','小学 3 年级+','6 次共读','06-little-prince.jpg','一场星际旅行，把爱、责任、驯养和真正重要的事放进孩子可以慢慢理解的故事里。','爱与责任',['星球·一朵花|开篇|小王子照料一朵让他又爱又困惑的玫瑰。','出发·拜访星球|旅行|他遇见不同大人，发现他们常只在意数字和权力。','地球·很多花|发现|玫瑰园让他怀疑自己的花是否独一无二。','狐狸·被驯养|相遇|狐狸让他理解：关系需要时间，也会让彼此特别。','井水·重要的事|领悟|简单东西因等待和付出而有了意义。','告别·回到星球|转折|小王子做出选择，也把思念留给飞行员。','星光·继续寻找|余韵|故事邀请人继续抬头看星星。'],['小王子|纯真追问的旅行者','狐狸|耐心的朋友','玫瑰|骄傲脆弱的牵挂','飞行员|倾听者','大人们|需要反思的目光'],['重要的东西要用心看|关系和付出的时间，比数量更重要。','爱不是占有|照料与等待让玫瑰独一无二。','保持追问的能力|孩子的问题常比大人的答案更接近本质。'],['背景|星球为什么小？|小空间让照料一朵花格外具体。','情节|玫瑰园带来什么？|它让小王子理解独一无二来自关系。','人物|狐狸教会了什么？|“驯养”是建立联结，也意味着负责。'],'驯养|独一无二|责任|等候|思念|虚荣|荒唐|认真|星光|井水|告别|秘密',['小王子的玫瑰为何与花园里的不一样？','自由和责任会不会冲突？','狐狸为什么说每天同一时间来？','大人们在意的事哪些真的重要？','你愿意为谁每天留一点时间？'],['02','07','10','12'],'写给你的玫瑰：因为你，我愿意……'),
+      '07':profile('绿山墙的安妮','Anne of Green Gables','露西·莫德·蒙哥马利','小学 4 年级+','7 次共读','07-anne.jpg','一个红头发女孩带着旺盛的想象力走进绿山墙，也在错误、友谊与爱里找到自己的位置。','成长与自我接纳',['错位·来到绿山墙|开篇|安妮本以为会被带走，却意外来到陌生的家。','名字·渴望被尊重|相遇|她在小事上激烈表达，连接着被爱的愿望。','学校·朋友与对手|发展|她在友谊和竞争中看见别人的长处。','错误·承担后果|冲突|她一次次犯错，也练习道歉、修复和重新开始。','成长·不失热烈|转折|想象力没有被压下去，而有了方向。','选择·家成为牵挂|回望|家庭需要她时，她理解了留下的意义。','未来·继续生长|结尾|她带着自我认同走向新生活。'],['安妮|热烈想象的女孩','玛丽拉|慢慢接纳的养母','马修|温柔的养父','戴安娜|真诚的朋友','吉尔伯特|促进成长的同学'],['被接纳不等于被塑形|爱允许一个人保留独特和热烈。','错误也是成长材料|看见影响、愿意修复，比不犯错更重要。','想象力让愿望有声音|它帮助安妮理解世界和表达自己。'],['背景|为什么是绿山墙？|家是一个人被允许慢慢安定的地方。','情节|安妮的错误为何重要？|每次失误都在练习责任。','人物|玛丽拉变化在哪？|注意语气和行动怎样从克制变柔软。'],'想象|热烈|笨拙|自尊|遗憾|和解|勇敢|归属|调皮|真诚|成长|牵挂',['安妮为什么那么在意名字和头发？','被接纳是不是意味着不用改变？','犯错后怎样才算真的道歉？','玛丽拉何时开始把安妮当家人？','你的想象力最想保护什么？'],['06','05','12','03'],'写给安妮：你的热烈让我想起……'),
+      '08':profile('草房子','The Thatched House','曹文轩','小学 4-6 年级','7 次共读','08-thatched-house.jpg','油麻地的日常里，桑桑慢慢学会看见别人不说出口的难处，也学会理解成长的重量。','成长与理解',['油麻地·日常开始|开篇|桑桑在熟悉的学校和村庄，观察身边的人。','纸月·沉默力量|相遇|一个安静女孩让桑桑注意沉默背后的故事。','秃鹤·被误解|发展|当外表成为标签，人物怎样重新获得尊重？','细马·寻找归处|冲突|孩子在陌生环境里努力找到位置。','杜小康·面对变化|转折|生活突然改变时，成长是愿意承担的行动。','桑桑·重新看见|回望|经历让他理解每个人都有难处。','草房子·留下的光|结尾|普通屋顶与日常成为成长记忆。'],['桑桑|好奇敏感的男孩','纸月|沉静的女孩','秃鹤|面对标签的同学','杜小康|经历变化的朋友','油麻地|故事发生的共同体'],['理解从不急着下结论|经历比标签更接近真实。','成长发生在日常细节里|一次次看见和承担，慢慢改变人。','每个人都值得尊重|外表、贫富和沉默不该定义价值。'],['背景|油麻地为何像角色？|环境和物件共同保存成长。','情节|为何由多个孩子组成？|不同经历彼此映照，让目光变宽。','人物|谁没有说出困难？|读沉默、停顿和不愿解释。'],'油麻地|宁静|倔强|沉默|窘迫|体面|守望|承担|理解|季节|告别|成长',['桑桑真正长大的标志是什么？','沉默的人一定是不想说话吗？','秃鹤最想被看见什么？','杜小康的变化告诉我们什么？','你曾因不了解而误解过谁吗？'],['09','05','11','03'],'写给油麻地的一个角色：我现在更理解你……'),
+      '09':profile('城南旧事','My Memories of Old Beijing','林海音','小学 5 年级+','7 次共读','09-old-beijing.jpg','英子的童年记忆里，有骆驼、胡同和一次次告别；孩子目光温柔地照见复杂的大人世界。','童年、理解与告别',['城南·骆驼队|开篇|英子在北京城南日常里，用细致眼睛看世界。','秀贞·等待的人|相遇|被误解的女人，让英子靠近大人的伤心。','妞儿·寻找母亲|发展|孩子的信任推动了一个看似不可能的团圆。','草地·陌生朋友|冲突|英子遇见一个有秘密的人，害怕也不舍。','兰姨娘·新的选择|转折|她看见大人也会因为选择获得新生活。','宋妈·失去与离开|回望|熟悉照料者带着自己的故事离开。','爸爸·童年远去|结尾|父亲离开后，英子知道自己似乎长大了。'],['英子|好奇温柔的孩子','秀贞|被误解的等待者','妞儿|需要守护的女孩','宋妈|有故事的大人','爸爸|童年告别的标记'],['孩子目光很小，却很真|英子未必全懂，却愿意靠近。','理解不等于立刻判断|读者多知道一点，也多承担同理心。','告别让人成长|过去不会消失，会留在心里。'],['背景|城南为何充满细节？|骆驼、胡同和季节让记忆可触摸。','情节|英子与读者知道的不同？|体会有限视角的单纯与复杂。','人物|英子怎样靠近陌生人？|先看具体的人和事，再慢慢理解。'],'城南|骆驼|胡同|惆怅|等待|离别|温柔|秘密|理解|记忆|成长|远去',['英子不明白的地方，读者明白了吗？','她为什么靠近别人不敢靠近的人？','孩子和大人看同一件事有何不同？','告别后什么会留下？','你愿意讲哪一段童年记忆？'],['08','07','11','06'],'写给城南的一封小信：我会记得……'),
+      '10':profile('柳林风声','The Wind in the Willows','肯尼思·格雷厄姆','小学 3-5 年级','7 次共读','10-wind-willows.jpg','鼹鼠、河鼠、蟾蜍和獾的冒险故事，讨论朋友、边界、冲动与可以回来的家。','友谊与边界',['春天·鼹鼠出发|开篇|鼹鼠离开地下家，第一次看见更大世界。','河边·遇见河鼠|相遇|河鼠带来稳定陪伴，也让鼹鼠享受新生活。','蟾蜍·迷上新鲜事|发展|热情蟾蜍不断被新玩意吸引。','危险·越走越远|冲突|自由失去边界，选择带来真实后果。','朋友·说出不|转折|伙伴不只纵容，而是想办法让朋友回到安全处。','家园·被夺回|回望|大家一起守住蟾蜍府，也守住关系。','河风·继续流动|结尾|冒险结束，友谊与可以回来的地方仍在。'],['鼹鼠|好奇的朋友','河鼠|稳定的陪伴者','蟾蜍|冲动热情的朋友','獾|守住原则的长者','柳林与河|家园与冒险'],['陪伴也需要边界|好朋友会在重要时刻敢说“不”。','自由要承担后果|选择会影响别人和现实。','家是可以修复关系的地方|冲突后仍愿意一起处理问题。'],['背景|河流与柳林不同？|一个流动一个安定，像两种生活需要。','情节|朋友为何限制蟾蜍？|分辨帮助和纵容。','人物|蟾蜍只是坏吗？|看见热情、虚荣和脆弱，再谈选择。'],'河岸|柳林|冒险|冲动|边界|陪伴|家园|顽皮|体面|修复|自由|后果',['帮助朋友和纵容朋友有何不同？','蟾蜍最需要学什么？','河鼠为什么让人安心？','朋友做不太好的事，你怎样说？','什么地方让你觉得可以放心回来？'],['01','12','06','07'],'写给蟾蜍：我想提醒你……'),
+      '11':profile('爱的教育','Cuore','埃德蒙多·德·亚米契斯','小学 3-6 年级','7 次共读','11-cuore.jpg','一本日记记录的日常，让孩子在许多普通小事里学习尊重、同情、诚实与责任。','同理心与日常品格',['开学·新的同学|开篇|安利柯认识不同家庭、性格和处境的同学。','日常·一件小事|发展|教室和街道小事，让人面对选择。','父亲的信·回头看|提醒|父亲用书信提醒他理解别人前先反省。','每月故事·更大世界|延伸|故事把勇气、责任和爱带进经验。','误解·重新理解|冲突|评价太快时，安利柯学习想对方处境。','行动·表达善意|转折|同情不是停在心里，而是具体行动。','日记·继续成长|结尾|记录让他会用新眼光看人。'],['安利柯|学习反思的记录者','父亲|用书信提醒的人','同学们|不同处境的伙伴','老师|让日常成为学习','每月故事人物|可讨论的榜样'],['同情要具体到处境|先想想他到底经历了什么。','品格在日常小事里|礼貌诚实责任，不只大事才需要。','反思让人慢慢长大|日记让人把今天放回事情重新看。'],['背景|为什么用日记？|它给人物再看一次的机会。','情节|小事为何值得记录？|它改变了谁的看法或选择？','人物|父亲的信有什么作用？|不是给答案，而是把问题还给孩子。'],'尊重|同情|诚实|反思|责任|日记|宽容|善意|处境|理解|选择|成长',['小事为什么值得写进日记？','同情和可怜有什么不同？','误解别人后怎样修复？','父母怎样给孩子建议？','今天你想记录哪次新理解？'],['05','03','08','07'],'给今天的一篇日记：我发现自己……'),
+      '12':profile('长袜子皮皮','Pippi Longstocking','阿斯特丽德·林格伦','小学 2-5 年级','7 次共读','12-pippi.jpg','一个不按常规生活的女孩，带着大胆、幽默和独立，也让人思考自由与责任。','独立、自由与责任',['维拉维洛古拉·独自生活|开篇|皮皮在自己的家里，用不同于大人的方式生活。','朋友·一起冒险|相遇|杜米和阿妮卡被皮皮的独特打开新视野。','规则·不太一样|发展|皮皮面对学校、警察与规则，常给出意外回应。','力量·怎样使用|冲突|能力和财富能做到很多事，也需要判断怎样做好。','远行·帮助别人|转折|冒险里，皮皮用勇气和机智帮助人。','离开·想念家|回望|自由不等于没有牵挂，朋友和家仍重要。','独立·继续长大|结尾|独立是能照顾自己，也愿意顾及别人。'],['皮皮|自由大胆的女孩','杜米|好奇的朋友','阿妮卡|谨慎的朋友','大人规则|需要讨论的期待','维拉维洛古拉|自由与安全的家'],['自由需要责任照亮|选择会影响别人。','独立不是孤立|能照顾自己，也能建立可靠关系。','幽默让人敢于不同|她用自己的方式看世界。'],['背景|为何让皮皮独自生活？|极端设定放大孩子对规则的好奇。','情节|每次冒险在问什么？|有能力时怎样使用能力才负责？','人物|哪些值得学习和保留？|喜欢角色不等于同意每个选择。'],'独立|自由|规则|机智|冒险|幽默|勇敢|负责|不同|牵挂|选择|边界',['皮皮哪些值得学，哪些你会不同做？','自由和任性有什么区别？','有能力时应怎样使用？','大人规则都不合理吗？','你希望拥有怎样的独立？'],['10','07','03','06'],'写给皮皮：自由对我来说是……')
+    };
+    B['01'].handbook={edition:'[美] E. B. 怀特 著 · 任溶溶 译 · 上海译文出版社',relations:[['弗恩','第一个守护者','小女孩，善良勇敢，救下威尔伯'],['夏洛','挚友 · 救命恩人','蜘蛛，聪明温柔，看透生死'],['老羊','谷仓消息通','见多识广，最早提醒威尔伯命运'],['坦普尔顿','损友 · 帮手','老鼠，贪吃自私，关键时刻帮忙'],['朱克曼夫妇','农场主人','谷仓农场主，威尔伯的主人'],['514 只小蜘蛛','接力守护','夏洛的孩子，三只留下来陪威尔伯']],words:[['生死攸关','关系到生和死，形容事情非常重要、紧急'],['自得其乐','自己从中找到乐趣，自己觉得快活'],['心事重重','心里有很多事情在想，放不下来'],['勃勃生机','充满了旺盛的生命力'],['冥思苦想','深沉地、反复地思考，想办法'],['食言','说了话不算数，不兑现诺言'],['息息相关','紧密相连，一个变化另一个也跟着变化'],['一不做二不休','既然开始做了，就索性做到最彻底'],['忧郁','心情不好、闷闷不乐的样子'],['多才多艺','能做很多不同的事情，而且都做得很好'],['安宁','内心平静、安详的感觉'],['遐迩闻名','远近都很有名，人人都知道']],sentences:[['青草湿湿的，泥土散发着一股春天的气息。','简洁有画面感，用“气息”写出了春天的感觉，仿佛能闻到泥土的味道。'],['天空亮起来了。哦，美丽的白天，它终于来了！今天我将找到我的朋友。','简单的几句话写出了威尔伯等待朋友的急切和期待，读起来很温暖。'],['你必须尽力打起精神来。我要你睡得足足的，不要担心。永远不要紧张，永远不要担心！','夏洛对威尔伯的安慰，简单却充满力量，体现真正朋友的关心。'],['一滴滴露水对着太阳光，使得蜘蛛网十分显眼，让人看得清清楚楚。','用露水和阳光衬托蜘蛛网的美丽，简单的描写让人仿佛看到了明亮的画面。'],['蟋蟀觉得这是它们的责任，警告大家夏日不能持久。就算是在一年中最美丽的日子——在夏天进入秋天的日子——蟋蟀还是向大家传布这个哀伤和变化的消息。','用蟋蟀的歌声来暗示季节变化和即将发生的事情，充满诗意。'],['夏洛蹲在天花板的阴影里，前腿抱着卵袋，没人看见。它的心跳不如往常有力，它感到疲惫老弱，不过它最后确信，它已经救了威尔伯的命，感到安宁，心满意足。','在热闹的颁奖典礼上，没人注意到真正的功臣夏洛默默地待在角落，这种对比让人非常感动。']],skills:[['通过人物的语言和行为理解感受','读故事时，看人物说的话、做的事，就能猜他心里的感受。','例如弗恩和爸爸争吵时说“这不公平”，还抢斧子；她那时特别着急，想救威尔伯。'],['用证据支持对人物的看法','每个“善良、勇敢”都要回到书里的语言和行动。','威尔伯一开始觉得夏洛凶狠，但第 5 章能找到夏洛善良的证据吗？'],['追踪人物感受的变化','注意人物一开始心情怎样，哪些事情让它改变。','读故事时，做一个“心情追踪器”，比较开头、中间和结尾。'],['通过人物互动推断关系','盯着两个人（或动物）说了什么、做了什么，从互动里判断关系。','用“互动小侦探”的办法，找出他们是伙伴、朋友还是帮助者。'],['通过共情理解人物的动机','看到人物做了一件事，要站在他的角度想“如果我是他，我会怎么想？”','用“猜动机”的小办法，说清人物为什么这样做。'],['思考故事的寓意','读故事结尾，要想“这个故事到底告诉我们什么？”','用一句“这本书让我明白……”说出主旨，并用情节作证据。']],quiz:[['内容理解 · 因果','威尔伯刚生下来是一只又小又弱的“落脚猪”，爸爸本来要拿斧子把它杀掉。是谁、用了什么办法，才让威尔伯活了下来？','是八岁的弗恩救下了威尔伯。她哭着拦住爸爸，说小猪太小就杀它太不公平；爸爸被说动，把小猪交给她。弗恩用奶瓶喂它、给它取名“威尔伯”，像照顾小宝宝一样把它养活了。'],['人物分析 · 动机','老鼠坦普尔顿当众喊“只有我自己”，可它后来还是跑去垃圾场叼字、又咬断丝把卵袋取下来。它帮忙真的是因为关心威尔伯吗？是什么让它一次次答应的？','不是出于关心，主要是为了自己的好处：威尔伯吃剩的甜甜圈是坦普尔顿的主要口粮；威尔伯活着和它的命运息息相关。它虽一直抱怨，行动上却是救利的选择。'],['词句品味 · 一字之妙','夏洛在网上一连织了好几个字——“王牌猪”“了不起”“光彩照人”，最后在集市上织的是“谦卑”。威尔伯说自己“并不谦卑”，那夏洛为什么偏偏挑“谦卑”这两个字？这个词用在威尔伯身上合适吗？','“谦卑”是夏洛精意挑的。它说“谦”是不自高自大，“卑”是位置低下；这两点都正合威尔伯——它从不骄傲，又老老实实待在地上的肥料堆里。词既贴合小猪，也让人类、农场里的信念更像在夸威尔伯。'],['推断 · 读懂没明说的话','多里安医生说：“那些字的出现，大家说是奇迹，可没有人指出，蜘蛛网本身就是一个奇迹。”网上明明出现了字，他却说“真正的奇迹”是蜘蛛网本身。你能读出他这句话想说什么吗？','他想说：大家盯着网上的字大呼小叫，其实蜘蛛网本身、坐下来就会织出精巧的网，本身就是一个奇迹。奇迹不在那几个字，而在大自然平常的事物里——只是人们看惯了，反而不觉得稀奇。'],['主旨把握','夏洛快要死的时候对威尔伯说：“一只蜘蛛一生只忙着捕提和吃苍蝇是毫无意义的，通过帮助你，也许可以提升一点我生命的价值。”读完整本书，你觉得夏洛这句话，想告诉我们一个怎样的道理？','它想告诉我们：一个生命的价值，不在于活得多么久，而在于有没有真心为别人做过点有意义的事。夏洛只是小小蜘蛛，活得很短，但它因为帮助朋友，让自己的生命很有分量。'],['联系生活','夏洛为了救威尔伯，一夜一夜地织字，最后耗尽了力气，连自己孩子出生都没能看到。在你的生活里，有没有谁曾经在你看不见的地方，默默为你做过什么？你是后来才知道的吗？','开放题，言之有理即可。引导孩子想想身边那些“看不见的付出”，比如父母深夜还在忙、老师悄悄帮过自己、朋友替自己说过话；说出具体事情和知道后的感受。']],recs:[['时代广场的蟋蟀','一只蟋蟀与朋友的城市奇遇，友谊与才华的温暖故事'],['吹小号的天鹅','E. B. 怀特同作者，关于成长、坚持与爱的勇气'],['精灵鼠小弟','E. B. 怀特同作者，一只小老鼠的勇敢冒险'],['青蛙和蟾蜍','一对好朋友的日常小事，把友谊讲得又暖又好笑']]};
+    var handbook02 = {
+  edition: '凯瑟琳·佩特森 著；请按课堂所用中文译本核对章节与表述',
+  map: {
+    people: [
+      '杰斯·阿伦斯', '莱斯莉·伯克', '梅贝尔·阿伦斯', '父亲',
+      '埃德蒙兹老师', '珍妮斯·艾弗里', '杰斯的姐姐们'
+    ],
+    plot: [
+      '奔跑·想被看见', '莱斯莉·意外胜出', '王国·共同命名',
+      '秘密·彼此照亮', '绳索·突然断裂', '悲伤·不肯相信', '新桥·把勇气递出去'
+    ],
+    theme: [
+      '想象不是逃离，而是重新命名现实的力量',
+      '真正的朋友会扩大你理解世界的边界',
+      '告别不会取消关系，记忆可以变成继续生活的勇气'
+    ],
+    deep: [
+      '背景：贫困、学校秩序与性别期待如何困住杰斯',
+      '情节：特雷比西亚既是庇护所，也是人物改变的练习场',
+      '人物：莱斯莉没有“拯救”杰斯，而是教他看见另一种可能'
+    ],
+    language: {
+      words: ['局促', '倔强', '怯懦', '辽阔', '僻静', '嘲弄', '盟友', '闯入', '失落', '哀恸', '勇气', '传递'],
+      quotes: ['晨跑与鞋底踏过田野的画面', '越过溪流进入树林的动作', '两人给王国命名的想象场景', '杰斯得知消息后一连串否认反应', '木板桥出现时的视觉变化', '梅贝尔第一次走进王国的背影']
+    }
+  },
+  acts: [
+    '晨跑·想被看见|开篇|杰斯每天清早练跑步，盼望在学校成为最快的男孩；但家庭的拮据和姐姐们的嘲笑让他常常把愿望藏起来。',
+    '莱斯莉·意外胜出|相遇|新同学莱斯莉在赛跑中跑赢男孩。杰斯先感到受挫，后来却被她不在意成规的样子吸引。',
+    '特雷比西亚·共同诞生|发展|两人荡过溪流，在树林里创造秘密王国；他们把学校、家庭里的害怕和委屈，变成可以一起面对的“敌人”。',
+    '秘密·彼此照亮|深化|莱斯莉带杰斯读书、想象、观察世界；杰斯也让她进入真实的家庭和乡野生活，友谊慢慢改变两人的眼光。',
+    '绳索·突然断裂|转折|杰斯与埃德蒙兹老师外出后回家，得知莱斯莉过溪时出事去世。熟悉的王国和日常一下失去入口。',
+    '悲伤·不肯相信|回望|杰斯在愤怒、否认和自责间摇摆，终于靠近莱斯莉的家人，也第一次更真切地理解父亲笨拙的关心。',
+    '新桥·把勇气递出去|结尾|杰斯用木板搭起通往特雷比西亚的桥，邀请妹妹梅贝尔进入王国。他把莱斯莉给自己的勇气继续传下去。'
+  ],
+  relationCore: ['杰斯·阿伦斯', '敏感、好画画的男孩；从渴望被认可，到敢于接受自己的感受'],
+  relations: [
+    ['莱斯莉·伯克', '想象同盟 · 彼此照亮', '不按常规生活的新同学；她邀请杰斯进入更辽阔的想象与阅读世界。'],
+    ['梅贝尔·阿伦斯', '被忽略的妹妹 · 勇气接棒者', '一直想靠近哥哥；结尾由杰斯带她进入王国，成为关系延续的见证。'],
+    ['父亲', '沉默的依靠 · 迟来的拥抱', '不善表达，却在杰斯最崩溃时用行动接住儿子。'],
+    ['埃德蒙兹老师', '艺术看见者 · 一日同行', '欣赏杰斯的绘画，给他一次被认真看见与短暂离开日常的机会。'],
+    ['珍妮斯·艾弗里', '曾经的欺负者 · 被重新理解的人', '她让两人看见：看似强势的人也可能藏着难以说出的处境。'],
+    ['姐姐们', '家庭压力 · 比较的来源', '她们的嘲笑与家务分配，让杰斯更急切地想证明自己的价值。']
+  ],
+  themes: [
+    ['想象不是逃避，而是给现实重新命名的能力', '特雷比西亚没有消除贫困、孤独和学校里的冲突，却让杰斯与莱斯莉能用共同的语言面对它们。读到“幻想”时，要问：它让人物回避了什么，又获得了什么？'],
+    ['友谊会扩大一个人的世界', '莱斯莉没有要求杰斯变成另一个人；她让他敢画画、敢读书、敢把害怕说出来。真正的友谊不是替人做决定，而是让人看见自己还有别的可能。'],
+    ['失去之后，爱可以变成行动', '结尾的桥不是忘记莱斯莉，而是杰斯把她给过的勇气交给梅贝尔。告别之后仍能照顾别人，是关系换了一种存在方式。']
+  ],
+  deep: [
+    ['背景', '为什么普通小镇里的孩子需要一个秘密王国？', '杰斯面对经济拮据、家庭性别期待和学校评价，很多愿望无处安放。特雷比西亚不是“无缘无故的奇幻”，而是人物在现实夹缝里创造出的精神空间。'],
+    ['情节', '溪流、绳索和木板桥分别意味着什么？', '前半段的绳索让两个孩子抵达王国；事故后，杰斯主动搭桥。通路从冒险工具变成承担与传递的选择，串起了故事的前后变化。'],
+    ['人物', '莱斯莉究竟留给杰斯什么？', '她不是为了推动杰斯成长而存在的“完美朋友”。她也有陌生与孤独；她留给杰斯的，是敢于追问、想象，并照顾比自己更弱小者的能力。']
+  ],
+  words: [
+    ['局促', '因窘迫或不自在而显得不自然；可联系杰斯在家庭、课堂中的身体与语气。'],
+    ['倔强', '不轻易服从或改变；比较杰斯的隐忍与莱斯莉的坚持。'],
+    ['怯懦', '因害怕而不敢行动；要分辨它与谨慎、悲伤的不同。'],
+    ['辽阔', '宽广没有边际；既可写树林，也可写莱斯莉带来的新眼光。'],
+    ['僻静', '偏僻安静；说明树林为何能成为两人的秘密空间。'],
+    ['嘲弄', '用言语或神态取笑、轻慢别人；找出它如何伤害杰斯。'],
+    ['盟友', '为了共同目标而相互支持的人；是两人给彼此的角色。'],
+    ['闯入', '突然进入原本不属于自己的地方或生活；莱斯莉的到来改变了日常。'],
+    ['失落', '因失去、未得到而情绪低沉；比较杰斯在不同段落中的失落。'],
+    ['哀恸', '因悲伤而痛苦；用于结局讨论时注意尊重真实情绪。'],
+    ['勇气', '明知困难仍愿意面对；不是“不害怕”。'],
+    ['传递', '把得到的东西交给后来的人；对应结尾把王国交给梅贝尔。']
+  ],
+  sentences: [
+    ['晨跑与鞋底踏过田野的画面', '从重复的清晨动作读出杰斯想证明自己的执拗，也可留意“孤身跑步”如何暗示他的孤独。请按版本摘录原文。'],
+    ['越过溪流进入树林的动作', '把“过溪”当作现实与想象之间的门槛：每一次进入前，人物的心情一样吗？请按版本摘录原文。'],
+    ['两人给特雷比西亚命名的场景', '自创名称让普通树林变成共同拥有的世界；品味命名怎样给孩子力量。请按版本摘录原文。'],
+    ['杰斯得知莱斯莉消息后的否认反应', '关注短句、重复或身体动作如何呈现不愿相信；不要急着把悲伤概括成一个词。请按版本摘录原文。'],
+    ['杰斯看到木板桥时的视觉变化', '桥的材料很普通，但含义已改变；比较绳索与木桥带给他的感受。请按版本摘录原文。'],
+    ['梅贝尔第一次走进王国的背影', '用“邀请”而非“独占”收束故事，读出杰斯把友谊化为照顾的行动。请按版本摘录原文。']
+  ],
+  skills: [
+    ['追踪人物想要的东西', '人物表面的行为背后常有一个更深的愿望。', '在第一幕圈出杰斯练跑和画画的细节，分别说说他想被谁看见。'],
+    ['从反应推断复杂感受', '人物可能同时害怕、羡慕、愤怒或难过。', '莱斯莉赢赛跑后，给杰斯画一张“感受混合图”，每种感受都要有文本依据。'],
+    ['读懂象征性物件', '反复出现的物件会随着情节获得新的意义。', '用“起初—后来—结尾”三格记录溪流、绳索、木桥的变化。'],
+    ['比较人物如何互相影响', '关系不是标签，要从两人互相做过什么读出来。', '列出莱斯莉给杰斯的一个影响，也列出杰斯给莱斯莉的一个影响。'],
+    ['尊重悲伤叙事', '讨论失去时先承认感受，再分析情节。', '用“杰斯可能……因为……”写一句，不替角色快速下结论。'],
+    ['把主题落实为行动', '好的主题要能回到具体选择。', '用结尾邀请梅贝尔的证据，完成“爱会在___时继续”的一句话。']
+  ],
+  quiz: [
+    ['内容理解 · 因果', '杰斯和莱斯莉为什么要创造特雷比西亚？它替他们解决了哪些“不能直接说”的困难？', '两人在家庭和学校中都有孤独、压力与被误解的时刻。王国没有替他们消除现实问题，却给他们共同想象、互相支持、重新理解害怕的空间；回答需举出具体经历。'],
+    ['人物分析 · 动机', '莱斯莉赢了男孩赛跑后，杰斯为什么既想远离她，又渐渐靠近她？', '可从杰斯渴望成为最快男孩、胜利被打断的受挫感，以及莱斯莉的坦率、阅读与想象力带来的吸引来分析。两种反应可以同时成立。'],
+    ['词句品味 · 物象', '作品反复写到溪流和过溪。它们除了是地点，还让你想到人物怎样的心理变化？', '起初的绳索意味着冒险和进入秘密世界；事故后“过溪”关联恐惧与失去；木桥则意味着杰斯把恐惧转换为承担。应结合前后情节。'],
+    ['推断 · 读懂没明说的话', '杰斯为什么在得知莱斯莉去世后先否认、发怒，甚至说出伤人的话？', '这不是“他不在乎朋友”，而是突如其来的打击让他一时无法接受。可找他的身体反应、回避和后来靠近莱斯莉父母的行动作证。'],
+    ['主旨把握', '结尾杰斯邀请梅贝尔进入特雷比西亚，为什么不是一个简单的“开始新游戏”？', '这是成长后的传递：他没有忘记莱斯莉，而是把从友谊中得到的勇气、想象和照顾弱小者的责任交给妹妹。'],
+    ['联系生活', '当朋友经历难过的事时，“安慰”一定要说很多话吗？你愿意做一个怎样具体的陪伴者？', '开放题。可从陪在身边、认真听、不逼对方立刻好起来、提供具体帮助等角度回答；不要求孩子分享私人伤痛。']
+  ],
+  family: [
+    '想象一个秘密王国是在逃避现实，还是在练习面对现实？请各举一个情节证据。',
+    '莱斯莉和杰斯谁改变了谁更多？能不能不比较，而是说说他们怎样互相成就？',
+    '杰斯的父亲不善表达，他算不算关心孩子？请从行动而不是标签讨论。',
+    '失去重要的人后，继续快乐是不是“不够想念”？为什么？',
+    '你愿意把从朋友那里得到的哪一种力量“搭桥”传给别人？'
+  ],
+  recs: [
+    ['《仙境之桥》', '同一作品的影视改编；建议读完原著后比较“桥”和王国如何被视觉化。'],
+    ['《秘密花园》', '从封闭、孤独到在花园中重新获得生命力，适合比较空间如何改变人物。'],
+    ['《永远讲不完的故事》', '想象世界与现实世界彼此影响，可继续讨论想象的责任。'],
+    ['《柳林风声》', '以友谊、冒险与家为主线，适合衔接“伙伴如何互相托住”的主题。']
+  ]
+};
+
+var handbook03 = {
+  edition: '黑柳彻子 著；赵玉皎 译本常见，章节与原句请按课堂所用版本核对',
+  map: {
+    people: ['小豆豆', '小林宗作校长', '妈妈', '泰明', '阿泰', '美代', '洛基'],
+    plot: ['退学·被贴标签', '校长·四小时倾听', '电车·成为教室', '午餐·山的味道海的味道', '朋友·一起长大', '战争·日常被打断', '记忆·把理解传下去'],
+    theme: ['理解要先于评价', '教育应保护不同孩子的生长节奏', '被好好对待的孩子，更有能力善待世界'],
+    deep: ['背景：战前日本与巴学园为何珍贵', '情节：看似零散的童年片段如何形成成长叙事', '人物：小林校长的教育不是放任，而是有尊严的信任'],
+    language: {
+      words: ['与众不同', '津津有味', '兴高采烈', '若有所思', '全神贯注', '小心翼翼', '好奇', '倾听', '接纳', '体谅', '尊严', '告别'],
+      quotes: ['小豆豆站在窗边和宣传艺人说话的场景', '校长认真听她讲四小时的场景', '电车教室与自由选科的早晨', '“山的味道，海的味道”的午餐检查', '泰明爬树与被平等对待的片段', '巴学园在战火中消失的回望']
+    }
+  },
+  acts: [
+    '窗边·被贴标签|开篇|小豆豆因上课时反复站到窗边说话、开关书桌等行为，被原学校要求转学。她的好奇被成人先解释成“麻烦”。',
+    '校长·四小时倾听|相遇|小林校长没有先追问过错，而是请小豆豆把想说的话都讲出来。被长时间认真听见，是她进入巴学园的第一课。',
+    '电车·成为教室|发现|废弃电车做教室，自由安排学习顺序，孩子们先从自己喜欢的课程开始，学习不再只剩“坐好听讲”。',
+    '午餐·山的味道海的味道|日常|校长用有趣又具体的方式关心营养；生活细节也成为教育的一部分。',
+    '朋友·一起长大|发展|泰明、阿泰、美代等同学各有身体、家庭或性格上的不同，巴学园让他们在游戏、劳动与相处中彼此看见。',
+    '战争·日常被打断|转折|战时生活改变，学校最终在空袭中被烧毁。幸福的校园不是永远存在，也因此更需要被记得。',
+    '记忆·把理解传下去|结尾|长大的黑柳彻子回望童年，把小林校长曾给她的信任写给后来的人：每个孩子本来都是好孩子。'
+  ],
+  relationCore: ['小豆豆', '精力旺盛、充满好奇的孩子；在被倾听后，慢慢学会理解他人'],
+  relations: [
+    ['小林宗作校长', '耐心倾听者 · 成长引路人', '愿意花时间听孩子说话，用具体生活安排保护孩子的尊严与好奇。'],
+    ['妈妈', '相信孩子的人 · 温柔的边界', '没有把“退学”变成羞耻，带小豆豆寻找更适合她的学校。'],
+    ['泰明', '平等的朋友 · 勇敢示范者', '身体有障碍却有力量与幽默；他让小豆豆理解“帮助”不能代替尊重。'],
+    ['阿泰', '需要被理解的同学 · 游戏伙伴', '来自朝鲜的同学，经历身份与家庭处境带来的伤害；作品提醒人不要用偏见伤人。'],
+    ['美代', '日常伙伴 · 共同发现者', '在小事、游戏和课堂中与小豆豆一起学习相处。'],
+    ['洛基', '无条件陪伴 · 告别练习', '小豆豆的狗；人与动物的信任和失去，让她学习珍惜与告别。']
+  ],
+  themes: [
+    ['理解先于评价', '小豆豆在旧学校的问题并没有凭空消失，但小林校长先听她说话。成人多听一会，才能分辨好奇、精力、困难与故意捣乱。'],
+    ['每个孩子有不同的学习节奏', '电车教室、自由选科、散步、劳动和午餐，说明学习不仅发生在统一答案里，也发生在身体、关系和真实体验中。'],
+    ['尊严让人愿意成长', '巴学园并非没有规则，而是规则不靠羞辱来执行。被信任的孩子更愿意为自己和他人负责。']
+  ],
+  deep: [
+    ['背景', '为什么一所“小学校”的故事能一直被记住？', '巴学园处在战前日本的特定时代，后来毁于战火。正因为它短暂，作品更珍惜一种教育理想：儿童不是等待被修理的对象，而是正在生长的人。'],
+    ['情节', '这些看似零散的小故事如何组成一本书？', '每个片段都在回答同一件事：小豆豆怎样被看见，又怎样学会看见别人。可让孩子用“这件事让她多懂了什么”串联章节。'],
+    ['人物', '小林校长的“自由”是否等于什么都可以？', '不是。自由学习、午餐检查、劳动、集体活动都有明确用意。关键是他相信孩子能理解规则，而不是靠恐吓让孩子服从。']
+  ],
+  words: [
+    ['与众不同', '与多数人不一样；不是好坏判断，需追问差异的具体内容。'],
+    ['津津有味', '很有兴趣地做或听；适合观察孩子在喜欢的活动中的专注。'],
+    ['兴高采烈', '兴致很高、情绪愉快；可与突发伤心形成对照。'],
+    ['若有所思', '像在思考某件事；可从神态和停顿推断，不要随意确定想法。'],
+    ['全神贯注', '精神高度集中；提醒学习不等于静止不动。'],
+    ['小心翼翼', '非常谨慎；看人物为什么需要小心。'],
+    ['好奇', '对未知想了解、想尝试；与无视边界的行为要区分。'],
+    ['倾听', '认真听并试着理解；不只是“不打断”。'],
+    ['接纳', '承认并尊重差异；不等于放弃帮助和规则。'],
+    ['体谅', '设身处地理解别人的难处；需落实为不嘲笑、不排斥。'],
+    ['尊严', '一个人被平等对待的价值感；联系校长如何和孩子说话。'],
+    ['告别', '与人、地方或时光分开；可谈记忆怎样留下。']
+  ],
+  sentences: [
+    ['小豆豆站在窗边和宣传艺人说话的场景', '先看她做了什么、为什么感到有趣，再讨论老师是否有别的回应方式；不要把情境缩成“她不守纪律”。请按版本摘录原文。'],
+    ['校长认真听她讲四小时的场景', '长时间倾听本身就是叙事动作。注意校长的神态、提问和不催促如何让小豆豆放松。请按版本摘录原文。'],
+    ['电车教室与自由选课的早晨', '电车这一空间打破了“教室只能有一种样子”的想象；观察自由如何和学习任务同时存在。请按版本摘录原文。'],
+    ['“山的味道、海的味道”的午餐检查', '有趣的说法把营养知识变得可感；品味儿童语言如何承载教育观念。请按版本摘录原文。'],
+    ['泰明爬树与被平等对待的片段', '不要把泰明写成需要同情的符号，重点读他怎样选择、怎样被伙伴平等相待。请按版本摘录原文。'],
+    ['巴学园在战火中消失的回望', '叙述从热闹日常转向克制的告别；感受童年记忆和时代伤痛如何并置。请按版本摘录原文。']
+  ],
+  skills: [
+    ['区分事实与评价', '先写发生了什么，再说自己怎么看。', '用两栏记录“小豆豆做了什么”和“老师给她贴了什么标签”，避免把评价当事实。'],
+    ['从成人回应分析教育观', '成人的语气、等待和规则会影响孩子怎样理解自己。', '找校长的一个回应，说明它为什么让小豆豆感到被尊重。'],
+    ['用细节理解差异', '差异不是一个概念，要从具体生活细节读。', '任选泰明或阿泰的片段，写“他喜欢/会做/担心什么”，不用一个标签概括他。'],
+    ['串联片段形成主题', '散文式章节也能有清晰的成长线。', '用“这件小事让小豆豆学会……”给三个片段排序。'],
+    ['比较规则的目的', '讨论规则时要问它保护了谁、帮助了什么。', '比较旧学校的一条要求与巴学园的一项安排，分别推测它们想解决什么问题。'],
+    ['从回忆者视角读故事', '成年后的讲述者会挑选、理解并珍惜童年。', '找一个结尾回望，讨论成年小豆豆为什么要把它写下来。']
+  ],
+  quiz: [
+    ['内容理解 · 因果', '小豆豆为什么离开原来的学校？妈妈为什么没有立刻把“退学”告诉她？', '小豆豆的行为不符合原学校的课堂期待，学校要求她转学。妈妈不把这个消息变成羞耻，而是先为她寻找合适的环境，保护她对上学的期待。'],
+    ['人物分析 · 动机', '小林校长为什么愿意听小豆豆讲很久？他只是想哄她开心吗？', '倾听让校长认识真实的孩子，也让小豆豆感到自己值得被认真对待。这是教育判断的开始，而非没有目的的纵容；可联系他后续的安排。'],
+    ['词句品味 · 表达', '“山的味道、海的味道”为什么比直接说“要营养均衡”更容易被孩子记住？', '它把抽象营养变成可想象的画面和游戏语言，既具体又不说教。回答可进一步谈儿童语言怎样让规则变得亲近。'],
+    ['推断 · 读懂没明说的话', '作品写泰明、阿泰等同学时，为什么不把他们写成“可怜的人”？', '他们各有兴趣、能力、幽默和烦恼。平等不是替别人贴上脆弱标签，而是承认他是完整的人，并在需要时提供尊重的帮助。'],
+    ['主旨把握', '“你真是个好孩子”为什么对小豆豆很重要？', '它不是空泛表扬，而是在她被误解后给出信任。被看见好的一面，能让孩子愿意承担责任、理解别人，并在以后记得这样对待他人。'],
+    ['联系生活', '当同学有一个让你觉得奇怪的习惯时，你怎样先了解他，而不是先给他下结论？', '开放题。可从礼貌询问、观察情境、不传播嘲笑、需要时寻求老师帮助等角度回答；强调尊重边界。']
+  ],
+  family: [
+    '如果小豆豆在今天的班级，你觉得她最需要怎样的支持，而不是怎样的“纠正”？',
+    '“自由选喜欢的课”会不会让孩子只学喜欢的内容？巴学园怎样让自由和责任并存？',
+    '大人什么时候该倾听，什么时候该设边界？请各用一个具体情境讨论。',
+    '同情、帮助、平等对待三者有什么不同？联系泰明或阿泰说一说。',
+    '你小时候最希望大人认真听你讲哪一件小事？现在愿意怎样听孩子讲？'
+  ],
+  recs: [
+    ['《小豆豆频道》', '同一作者后续作品，可追踪小豆豆长大后如何把被理解化为理解社会。'],
+    ['《孩子们的拜厄》', '关注儿童在成长与艺术中的自我发现，适合继续讨论教育如何保护兴趣。'],
+    ['《夏山学校》', '可与巴学园比较不同教育理念；建议家长先读，再选择性与高年级孩子讨论。'],
+    ['《窗边的豆豆》绘本/图像版', '适合低年龄读者借图像回顾电车教室、午餐和伙伴关系。']
+  ]
+};
+
+var handbook04 = {
+  edition: '吴承恩 著；建议以课堂选定的少儿节选/整本版本为准，回目和原句须按版本核对',
+  map: {
+    people: ['唐僧', '孙悟空', '猪八戒', '沙悟净', '白龙马', '观音菩萨', '如来佛祖'],
+    plot: ['花果山·寻自由', '大闹天宫·受压山下', '五行山·受命启程', '收徒·队伍成形', '磨难·屡陷迷局', '真假·照见内心', '灵山·取经回望'],
+    theme: ['本领要有方向，强大才不伤人', '团队不是相同，而是学会互补与信任', '修行是每一次在诱惑和困难前回到初心'],
+    deep: ['背景：神魔世界怎样映照人间规则与欲望', '情节：反复受难不是拖延，而是人物弱点的显影', '人物：孙悟空从只凭本领到愿意承担责任的变化'],
+    language: {
+      words: ['腾云驾雾', '神通广大', '火眼金睛', '斩妖除魔', '桀骜不驯', '嫉恶如仇', '掩人耳目', '贪图', '磨难', '同行', '担当', '初心'],
+      quotes: ['石猴跃入水帘洞的动作场景', '悟空自封“齐天大圣”的气势描写', '五行山下师徒相见的对话场景', '三打白骨精中“看见”与“看不见”的冲突', '真假美猴王的照镜式对照', '抵达灵山后仍要过河的结尾关口']
+    }
+  },
+  acts: [
+    '花果山·寻自由|开篇|石猴出世，在花果山带领群猴发现水帘洞；它从对生死的恐惧出发，踏上学艺求长生的路。',
+    '天宫·反抗与代价|前段|孙悟空不甘被轻视，自封“齐天大圣”、大闹天宫；强大的本领和急躁的脾气一起把他推向五行山下。',
+    '五行山·受命启程|转折|唐僧西行取经，经过五行山救出悟空。紧箍咒既是约束，也让悟空开始学习把力量放进共同目标。',
+    '收徒·队伍成形|发展|猪八戒、沙悟净和白龙马陆续加入。性格、能力和过去都不同，师徒从彼此不服到逐渐形成分工。',
+    '磨难·屡陷迷局|中段|妖怪变化、诱惑和误会不断出现。每一难既考本领，也考唐僧是否坚定、悟空是否耐心、伙伴是否愿意互信。',
+    '真假·照见内心|深化|白骨精、红孩儿、女儿国、真假美猴王等情节，把“眼睛看见的”与“内心相信的”反复拉开，人物的弱点因此显形。',
+    '灵山·取经回望|结尾|师徒抵达灵山取得真经，仍需过最后关口。经历说明修行不是一场胜利，而是一路选择、承担和继续前行。'
+  ],
+  relationCore: ['唐僧', '取经团队的目标守护者；慈悲坚定，也会因眼前判断而动摇'],
+  relations: [
+    ['孙悟空', '大徒弟 · 本领与约束', '降妖除魔的主力；从桀骜不驯到学会为共同目标克制与担当。'],
+    ['猪八戒', '二徒弟 · 欲望与人情', '贪吃怕累、爱抱怨，却常带来生活感与不同角度；不是单纯的“坏角色”。'],
+    ['沙悟净', '三徒弟 · 稳定支撑', '少言踏实，承担行李、牵马等日常劳动，让团队能持续前进。'],
+    ['白龙马', '坐骑 · 无声同行者', '常被忽视，却在关键时刻显出能力；提醒读者看见不张扬的付出。'],
+    ['观音菩萨', '取经发愿者 · 路线引导者', '选择取经人、安排考验与帮助，代表更高目标与慈悲方向。'],
+    ['如来佛祖', '终点见证者 · 规则制定者', '收服悟空、授予真经，故事中的秩序与终极考验和他相关。']
+  ],
+  themes: [
+    ['本领需要方向', '悟空有七十二变和火眼金睛，但早期只凭本领和脾气会造成更大冲突。取经后，他逐渐把力量用于保护同伴、辨别危险和完成承诺。'],
+    ['不同的人可以互补前行', '唐僧守目标，悟空破难关，八戒带来人情与现实感，沙僧承担日常，白龙马默默同行。团队会冲突，但并不需要变成一样的人。'],
+    ['修行是反复选择初心', '“八十一难”不只是数字。诱惑、误会、疲惫每次都让师徒重新选择：放弃、各走各路，还是回到目标、承担自己的部分。']
+  ],
+  deep: [
+    ['背景', '神仙、妖怪和法力为什么仍然像人间？', '神魔世界把权力、名声、贪欲、规则和不公平放大。读者可从夸张情节回看现实：角色真正想要的是什么？他们怎样使用手里的力量？'],
+    ['情节', '为什么一路“抓走唐僧—搭救—继续赶路”仍有意义？', '重复的结构让不同难关像一面面镜子：悟空的急躁、唐僧的轻信、八戒的动摇、沙僧的稳重在不同情境里被重新检验。'],
+    ['人物', '悟空的成长只有“戴上紧箍咒”吗？', '约束只是开始。更值得读的是他后来何时愿意解释、等待、救人、承担后果。成长不是失去锋芒，而是知道锋芒该用在哪里。']
+  ],
+  words: [
+    ['腾云驾雾', '乘着云雾飞行；写悟空行动迅疾、神奇。'],
+    ['神通广大', '本领高强、变化多；可追问本领怎样被使用。'],
+    ['火眼金睛', '能识破妖怪伪装的眼力；也提醒“看见”不等于总能被相信。'],
+    ['斩妖除魔', '消灭妖怪、扫除邪恶；注意故事中有些冲突并非只靠武力解决。'],
+    ['桀骜不驯', '性情倔强、不服管束；适合读早期悟空。'],
+    ['嫉恶如仇', '对坏事坏人极度憎恨；可讨论正义感与冲动的界线。'],
+    ['掩人耳目', '用假象遮住真相；对应妖怪变化与叙事中的误认。'],
+    ['贪图', '过分想得到；常关联八戒或妖怪的选择。'],
+    ['磨难', '艰难困苦的遭遇；不把困难浪漫化，要看人物怎样应对。'],
+    ['同行', '同路一起走；比“跟随”更强调彼此关系。'],
+    ['担当', '对自己该做的事负责；可找沙僧、悟空的行动证据。'],
+    ['初心', '开始时最重要的目标与愿望；取经路上反复被检验。']
+  ],
+  sentences: [
+    ['石猴跃入水帘洞的动作场景', '节奏快、动词密集，写出敢闯敢试的生命力；也可追问“敢”之后他承担了什么。请按版本摘录原文。'],
+    ['悟空自封“齐天大圣”的气势描写', '夸张称号与排场展现反抗轻视的愿望，也埋下不服规则的冲突。请按版本摘录原文。'],
+    ['五行山下师徒相见的对话场景', '从山压住身体到被唐僧放出，外在束缚与内在承诺同时开始。请按版本摘录原文。'],
+    ['三打白骨精中“看见”与“看不见”的冲突', '悟空的火眼金睛、唐僧的肉眼判断与妖怪伪装形成张力；品味不同视角为何会导致同伴失信。请按版本摘录原文。'],
+    ['真假美猴王的对照场景', '两个“悟空”让读者思考：身份靠外貌、本领还是选择来证明？请按版本摘录原文。'],
+    ['抵达灵山后仍要过河的结尾关口', '临近目标仍有考验，打破“一到终点就万事大吉”的想象。请按版本摘录原文。']
+  ],
+  skills: [
+    ['读回目和章节标题', '古典小说的回目常提前点出冲突与人物。', '选一个回目，把它拆成“谁—遇到什么—可能怎样解决”。'],
+    ['识别夸张与想象', '夸张让人物和冲突更鲜明，不等于现实事实。', '从一个神通或妖怪变化里说说作者想放大角色的哪种力量或欲望。'],
+    ['比较人物的功能', '团队角色的价值常来自互补，不只来自谁最厉害。', '用表格写唐僧、悟空、八戒、沙僧各自“强项—短板—给团队的帮助”。'],
+    ['从反复结构找变化', '相似的受难情节里，人物反应会有细微变化。', '比较两次唐僧误会悟空：原因、悟空反应、最后结果有什么不同。'],
+    ['判断力量与责任', '评判角色不只看本领，还要看他是否承担后果。', '选择悟空或八戒的一次行动，用“有力量的人应该……”写出理由。'],
+    ['用证据讨论主题', '“修行”要从一次次选择中读出来。', '完成句式“他们没有放弃取经，因为___；这说明___”。']
+  ],
+  quiz: [
+    ['内容理解 · 因果', '孙悟空为什么会从花果山走向大闹天宫，最后又被压在五行山下？', '可串联他对长生与尊严的追求、对天庭轻视的不满、依靠强大本领反抗，以及如来用更高法力和规则收束冲突。避免把原因简化成“他调皮”。'],
+    ['人物分析 · 动机', '唐僧有时会误会悟空，为什么仍然是取经队伍不可替代的人？', '唐僧的长处是目标坚定、慈悲和愿意承担发愿；他的轻信与软弱也会造成困难。人物价值不等于没有缺点。'],
+    ['词句品味 · 一字之妙', '“火眼金睛”在故事里为什么既是悟空的优势，也可能让他更孤立？', '它让悟空看穿伪装，却不能保证同伴相信他的判断。这个词可引出“看见真相”和“让别人理解真相”是两件事。'],
+    ['推断 · 读懂没明说的话', '八戒常常说想散伙、怕吃苦，他是否因此毫无价值？', '不能只用一句抱怨定义人物。他有欲望和软弱，也在部分危急时刻出力；他的“人情味”让团队冲突更真实。需用具体情节说明。'],
+    ['主旨把握', '为什么取得真经前后还要经历最后关口？', '作品强调成长没有一劳永逸的终点。快完成时仍要检验是否守住目标、是否愿意承担，修行是一连串选择。'],
+    ['联系生活', '当小组里有人能力很强却容易急躁、有人踏实却不爱说话时，怎样让每个人都被看见？', '开放题。可提出分工、先听理由、明确责任、肯定不张扬贡献、发生冲突再回到共同目标等具体做法。']
+  ],
+  family: [
+    '悟空大闹天宫是在争取尊严，还是太冲动？请分别找证据。',
+    '紧箍咒是必要的规则还是不公平的控制？规则怎样既能保护人又不伤害尊严？',
+    '师徒四人中，谁最像你在小组里的样子？这不是贴标签，请说一种长处和一种要练习的地方。',
+    '真正的“火眼金睛”在今天可以是什么能力？是分辨信息、理解别人，还是别的？',
+    '当团队走得很慢时，怎样提醒伙伴又不把人推开？'
+  ],
+  recs: [
+    ['《哪吒闹海》', '同样有少年反抗与责任议题，可比较悟空和哪吒怎样面对规则。'],
+    ['《封神演义》少儿节选', '继续进入神魔叙事；建议选有注释的少儿版本，关注人物选择而非只看斗法。'],
+    ['《山海经》少儿图文版', '认识中国神话想象的来源，适合做神怪形象与故事功能的观察。'],
+    ['《水浒传》少儿节选', '可比较“伙伴、规则、反抗”在另一部古典小说中的复杂呈现。']
+  ]
+};
+
+var handbook05 = {
+  edition: 'R. J. 帕拉西奥 著；请按课堂所用中文译本核对人名、章节与原句',
+  map: {
+    people: ['奥吉·普尔曼', '薇娅·普尔曼', '杰克·威尔', '夏洛特/萨默', '朱利安', '伊莎贝尔妈妈', '内特爸爸'],
+    plot: ['头盔·不想被看见', '入学·第一次目光', '朋友·靠近与试探', '万圣节·听见伤人的话', '多视角·每个人的难处', '自然营·站到身边', '奖章·被看见的完整的人'],
+    theme: ['善意不是怜悯，而是把对方当作完整的人', '勇气既是走进人群，也是关键时刻站到别人身边', '换位思考能让简单判断变得更真实'],
+    deep: ['背景：学校为什么是练习看见与被看见的公共空间', '情节：多视角叙事如何打破单一的“主角滤镜”', '人物：奥吉需要的不是特殊待遇，而是尊重、友谊和普通生活'],
+    language: {
+      words: ['凝视', '回避', '误解', '犹豫', '善意', '怜悯', '尊重', '孤立', '和解', '陪伴', '勇气', '选择'],
+      quotes: ['奥吉戴头盔出门的日常场景', '校园参观时同学们的眼神与停顿', '万圣节听见杰克说话后的沉默', '薇娅在家庭里被“懂事”掩盖的感受', '自然营中同伴围到奥吉身边的动作', '毕业典礼奖章与全场掌声的结尾']
+    }
+  },
+  acts: [
+    '头盔·不想被看见|开篇|因罕见面部差异接受过多次手术的奥吉长期在家学习。他爱游戏、笑话和科学，也习惯用头盔躲开陌生目光。',
+    '入学·第一次目光|相遇|五年级前，父母决定让奥吉进入比彻预备学校。校长安排几位学生带他参观，善意、好奇与不安同时出现。',
+    '朋友·靠近与试探|发展|杰克和萨默逐渐愿意认识真实的奥吉：他的幽默、聪明和烦恼，而不只是外貌。友谊在日常相处中一点点建立。',
+    '万圣节·听见伤人的话|冲突|奥吉换上能遮住脸的服装去学校，却意外听见杰克为迎合朱利安说出伤人的话。他选择沉默疏远，关系受到考验。',
+    '多视角·每个人的难处|转折|薇娅、杰克、萨默、米兰达等人的叙述补出另一面：姐姐也会被忽略，朋友也会害怕失去同伴，旁观者也要作选择。',
+    '自然营·站到身边|高潮|校外活动中奥吉遭遇高年级学生挑衅，原本犹豫的同学站出来保护他。善意第一次成为可见的集体行动。',
+    '奖章·被看见的完整的人|结尾|奥吉获得亨利·沃德·比彻奖章。他不是因“可怜”被奖励，而是因勇气、友谊与让周围人变得更好而被尊重。'
+  ],
+  relationCore: ['奥吉·普尔曼', '爱科学、爱笑、也会害怕的男孩；他希望被当作完整的人认识'],
+  relations: [
+    ['薇娅·普尔曼', '姐姐 · 被忽略的守护者', '深爱弟弟，也因长期“懂事”而有自己的孤独与需要被看见的时刻。'],
+    ['杰克·威尔', '朋友 · 犯错后的修复者', '曾因迎合他人说出伤害奥吉的话，后来愿意承认、道歉并在行动中修复关系。'],
+    ['萨默·道森', '主动靠近者 · 平等朋友', '没有把奥吉当作任务或慈善对象，而是从午餐桌的一次坐下开始做普通朋友。'],
+    ['朱利安·阿尔本斯', '排斥者 · 偏见的放大器', '用嘲弄、孤立和暗示排斥奥吉，也让读者看见偏见如何借群体压力扩散。'],
+    ['伊莎贝尔妈妈', '细心守护者 · 放手练习者', '想保护奥吉，也要学习相信他能面对世界。'],
+    ['内特爸爸', '幽默支撑者 · 家庭安全感', '用玩笑和陪伴减轻紧张，同时尊重奥吉的感受与选择。']
+  ],
+  themes: [
+    ['善意不是怜悯，是平等地靠近', '萨默在午餐桌边坐下的动作很普通，却比“你真可怜”更有力量。理解一个人，要看见他的兴趣、脾气、愿望与边界。'],
+    ['勇气有两种方向', '奥吉愿意进学校是勇气；杰克承认错误、同学在自然营站到奥吉身边也是勇气。勇敢不只属于被伤害的人。'],
+    ['换位思考让故事更完整', '薇娅、杰克、米兰达等视角提醒读者：每个人都有看不见的难处。理解不是取消责任，而是让判断有更多事实和同理心。']
+  ],
+  deep: [
+    ['背景', '为什么故事必须发生在学校？', '学校是孩子每天共同生活的公共空间：目光、座位、午餐桌、群聊和活动都会决定一个人能否被接纳。作品把“友善”写成每天可做的选择。'],
+    ['情节', '多视角叙事带来了什么？', '如果只跟着奥吉，读者容易把其他人分成好人坏人。切换视角后，姐姐的委屈、杰克的害怕、米兰达的孤独都变得可见，但这不为伤害行为开脱。'],
+    ['人物', '奥吉真正想要什么？', '他需要合理照顾，却不想永远被当作特殊案例。他想交朋友、开玩笑、上课、被尊重，也希望别人先看见他是谁，而不只看见他的脸。']
+  ],
+  words: [
+    ['凝视', '长时间盯着看；在故事里会让人感到被物化或不自在。'],
+    ['回避', '因为害怕、尴尬或不愿面对而躲开；要追问人物回避什么。'],
+    ['误解', '没有真正了解就作出错误判断；可联系外表与传言。'],
+    ['犹豫', '想做又拿不定主意；旁观者常在善意与群体压力间犹豫。'],
+    ['善意', '希望别人更好并落实为行动；不等于居高临下的施舍。'],
+    ['怜悯', '因别人不幸而同情；若只有怜悯，可能忽略对方的尊严。'],
+    ['尊重', '承认对方的价值、感受和边界；可以体现在不嘲笑、先询问、守承诺。'],
+    ['孤立', '让一个人被排除在群体之外；既可由直接欺负，也可由沉默旁观造成。'],
+    ['和解', '冲突后通过承认伤害、道歉和行动重新建立关系；不是假装没发生过。'],
+    ['陪伴', '在关系中稳定地在场；不必总是说很多话。'],
+    ['勇气', '带着害怕仍做正确的事；包含求助与承认错误。'],
+    ['选择', '面对压力时采取的行动；作品不断让人物在旁观和站出来之间选择。']
+  ],
+  sentences: [
+    ['奥吉戴头盔出门的日常场景', '头盔既像保护壳，也说明他多么想免于被盯看；比较“躲起来”与“走进学校”的两种勇气。请按版本摘录原文。'],
+    ['校园参观时同学的眼神与停顿', '人物未必说出恶意，但停顿、躲闪和不知如何开口也会制造距离。请按版本摘录原文。'],
+    ['万圣节听见杰克说话后的沉默', '奥吉没有立刻争吵，沉默反而放大受伤感；留意叙述节奏怎样让读者贴近他的孤独。请按版本摘录原文。'],
+    ['薇娅在家庭里被“懂事”掩盖的感受', '从姐姐视角看见“照顾病弱孩子的家庭”中另一位孩子的复杂处境。请按版本摘录原文。'],
+    ['自然营中同伴围到奥吉身边的动作', '没有长篇宣言，站位和行动就表明了关系改变；讨论集体善意怎样变得可见。请按版本摘录原文。'],
+    ['毕业典礼奖章与全场掌声的结尾', '结尾的肯定不是把奥吉塑造成励志符号，而是肯定他与身边人共同完成的成长。请按版本摘录原文。']
+  ],
+  skills: [
+    ['从细节辨别偏见', '偏见不只在明显的辱骂里，也会出现在盯看、传言、座位和排斥中。', '找到一个细节，说明它怎样让奥吉感觉自己被当作“不同的人”。'],
+    ['区分同情、怜悯与尊重', '帮助他人前要先问：这会不会让对方更有选择权？', '比较萨默的靠近与某种居高临下的“好心”，说出两者的不同。'],
+    ['阅读多视角叙事', '不同人物看到同一件事会有不同信息与感受。', '用两栏比较奥吉和薇娅眼中的家庭生活，找一个相同点和一个不同点。'],
+    ['分析道歉与修复', '真正修复包括承认伤害、承担后果和持续行动。', '给杰克的修复过程画三步图：他说了什么、做了什么、关系怎样变化。'],
+    ['判断旁观者的选择', '沉默有时也会支持伤害，站出来需要具体方法。', '针对自然营冲突，列出旁观同学能做的两个安全、可执行动作。'],
+    ['把主题写成自己能做的事', '“选择善意”要从口号变成日常行为。', '完成句式“当我发现有人被孤立，我可以先___，再___”。']
+  ],
+  quiz: [
+    ['内容理解 · 因果', '奥吉为什么一开始不想去学校？父母为什么仍决定让他入学？', '他担心陌生目光、嘲笑和离开熟悉环境。父母知道学校会有挑战，但也希望他能学习、交朋友、拥有更独立的生活；可同时讨论他们如何提供支持。'],
+    ['人物分析 · 动机', '杰克曾说出伤人的话，后来为什么又愿意回到奥吉身边？', '他受朱利安和群体压力影响，但也在失去友谊后认识到自己的话造成伤害，并逐渐看见奥吉是朋友而不是取悦他人的工具。要用道歉和后续行动作证。'],
+    ['词句品味 · 一字之妙', '作品里“看”这个普通动作为什么会变得重要？', '有人盯看、有人回避、有人真正看见奥吉的兴趣和感受。相同的“看”在不同关系里含义不同，反映了物化、害怕与尊重的差别。'],
+    ['推断 · 读懂没明说的话', '薇娅很爱弟弟，为什么有时仍会觉得自己被忽略？这是否说明她不够善良？', '不是。她在家庭中常被期待更懂事，因此个人需要容易被遮住。爱弟弟和希望被父母看见可以同时成立；多视角正是为了让读者理解这种复杂。'],
+    ['主旨把握', '奥吉在结尾得到奖章，为什么不应理解成“只有表现特别好的人才值得被尊重”？', '奖章肯定的是勇气、友谊和对周围人的影响，但每个人都应获得基本尊重。作品反对把人的价值建立在“励志表现”或外貌之上。'],
+    ['联系生活', '同学被起绰号、被孤立时，你可以怎样既支持他又不让自己陷入危险？', '开放题。可包括陪同、明确说不参与嘲笑、邀请加入活动、保存证据、告诉可信任的成人和学校老师；遇到威胁应优先求助。']
+  ],
+  family: [
+    '“选择善意”会不会太简单？当周围人都在笑时，善意最难在哪里？',
+    '萨默主动坐到奥吉身边，这算不算“帮助”？为什么她的做法让人感到平等？',
+    '杰克的错误能被原谅吗？原谅和继续做朋友是否必须同时发生？',
+    '薇娅的懂事为什么也需要被看见？家庭里怎样避免把一个孩子固定成“永远懂事的人”？',
+    '你希望别人先认识你的哪一面？你愿意怎样先认识一个新同学？'
+  ],
+  recs: [
+    ['《白鸟》', '同一作者作品，延伸朱利安家族故事；适合在读完本书后讨论偏见如何跨代影响人。'],
+    ['《奥吉与我》', '补充《奇迹男孩》中其他人物的短篇视角，继续练习多视角阅读。'],
+    ['《不完美的我》', '关注青少年自我认同与友谊，适合比较“被看见”的不同处境。'],
+    ['《怦然心动》', '从少年视角练习换位思考与多重叙述，讨论第一印象如何被打破。']
+  ]
+};
+
+var windInWillowsHandbook = {
+  edition: '肯尼思·格雷厄姆著《柳林风声》；请按家庭手中译本核对章节、人名译法与页码。',
+  relationCore: ['鼹鼠', '从地下家走向河岸与柳林的学习者'],
+  map: {
+    people: [
+      '鼹鼠·好奇出发，学习在陌生世界安顿自己',
+      '河鼠·河上向导，也是稳定的日常陪伴',
+      '蟾蜍·热情、虚荣、冲动，必须承担选择后果',
+      '獾·野林中的长者，守住原则与家园',
+      '水獭·可靠邻居，与伙伴共同寻找孩子',
+      '波特利·水獭之子，使伙伴的关心落到行动',
+      '野林动物·闯入蟾蜍府的对手，推动家园保卫'
+    ],
+    plot: [
+      '春日出发·鼹鼠离开地下屋，遇见河鼠',
+      '河岸生活·划船、野餐，认识流动的世界',
+      '野林迷路·害怕中得到獾的接纳',
+      '蟾蜍迷车·一次次追逐新鲜事，越过边界',
+      '闯祸入狱·冲动造成伤害，也带来代价',
+      '伙伴相助·朋友敢于劝阻，也帮助他面对处境',
+      '夺回蟾蜍府·大家守住家园，回到可修复的关系'
+    ],
+    theme: [
+      '陪伴不是纵容·真正的朋友会在关键时刻说“不”',
+      '自由伴随责任·想做什么之前，也要看见后果',
+      '家园能安放关系·冒险后仍有一个可以回来、一起修复的地方'
+    ],
+    deep: [
+      '背景·河岸、野林和蟾蜍府像三种生活选择：流动、未知与归处',
+      '情节·片段式冒险并不松散，每次事件都在测试“如何做朋友”',
+      '人物·蟾蜍不是单纯的坏角色；夸张的缺点让读者讨论边界与改变'
+    ],
+    language: [
+      '好词·春意盎然、心驰神往、兴高采烈、漫不经心、得意忘形、固执己见、狼狈不堪、乐此不疲、危机四伏、寂静无声、重归于好、各得其所',
+      '好句·春日地底屋、初见河流、野林寒夜、汽车诱惑、狱中脱身、夜夺蟾蜍府（均按译本核对）'
+    ]
+  },
+  acts: [
+    '春日·鼹鼠出发|开篇|春天把鼹鼠从地下屋带到地面；它离开熟悉处所，第一次遇见河鼠与河岸生活。',
+    '河岸·学会停靠|相遇|划船、野餐和交谈让鼹鼠明白：探索世界也需要一个愿意陪伴、能让人安心的朋友。',
+    '野林·害怕与接纳|发展|鼹鼠误入野林，感到未知的威胁；獾的住处与河鼠的寻找，让“被接住”变得具体。',
+    '蟾蜍·迷上汽车|冲突|蟾蜍不断迷恋新玩意，尤其是汽车；兴奋压过判断，朋友的提醒被它当成扫兴。',
+    '闯祸·承担后果|转折|蟾蜍因鲁莽和不诚实惹出严重麻烦，故事把“想做”与“该负责”放在一起。',
+    '伙伴·敢劝也敢帮|回望|河鼠、鼹鼠和獾既不赞成蟾蜍的做法，也不把它丢下，帮助它面对失去的家。',
+    '蟾蜍府·一起夺回|结尾|面对占据蟾蜍府的野林动物，伙伴协力守住家园；冒险落回关系、秩序与归处。'
+  ],
+  relations: [
+    ['河鼠', '河上引路人·日常陪伴', '教鼹鼠认识河流、划船和待客之道；它的稳当，为鼹鼠的好奇提供安全边界。'],
+    ['蟾蜍', '冒险伙伴·需要被提醒', '两人关心蟾蜍，却不能认同它危险又伤人的选择；关系的难点是帮助而非纵容。'],
+    ['獾', '长者·原则守护', '熟悉野林，也能看穿蟾蜍的问题；在关键时刻把伙伴聚到一起，提出有边界的帮助。'],
+    ['水獭', '河岸邻居·共同寻找', '波特利走失时，鼹鼠与河鼠参与寻找；邻里情谊不是口号，而是马上出发。'],
+    ['波特利', '失踪事件的牵引者', '水獭之子的走失提醒读者：孩子、冒险和安全都需要伙伴共同照看。'],
+    ['野林动物', '家园冲突·共同面对的对手', '黄鼠狼、白鼬等占据蟾蜍府，迫使朋友们从各自的冒险回到共同的守护行动。']
+  ],
+  themes: [
+    ['陪伴也要有边界', '朋友不是永远说“好”。河鼠和獾会关心蟾蜍，也会指出它的冲动正在伤害自己和别人。'],
+    ['自由必须承担后果', '蟾蜍追逐汽车时只看见刺激；故事让读者看见鲁莽、撒谎和逃避会把自由变成麻烦。'],
+    ['家是可以回来的地方', '河岸、獾的家和蟾蜍府都不是漂亮布景，而是人物遇到困难后能重新连接、修复关系的地方。']
+  ],
+  deep: [
+    ['背景·河、野林、房子为什么都重要？', '河岸流动而温暖，野林陌生而危险，蟾蜍府代表被守护的家。比较场景变化，能读出人物的安全感从哪里来。'],
+    ['情节·为什么蟾蜍总在重复犯错？', '重复制造幽默，也让读者追踪“提醒—不听—后果—再帮助”的循环。讨论改变为何需要本人愿意承担。'],
+    ['人物·獾的严厉是不是不近人情？', '獾不是替大家做决定，而是把危险说清、组织行动。可比较“命令”“提醒”“支持”三种不同的帮助。']
+  ],
+  words: [
+    ['春意盎然', '用于春日苏醒的景象；留意环境怎样推动鼹鼠出发。'],
+    ['心驰神往', '形容被新世界吸引；可联系鼹鼠初见河岸的心情。'],
+    ['兴高采烈', '读出伙伴相聚、出游时的轻快节奏。'],
+    ['漫不经心', '观察角色忽略提醒时的态度。'],
+    ['得意忘形', '适合分析蟾蜍被夸奖或迷恋新鲜事时的失衡。'],
+    ['固执己见', '区分“有主见”与“不听合理劝告”。'],
+    ['狼狈不堪', '联系冒险失控后的外在状态和内心处境。'],
+    ['乐此不疲', '讨论反复追逐刺激为什么会带来风险。'],
+    ['危机四伏', '品味野林、夜行等场景的紧张气氛。'],
+    ['寂静无声', '以声音的消失反衬陌生和害怕。'],
+    ['重归于好', '用于冲突后愿意修复的关系。'],
+    ['各得其所', '结尾可讨论不同角色是否找回合适的位置。']
+  ],
+  sentences: [
+    ['春日地底屋', '定位：开篇鼹鼠大扫除、闻到春意并走出地下屋的段落。请按译本摘录一至两句。', '赏析：嗅觉、泥土和动作把“春天来了”写成一种身体想要出发的冲动。'],
+    ['初见河流', '定位：河鼠在水面与鼹鼠相遇、介绍划船生活的段落。请按译本核对。', '赏析：水光、船和招呼声让河流像一位友善的角色，奠定温暖的伙伴关系。'],
+    ['野林寒夜', '定位：鼹鼠独自误入野林、听见或看见陌生动静的段落。请按译本核对。', '赏析：雾、阴影、声音的缺失与突然出现，制造未知感；环境映照了鼹鼠的害怕。'],
+    ['汽车诱惑', '定位：蟾蜍第一次被汽车吸引、随后不断谈论它的段落。请按译本核对。', '赏析：夸张、反复和快节奏语言放大角色的冲动，也预埋了后果。'],
+    ['狱中脱身', '定位：蟾蜍因闯祸被关押、伪装离开的段落。请按译本核对。', '赏析：荒诞喜剧让人发笑，但要追问：逃避能不能真正解决自己造成的问题？'],
+    ['夜夺蟾蜍府', '定位：伙伴夜里共同夺回房子的段落。请按译本核对。', '赏析：黑夜、行动和彼此配合，使“家园”从个人财产变成朋友共同守护的关系。']
+  ],
+  skills: [
+    ['读环境的情绪', '比较河岸、野林和蟾蜍府的声音、光线与颜色，理解地点怎样影响人物感受。', '任选两个场景，各找一个感官细节，说说哪里让你想停留、哪里让你警觉。'],
+    ['追踪因果链', '不只说蟾蜍“闯祸了”，还要说清它先做了什么选择、忽略了什么提醒、造成什么后果。', '用“因为—所以—结果”画出一次汽车事件的三格因果图。'],
+    ['区分帮助和纵容', '从河鼠、獾对蟾蜍的反应判断：关心不等于答应对方所有要求。', '给故事中一句劝告加标签：是提醒、纵容、责备还是支持？说明理由。'],
+    ['从夸张读人物', '蟾蜍的夸张语言与行动不是事实报道，而是让读者看见它的虚荣、急切和可笑。', '找一个夸张动作，改写成平静叙述，再比较哪一种更能表现蟾蜍。'],
+    ['用行动判断关系', '人物关系不靠“我们是朋友”一句话，而看谁在寻找、等待、劝阻和共同承担。', '列出一次伙伴互助，写出“谁做了什么，因此关系怎样”。'],
+    ['概括成长主题', '把冒险放回生活问题：自由、边界、责任和家。', '用“我认为自由是……，因为蟾蜍……”写一句有证据的读后感。']
+  ],
+  quiz: [
+    ['内容理解·起点', '鼹鼠为什么会离开地下屋？它的出发为后面的故事打开了什么？', '参考要点：春日与长期清扫触发它对外面世界的向往；出发使它认识河鼠、河岸和更大的未知，也留下“探索需要伙伴”的线索。'],
+    ['人物动机·蟾蜍', '蟾蜍迷恋汽车时，真正想得到的可能是什么？只说“它喜欢车”够不够？', '参考要点：可从刺激、被注意、显得神气、害怕无聊等角度推断；需回到它反复谈车、轻视劝告的行动，不把推测当事实。'],
+    ['因果推断·后果', '朋友为什么要限制蟾蜍？这是不尊重它的自由吗？', '参考要点：朋友看到它的选择伤及自身、他人和家园；可讨论限制的方法是否合适，但“关心”和“纵容”不同，理由要结合情节。'],
+    ['词句品味·场景', '野林与河岸给人的感觉有什么不同？作者为什么不把所有故事都放在明亮的河边？', '参考要点：河岸多流动、友好、日常；野林多未知、紧张、考验。场景对比让人物的害怕、接纳和回家更清楚。'],
+    ['主旨把握·朋友', '河鼠、鼹鼠和獾在蟾蜍最麻烦的时候仍然帮助它，这是否等于原谅它的一切？', '参考要点：不是。好的回答应同时写到他们的劝阻、原则和实际帮助；关系可以修复，但责任不能被抹掉。'],
+    ['联系生活·边界', '当朋友邀请你做一件不安全或不合适的事时，怎样既不伤害关系，又能说清“不”？', '参考要点：可说出具体表达，如先认可心意、明确拒绝、说明风险、提出替代活动；没有唯一答案，关键是尊重与边界同时存在。']
+  ],
+  family: [
+    '河鼠的安稳和蟾蜍的冒险，你更想要哪一种生活？为什么？',
+    '朋友做错事时，提醒、陪伴、替他收拾后果，三者的边界在哪里？',
+    '家对你来说更像一个地点，还是一种“有人等你回来”的感觉？',
+    '蟾蜍的热情有没有值得珍惜的地方？怎样让热情不伤害自己和别人？',
+    '你想和家人订一条什么样的“自由也要负责”小约定？'
+  ],
+  recs: [
+    ['青蛙和蟾蜍', '读一对朋友的日常互相等待、提醒与接纳。'],
+    ['彼得兔的故事', '比较英国乡野中的冒险、边界和回家的主题。'],
+    ['夏洛的网', '继续讨论朋友如何用行动守护彼此，以及生命的价值。'],
+    ['绿野仙踪', '从离家远行到寻找归处，比较“家”的不同含义。']
+  ]
+};
+
+var cuoreHandbook = {
+  edition: '埃德蒙多·德·亚米契斯著《爱的教育》（原名《Cuore》）；不同译本的学生姓名、每月故事名称与章节次序可能不同，请按手中版本核对。',
+  relationCore: ['安利柯', '用日记回看校园与家庭日常的孩子'],
+  map: {
+    people: [
+      '安利柯·记录、感受并学习反思的叙述者',
+      '父亲·用书信把问题还给孩子的引导者',
+      '母亲·温柔而具体的支持者',
+      '培尔波尼老师·把班级组织成共同体的教育者',
+      '卡隆·强壮善良，常保护弱小同学',
+      '代洛西·成绩优异而不骄傲的同学榜样',
+      '弗兰蒂·制造冲突的同学，也提醒人别急着给人贴死标签'
+    ],
+    plot: [
+      '开学相见·安利柯进入新班级，认识不同处境的同学',
+      '校园日常·座位、玩耍、误会和礼貌都成为选择',
+      '父亲来信·每次提醒都要求他先反省自己的态度',
+      '每月故事·把勇气、亲情、责任带到更大的世界',
+      '看见处境·从贫困、病弱或委屈中学习不轻率评价',
+      '善意行动·同情落实为保护、道歉、帮助和尊重',
+      '学年回望·日记记录的不是完美，而是目光慢慢改变'
+    ],
+    theme: [
+      '尊重先于评价·每个人都有不该被嘲笑的尊严与处境',
+      '品格在小事里·诚实、礼貌、责任不是口号，而是每天的选择',
+      '反思带来成长·愿意回看自己，才能修正原来的判断'
+    ],
+    deep: [
+      '背景·日记体让“今天的我”有机会重新理解刚发生的事',
+      '情节·每月故事像一扇窗，把班级经验连接到更大的社会与历史',
+      '人物·父亲的信不代替孩子下结论，而是引导他回到他人的处境'
+    ],
+    language: [
+      '好词·尊重、同情、诚实、反思、责任、宽容、善意、处境、体谅、羞愧、和解、成长',
+      '好句·开学班级、父亲书信、老师讲话、卡隆护友、每月故事、学年回望（均按译本核对）'
+    ]
+  },
+  acts: [
+    '开学·新的班级|开篇|安利柯走进新学年，认识来自不同家庭、性格各异的同学；班级成为观察人与关系的起点。',
+    '日常·一件小事|发展|课堂、街道和家里的小事不断要求孩子做选择：礼貌、诚实、是否取笑别人、是否愿意帮助。',
+    '书信·回头看看自己|提醒|父亲通过信件追问安利柯的态度，让他理解“有道理”不等于“对人有善意”。',
+    '故事·把眼光放大|延伸|每月故事带来不同人物的勇气、亲情与责任，帮助孩子超出自己的日常经验。',
+    '误解·看见他人的难处|冲突|面对家庭困顿、身体弱小或行为不讨喜的同学，安利柯学习不凭第一印象下判断。',
+    '行动·让善意落地|转折|保护、道歉、安慰和承担让“同情”不只停在感动里，而成为看得见的行为。',
+    '日记·继续长大|结尾|一学年结束，安利柯仍会犯错，但已经能用更宽的眼光记录与理解身边的人。'
+  ],
+  relations: [
+    ['父亲', '反思引导者·书信对话', '父亲常以书信提示安利柯回看行为与动机；重点不是替他判对错，而是教他站到别人的处境里。'],
+    ['母亲', '亲情支持·温柔提醒', '母亲的关怀让“爱”有家庭里的日常形状，也让孩子理解尊重不只发生在学校。'],
+    ['培尔波尼老师', '班级组织者·价值示范', '老师看重全班的共同生活，借具体事件让学生理解纪律、同情与责任。'],
+    ['卡隆', '善意榜样·保护弱小', '卡隆有力量却不靠力量欺负人；可从他对同学的保护，理解勇敢与善良怎样同时出现。'],
+    ['代洛西', '学习伙伴·谦逊榜样', '代洛西表现突出，但并不因此轻视他人；可讨论优秀与谦逊能否并存。'],
+    ['弗兰蒂', '冲突对照·复杂同学', '他的行为常令人不满，却提醒读者：批评具体行为不等于否认一个人改变的可能。']
+  ],
+  themes: [
+    ['尊重从看见处境开始', '不要只用“淘气、穷、弱、笨”等标签概括同学；理解需要先问：他可能经历了什么？'],
+    ['品格藏在日常选择里', '一次道歉、一次不嘲笑、一次愿意承担，都是诚实和责任的真实练习。'],
+    ['反思比自我辩护更勇敢', '安利柯写下当天发生的事，给自己第二次理解和修正的机会。']
+  ],
+  deep: [
+    ['背景·为什么用日记而不是全知叙述？', '日记保留了孩子当下的不完整理解，读者能同时看见安利柯的感受、局限与后来的改变。'],
+    ['情节·每月故事有什么作用？', '它们不是脱离主线的说教，而是把同情、责任、勇气等问题换到新的处境，让孩子带回班级生活思考。'],
+    ['人物·父亲的信为什么值得细读？', '信件常先承认感受，再追问行为和影响。可把它和简单训斥比较，理解支持性沟通。']
+  ],
+  words: [
+    ['尊重', '把对方当作完整的人，而不是一项成绩或一个标签。'],
+    ['同情', '从他人的困难出发愿意理解和行动，不等于居高临下地可怜。'],
+    ['诚实', '敢承认事实与责任，也包括不为自己找借口。'],
+    ['反思', '回看事情经过、自己的想法和对别人的影响。'],
+    ['责任', '知道自己的选择会影响别人，并愿意承担后果。'],
+    ['宽容', '不急着报复或否定，但不等于纵容伤害。'],
+    ['善意', '可落实为一句尊重的话、一次帮助或一次保护。'],
+    ['处境', '理解一个人时要看他所在的家庭、经历和当时情形。'],
+    ['体谅', '设身处地想一想，再决定怎样回应。'],
+    ['羞愧', '做错后意识到伤害，是道歉和改变的起点。'],
+    ['和解', '承认问题、修复关系，不是假装事情没有发生。'],
+    ['成长', '不是从此不犯错，而是更能看见、承担和调整。']
+  ],
+  sentences: [
+    ['开学班级', '定位：新学年第一天，安利柯观察老师和同学的段落。请按译本摘录。', '赏析：用孩子的目光介绍人物，既有新鲜感，也留下第一印象可能不完整的空间。'],
+    ['父亲书信', '定位：父亲针对安利柯某次言行写信提醒的段落。请按译本核对。', '赏析：留意书信如何从一个具体行为，推到尊重、责任或亲情，而不是只给一句命令。'],
+    ['老师讲话', '定位：老师面对班级事件、安慰或提醒学生的段落。请按译本核对。', '赏析：语气既维护规则又照顾感受，适合比较“批评”与“引导”的不同。'],
+    ['卡隆护友', '定位：卡隆为受欺负或受委屈同学挺身而出的段落。请按译本核对。', '赏析：动作和站位比形容词更能表现善良；重点看他怎样用力量保护而非压迫。'],
+    ['每月故事', '定位：任意一则每月故事的开头或转折处。请按译本核对。', '赏析：观察故事如何用一个具体选择呈现勇气与责任，避免把主题读成空口号。'],
+    ['学年回望', '定位：安利柯在学年末回看同学、老师与自己的段落。请按译本核对。', '赏析：前后对照让“成长”变得可见：不是所有问题消失，而是看人的目光更完整。']
+  ],
+  skills: [
+    ['从日记分清事实与感受', '叙述者写下的是他的所见所感，不等于全部事实。', '把一件事分成两栏：发生了什么？安利柯怎样感觉或判断？'],
+    ['从处境理解人物', '评价人物前，先找家庭、身体、关系或当时事件等背景。', '选择一位同学，用“他/她可能……，所以……”做推断，并写出文本依据。'],
+    ['读书信的沟通方式', '书信里的提醒常包含关心、问题和期待。', '找一封父亲的信，标出“关心”“追问”“建议”各一句的功能（按译本）。'],
+    ['用行动定义善意', '善意不是抽象形容词，要看谁在什么时候做了什么。', '把“卡隆很善良”改写成“因为他……，所以我认为他善良”。'],
+    ['比较故事与日常', '每月故事扩大主题，日记把主题落回身边的小事。', '选一则每月故事，写出它和班级某件事共享的一个问题。'],
+    ['形成有证据的价值判断', '可以不同意角色，也要同时理解他的处境与行为后果。', '用“我不认同……，但我理解……，因为……”完成一句判断。']
+  ],
+  quiz: [
+    ['内容理解·结构', '《爱的教育》为什么要把日记、父亲书信和每月故事放在一起？', '参考要点：日记呈现孩子的日常观察，书信提供反思视角，每月故事扩展经验；三者共同让品格问题从校园小事延伸到更广的处境。'],
+    ['人物分析·卡隆', '卡隆被称为善良，不能只写“他人好”。请找一种他对待同学的行动来说明。', '参考要点：应写出具体保护、安慰、帮助或不取笑的行动及其对象，再解释这项行动怎样顾及了对方的尊严；以手中版本为准。'],
+    ['概念辨析·同情', '同情和可怜有什么不同？联系书中的一个人物或事件回答。', '参考要点：同情是理解他人处境并尊重地靠近，可能带来行动；可怜若把人放在低处，可能忽略他的尊严与愿望。须结合文本。'],
+    ['叙述视角·日记', '安利柯的第一印象可能会错吗？为什么日记体反而适合写“成长”？', '参考要点：会。日记保留当下感受，后续事件和书信可促使他修正判断；读者因此能看见目光如何变化。'],
+    ['主旨把握·小事', '为什么作品反复记录小事，而不是只讲惊天动地的英雄行为？', '参考要点：礼貌、诚实、是否取笑、是否承担等每天都会发生；品格正是在这些重复的小选择中形成。'],
+    ['联系生活·修复', '你误解同学后，怎样做才算有诚意地修复关系？', '参考要点：可包括承认具体行为、真诚道歉、听对方感受、补救并在之后改变；避免只说“对不起”却没有行动。']
+  ],
+  family: [
+    '哪一件很小的事最能看出一个人是否尊重别人？',
+    '当你不喜欢某个同学的行为时，怎样批评行为而不把他整个人定型？',
+    '父亲的信中哪种说话方式值得家里试一试：先听、先问，还是先给建议？',
+    '如果班里有人被取笑，旁观者可以做哪些不冒险却有力量的事？',
+    '今晚每个人愿意记录一件“我重新理解了谁”的小事吗？'
+  ],
+  recs: [
+    ['窗边的小豆豆', '从学校教育与倾听孩子的角度，比较“被理解”如何发生。'],
+    ['奇迹男孩', '继续讨论学校里的目光、同理心和站在别人身边的行动。'],
+    ['夏洛的网', '从友谊和无声付出，延伸“爱怎样落实在行动里”。'],
+    ['草房子', '比较孩子如何在日常中看见沉默、误解与他人的难处。']
+  ]
+};
+
+var pippiHandbook = {
+  edition: '阿斯特丽德·林格伦著《长袜子皮皮》；请按家庭手中译本核对地名、人名译法与章节。儿童福利机构女士的人名在译本中差异较大，页面宜显示角色身份。',
+  relationCore: ['皮皮', '住在维拉维洛古拉、以大胆想象挑战常规的女孩'],
+  map: {
+    people: [
+      '皮皮·独立大胆、力大无穷，也用自己的方式照顾他人',
+      '杜米·好奇的邻居男孩，愿意跟随皮皮走进新体验',
+      '阿妮卡·谨慎的邻居女孩，为皮皮的冒险提供另一种判断',
+      '尼尔松先生·皮皮的猴子伙伴，强化游戏与家庭气氛',
+      '白马·住在阳台上的动物伙伴，象征皮皮奇特而温暖的家',
+      '皮皮爸爸·远方的牵挂，说明独立不等于没有亲情',
+      '儿童福利机构女士·成人规则的代表，和皮皮形成自由与照顾的讨论'
+    ],
+    plot: [
+      '维拉维洛古拉·皮皮独自住进大房子，建立自己的日常',
+      '邻居朋友·杜米和阿妮卡被她的生活方式吸引',
+      '寻找东西·游戏和想象让普通街道变成冒险现场',
+      '警察来访·成人想安置皮皮，她把规则变成一场追逐游戏',
+      '学校尝试·皮皮面对课堂规范，提出不一样的问题',
+      '马戏团与小偷·强大本领、机智与慷慨被用来帮助别人',
+      '火场救援与生日·勇气回到照顾伙伴，快乐在分享中完成'
+    ],
+    theme: [
+      '敢于不同·想象和幽默让孩子拥有自己的声音',
+      '独立不是孤立·能照顾自己，也愿意建立可靠关系',
+      '自由需要判断·喜欢皮皮不等于照搬每个选择，要讨论能力如何负责任地使用'
+    ],
+    deep: [
+      '背景·极端独居设定把孩子对自主权的愿望放大，让规则可被讨论',
+      '情节·荒诞夸张不是逃离现实，而是用孩子视角重新审视成人世界',
+      '人物·皮皮挑战规则但常关心弱小；阅读时要分辨可学的勇气与不可照搬的风险'
+    ],
+    language: [
+      '好词·力大无穷、异想天开、满不在乎、兴致勃勃、手舞足蹈、一本正经、神气十足、自由自在、出其不意、稀奇古怪、乐不可支、慷慨大方',
+      '好句·维拉维洛古拉、寻找东西、警察来访、学校尝试、马戏团、小偷与生日（均按译本核对）'
+    ]
+  },
+  acts: [
+    '维拉维洛古拉·独自生活|开篇|皮皮带着猴子、白马和一只装满金币的箱子，住进自己的大房子；她的日常从一开始就不按成人常规。',
+    '邻居·交到朋友|相遇|杜米和阿妮卡走进皮皮的世界。一个好奇、一个谨慎，三人的差异使冒险既热闹又可以讨论。',
+    '寻找东西·想象出发|发展|皮皮把“找东西”变成游戏，也让普通街道出现新的看法：世界不只由大人规定玩法。',
+    '警察·规则碰面|冲突|成人担心皮皮无人照看，派人想带她离开；皮皮用追逐和幽默回应，故事提出自由与照顾的难题。',
+    '学校·不一样的提问|转折|皮皮进入课堂却不适应常规学习节奏。读者可以讨论：规则的目的是什么，怎样才算尊重不同？',
+    '马戏团与小偷·本领怎样用|回望|面对炫耀、欺负或偷窃，皮皮用力量和机智保护他人，并以慷慨处理得到的钱。',
+    '火场与生日·把快乐分给朋友|结尾|皮皮在危险时勇敢行动，又与孩子们分享生日；独立最终落到照顾、友谊和分享。'
+  ],
+  relations: [
+    ['杜米', '好奇伙伴·共同冒险', '杜米愿意被皮皮带进新游戏；他代表孩子对未知的好奇，也需要学习判断风险。'],
+    ['阿妮卡', '谨慎伙伴·提醒边界', '阿妮卡对皮皮既喜欢又会担心。她不是“胆小”，而是让冒险中多出一种审慎的声音。'],
+    ['尼尔松先生', '动物伙伴·游戏家庭', '小猴子与皮皮共同生活，增加幽默和童话感，也让维拉维洛古拉像一个由伙伴组成的家。'],
+    ['白马', '生活伙伴·温柔牵挂', '白马在皮皮家中出现，体现她与动物的亲近；可讨论照顾动物同样需要责任。'],
+    ['皮皮爸爸', '远方亲情·独立根基', '父亲虽不在身边，仍是皮皮思念与想象的对象，说明独立并不等于与亲情断开。'],
+    ['儿童福利机构女士', '成人规则·善意冲突', '她代表“孩子需要被照顾”的成人担忧；讨论时应看到动机的善意，也比较方法是否尊重孩子。']
+  ],
+  themes: [
+    ['不一样也可以有价值', '皮皮的穿着、说话和游戏方式常出人意料。故事鼓励孩子保留想象力，也提醒读者尊重不同。'],
+    ['独立需要关系支撑', '皮皮能做很多事，却并不孤单；杜米、阿妮卡、动物伙伴和远方的父亲都构成她的牵挂。'],
+    ['自由要和责任一起练习', '皮皮拥有力量、财富和行动自由。精读重点不是模仿，而是讨论有能力时怎样不伤害他人、如何照顾自己。']
+  ],
+  deep: [
+    ['背景·为什么让一个孩子独自住大房子？', '这是夸张的童话设定，放大孩子对自主、游戏和不被催促的渴望；不能把它当成现实生活建议。'],
+    ['情节·皮皮为何总把规则变得可笑？', '角色把成人习以为常的说法倒过来看，读者因此能追问：规则是为了安全、公平，还是只是因为“向来如此”？'],
+    ['人物·怎样喜欢皮皮而不照搬皮皮？', '把勇敢、慷慨、幽默和照顾弱者列为可学习的品质；把危险行为、无视安全或他人感受列为需要讨论的选择。']
+  ],
+  words: [
+    ['力大无穷', '用夸张突出皮皮的非凡力量，也引出力量该怎样使用。'],
+    ['异想天开', '形容她的想象跳出常规；可比较“新点子”和“不顾后果”。'],
+    ['满不在乎', '观察角色面对大人目光时的态度，讨论它是自信还是忽略风险。'],
+    ['兴致勃勃', '体会游戏与冒险的欢乐节奏。'],
+    ['手舞足蹈', '从动作读出皮皮讲故事或做游戏时的热烈。'],
+    ['一本正经', '常与荒诞内容形成反差，制造幽默。'],
+    ['神气十足', '分析角色是否在炫耀，也可联系马戏团场景。'],
+    ['自由自在', '讨论皮皮向往的自由和现实中的安全边界。'],
+    ['出其不意', '写皮皮用意外办法解决问题的机智。'],
+    ['稀奇古怪', '不是贬义标签，可用来描述陌生、新鲜而需要理解的事物。'],
+    ['乐不可支', '描写伙伴游戏时强烈的快乐。'],
+    ['慷慨大方', '联系皮皮与孩子、穷人或朋友分享时的行动（按版本核对场景）。']
+  ],
+  sentences: [
+    ['维拉维洛古拉', '定位：皮皮带着猴子和白马住进大房子的开篇描写。请按译本摘录。', '赏析：夸张的生活细节迅速建立童话规则，房子既是自由空间，也暗含“谁来照顾孩子”的问题。'],
+    ['寻找东西', '定位：皮皮带杜米和阿妮卡玩“寻找东西”的章节。请按译本核对。', '赏析：把平常物件重新命名、重新看待，展示想象如何改变日常体验。'],
+    ['警察来访', '定位：两位警察奉命带皮皮离开、皮皮与他们周旋的章节。请按译本核对。', '赏析：追逐和角色反转制造喜剧；读后可追问大人的担心是否完全没有道理。'],
+    ['学校尝试', '定位：皮皮第一次到学校、与课堂规则相遇的章节。请按译本核对。', '赏析：天真而直接的回答挑战了机械的问答，也适合讨论学习需要的秩序与弹性。'],
+    ['马戏团表演', '定位：皮皮在马戏团展示力量或技巧的章节。请按译本核对。', '赏析：夸张场面满足儿童对强大的想象；重点不只是“厉害”，还要看她是否用本领维护公平。'],
+    ['生日分享', '定位：皮皮邀请伙伴庆祝生日的章节。请按译本核对。', '赏析：食物、礼物和游戏让结尾回到分享；真正的富足不是金币，而是能把快乐分给朋友。']
+  ],
+  skills: [
+    ['识别夸张与童话规则', '皮皮的力量和独居生活带有童话夸张，不能按现实新闻理解。', '找一个最不可能发生的设定，说明它想让读者感受什么。'],
+    ['从反差读幽默', '皮皮常用一本正经的态度说荒诞的话，或把成人角色反过来。', '找一个反差：正常规则是什么？皮皮怎样倒过来做？为什么好笑？'],
+    ['比较不同立场', '杜米、阿妮卡、皮皮和成人对同一件事的看法可能不同。', '任选一次冒险，分别用“皮皮会说”“阿妮卡会担心”“大人会考虑”写三句话。'],
+    ['判断力量的使用', '有能力不等于可以随意做事；要看是否保护弱者、是否尊重他人和安全。', '从马戏团、对付坏人或救援中找一处，评价皮皮的做法并给理由。'],
+    ['区分自由与任性', '自由包含选择，也包含对后果和他人的照顾；任性只看自己当下想不想。', '把书中一个选择放在“自由”或“任性”旁，并允许写“我还不确定”。'],
+    ['把想象迁移到生活', '学习皮皮不是模仿危险，而是学会用新眼光、幽默和善意创造解决办法。', '为家里一件无聊小事设计一个安全、尊重他人的新玩法。']
+  ],
+  quiz: [
+    ['内容理解·设定', '皮皮为什么会住在维拉维洛古拉？这个夸张设定让故事可以讨论什么？', '参考要点：她没有和普通家庭一起生活，身边有动物、财富和远方父亲的牵挂；设定放大了孩子对自由、自主和被照顾的想象，不能按现实照搬。'],
+    ['人物关系·朋友', '杜米和阿妮卡为什么会被皮皮吸引？他们与皮皮的不同怎样让关系更有意思？', '参考要点：可写皮皮大胆新奇、朋友好奇或向往；杜米较愿尝试，阿妮卡较谨慎。差异能带来互补与讨论，不是简单的谁对谁错。'],
+    ['写法品味·幽默', '皮皮把成人严肃的安排变成游戏，为什么会让人发笑？', '参考要点：可从角色反转、一本正经说荒诞话、预期被打破等角度回答；需要描述一个具体情节并说明反差。'],
+    ['观点推断·规则', '儿童福利机构女士想带走皮皮，只是“讨厌孩子自由”吗？', '参考要点：不宜简单化。她也代表成人对儿童安全与照顾的担忧；可讨论她的方法是否尊重皮皮，区分动机与做法。'],
+    ['主旨把握·独立', '皮皮很独立，这是否等于一个孩子什么都不用听、什么都能自己决定？', '参考要点：不是。作品用夸张激发讨论；现实中的独立包括自理、求助、遵守安全边界、尊重他人并对选择负责。'],
+    ['联系生活·勇敢', '如果你也有皮皮一样的力量或财富，你最想怎样使用？', '参考要点：答案开放。鼓励写清具体对象、方式和安全边界，例如帮助需要帮助的人、保护弱小、分享资源，而不是只追求炫耀。']
+  ],
+  family: [
+    '皮皮最值得学习的三个地方是什么？最不应该照搬的一个选择又是什么？',
+    '阿妮卡的谨慎是胆小，还是另一种勇敢？请用一个情节说明。',
+    '家里哪些规则是在保护安全和尊重，哪些规则可以一起商量得更好？',
+    '自由、任性、独立这三个词，你会怎样分别解释？',
+    '如果今天办一场“皮皮式但安全”的家庭游戏，规则和任务会是什么？'
+  ],
+  recs: [
+    ['淘气包埃米尔', '同为林格伦作品，继续从顽皮、善意和成人误解讨论儿童视角。'],
+    ['窗边的小豆豆', '比较不按常规的孩子怎样被学校和大人理解。'],
+    ['绿山墙的安妮', '读另一个想象力旺盛的女孩如何在家庭、友谊与错误中成长。'],
+    ['玛蒂尔达', '比较孩子的阅读、智慧和自主性，以及如何面对不公平。']
+  ]
+};
+
+/* 可直接粘贴到 index.html：放在 B 定义完成后、render 函数之前。 */
+
+B['06'].handbook={
+  edition:'[法] 安托万·德·圣-埃克苏佩里 著 · 译者、出版社请按教师所用版本补录',
+  relations:[
+    ['玫瑰','牵挂 · 责任','小王子为她浇水、罩玻璃罩、听见咳嗽与抱怨；后来明白，她的独特来自自己的照料。'],
+    ['狐狸','驯养 · 朋友','狐狸让小王子学会等待、仪式和告别：关系不是立刻拥有，而是慢慢建立。'],
+    ['飞行员','倾听 · 见证','飞行员愿意画羊、听故事，也把小王子的提问和星光留给读者。'],
+    ['蛇','离开的通道','蛇提出能把人送回原处；小王子的选择使“回去”带有神秘、悲伤与责任。'],
+    ['点灯人','敬意 · 反思','小王子欣赏他的认真；但星球转得太快，点灯人也提醒人不能只服从失去意义的规则。'],
+    ['地理学家','知识 · 经验','他记录山川却不出门验证，促使小王子意识到玫瑰是短暂而值得珍惜的。']
+  ],
+  words:[
+    ['驯养','建立独特联结；不是驯服或占有，而是彼此愿意投入时间。'],['独一无二','因为一段具体关系而不可替代，不等于比别人更高贵。'],
+    ['责任','小王子想到玫瑰时，指向对自己建立的关系不逃避。'],['等候','狐狸强调固定时间的等待；等待让相见有了期待和准备。'],
+    ['思念','告别后仍会想起对方，说明关系没有因不在眼前而消失。'],['虚荣','只需要掌声、不在乎真实交流的状态。'],
+    ['荒唐','表面很忙、很有道理，实际忘了目的的做法。'],['认真','点灯人反复履职的态度，值得尊敬，也可追问规则是否仍合理。'],
+    ['星光','反复出现的意象；从遥远天体变成朋友留下的可听见的记忆。'],['井水','沙漠中得来的水，不只解渴，也包含共同寻找与等待的意义。'],
+    ['告别','承认不舍，同时把对方教会自己的东西带着走。'],['秘密','不容易立刻说清、却需要慢慢体会的生活真相。']
+  ],
+  sentences:[
+    ['【图像定位】帽子与蟒蛇吞象的两幅画（非逐字引文，按版本核对）','从“像帽子”到“看见蟒蛇”，读出成人与儿童观看世界的差异；可让孩子先画，再说自己看见什么。'],
+    ['【意象定位】B-612 的火山、日落与猴面包树（非逐字引文，按版本核对）','小星球很小，日常照料却很具体。讨论：哪些小事若不及时处理，会慢慢长成麻烦？'],
+    ['【人物定位】玫瑰的咳嗽、玻璃罩和四根刺（非逐字引文，按版本核对）','不要只把玫瑰读成“任性”。从她脆弱而别扭的表达，练习分辨“话语”与“需要”。'],
+    ['【情节定位】玫瑰园前的失落（非逐字引文，按版本核对）','“有很多”不必然等于“不珍贵”。这是理解独一无二由何而来的关键停顿。'],
+    ['【关系定位】狐狸约定每天同一时间相见（非逐字引文，按版本核对）','固定时间形成仪式感。可联系家庭共读：怎样约定能让彼此觉得被认真等待？'],
+    ['【结尾意象】沙漠井水与会笑的星星（非逐字引文，按版本核对）','水与星光让离别不只剩悲伤：看不见的人仍可在记忆和行动中陪伴。']
+  ],
+  skills:[
+    ['从图像和细节读出不同视角','同一幅画为什么有人看见帽子、有人看见蟒蛇？先说你看见的，再寻找画面证据。','把“帽子/蟒蛇图”分别讲给孩子和大人听，比较两种解释。'],
+    ['区分人物说的话与真正的需要','玫瑰的语言常带刺，但她的行动和处境也透露不安。','找玫瑰一句让小王子困惑的话，再找一个能说明她在乎的细节。'],
+    ['追踪一个意象的意义变化','星星、井水、猴面包树会在不同情节里长出不同意思。','选“星星”，画三格：初见、告别、读后，它各代表什么？'],
+    ['用情节解释抽象概念','“驯养”“责任”“独一无二”不是背定义，要回到狐狸和玫瑰的故事。','用“因为……所以……”解释：为什么花园里的玫瑰没有替代他的玫瑰？'],
+    ['比较人物的价值选择','六颗星球上的大人各有执念。比较认真点灯与盲目计数的不同。','为点灯人写一张建议卡：保留什么，改变什么？'],
+    ['保留多种解释并表达迁移','寓言不只有一个标准答案；重要的是能讲清自己的依据。','完成句子：“我想认真照料的，不一定是一朵花，而是……”并说明理由。']
+  ],
+  quiz:[
+    ['内容理解 · 因果','小王子为什么离开自己的星球？后来为什么又想回去？请各用一个情节说明。','他起初听不懂玫瑰骄傲话语背后的脆弱，受伤后选择旅行；在地球遇狐狸、看见玫瑰园后，他明白自己的花因照料而独特，因此想承担起这份关系。'],
+    ['人物分析 · 证据','你觉得玫瑰是“自私”还是“害怕”？不要只贴标签，找她的语言、动作或处境作证。','可以有不同判断。高质量答案会同时看到她的虚荣和脆弱：她夸耀四根刺，也会咳嗽、需要玻璃罩、临别时不愿让小王子看见难过。'],
+    ['词句品味 · 意象','狐狸为什么要小王子每天在同一时间来？“同一时间”在关系里有什么作用？','它让等待有方向，使人提前准备、产生期待；这种小小仪式并非限制自由，而是表示“我认真为你留出时间”。'],
+    ['推断 · 读懂没明说的话','小王子看到玫瑰园后很难过。为什么“花很多”反而会让他觉得自己贫穷？','他原以为自己的玫瑰天生唯一；看到同样的花后，旧判断被打破。后来他才明白，独特不来自稀少，而来自自己浇水、保护、倾听所建立的关系。'],
+    ['主旨把握','六个星球上的大人中，你最想提醒哪一位？他把什么事情看得太重了？','开放题。需说清人物的执念及其后果，如商人只计算星星数量却不欣赏星星；点灯人认真却要追问规则是否仍服务生活。'],
+    ['联系生活','你愿意为谁或什么“每天留一点时间”？怎样做才是照料，而不是控制？','开放题。可写家人、朋友、兴趣或一项承诺；应包含具体行动、对方感受与尊重边界，而非只说“我会一直管着他”。']
+  ],
+  recs:[['彼得·潘','飞向永无岛的冒险，让孩子比较“永远不长大”与真正的成长。'],['柳林风声','河岸朋友的四季故事，读友谊、归属与冒险。'],['夏洛的网','从玫瑰的责任延伸到夏洛为朋友付出的行动。'],['牧羊少年奇幻之旅','适合高年级亲子共读，比较“寻找梦想”与“看见身边重要之物”。']]
+};
+
+B['07'].handbook={
+  edition:'[加] 露西·莫德·蒙哥马利 著 · 译者、出版社请按教师所用版本补录',
+  relations:[
+    ['玛丽拉','养母 · 规则与照料','她起初强调规矩和现实，后来用持续照顾、学习与托付的行动接纳安妮。'],
+    ['马修','第一个守护者','他在车站就喜欢上安妮，虽不善表达，却用礼物、支持和安静的陪伴让她感到被欢迎。'],
+    ['戴安娜','知心朋友','两人郑重结交、也因误会分开又靠理解重聚；友谊不是永不出错，而是愿意修复。'],
+    ['吉尔伯特','竞争者 → 理解者','从取笑红发、拒绝道歉，到学业竞争、最后让出教职；关系的变化需要时间和具体行动。'],
+    ['林德太太','社区目光','她当面评价安妮的外貌，触发冲突；也提醒孩子分辨直率、冒犯和事后的道歉。'],
+    ['阿冯利','家园 · 共同体','绿山墙、白杨小径、学校和邻里，不只是背景，安妮在这些关系中从“被安置”变成“有归属”。']
+  ],
+  words:[
+    ['孤儿','没有父母长期照料的孩子；读安妮时要理解这带来的不安，而非只把它当身份标签。'],['归属','感到自己被欢迎、有位置、有可以回去的地方。'],
+    ['想象','把眼前景物与愿望连起来的能力，也是安妮表达自我的方式。'],['自尊','希望被平等对待、愿意保护自己价值的感受。'],
+    ['莽撞','没有充分考虑后果就行动；安妮的热烈有时会走到这里。'],['和解','冲突之后承认伤害、理解彼此并重新建立关系。'],
+    ['窘迫','生活困难或当众尴尬的感觉；读时要关注人物如何保有体面。'],['真诚','不靠讨好或掩饰，而把真实想法和歉意说清。'],
+    ['责任','知道自己的行为影响别人，并愿意补救。'],['选择','梦想、家庭、友谊发生冲突时，经过思考作出的决定。'],
+    ['牵挂','即使不在眼前，仍会把对方的需要放在心上。'],['成长','不是变得不再热烈，而是有更多能力理解自己和别人。']
+  ],
+  sentences:[
+    ['【开篇定位】马修在车站等待，却看见一个女孩（非逐字引文，按版本核对）','“领错孩子”的情节带来喜剧感，也埋下核心问题：安妮会不会再次被送走？读她的兴奋里怎样夹着害怕。'],
+    ['【人物定位】安妮坚持名字要有字母 e（非逐字引文，按版本核对）','看似小小的拼写要求，实际是她第一次明确说出：请按我希望的方式认识我。'],
+    ['【景物定位】白杨小径、湖水与安妮命名的风景（非逐字引文，按版本核对）','景物不是装饰。安妮用名字把陌生地方变成可亲近的家，可联系孩子给熟悉地点起一个名字。'],
+    ['【冲突定位】吉尔伯特取笑红发、石板落下（非逐字引文，按版本核对）','不要只评“谁对谁错”。可分析外号为何伤人，安妮的回击怎样保护自尊、又带来哪些后果。'],
+    ['【错误定位】误把外用药当作香料放进蛋糕（非逐字引文，按版本核对）','轻松场面背后有责任练习：安妮不是故意伤害朋友，仍需承认自己的疏忽并修复信任。'],
+    ['【结尾定位】父亲离世后，安妮决定留下（非逐字引文，按版本核对）','她没有“放弃未来”，而是重新安排未来。读吉尔伯特让出教职的行动，比一句道歉更能说明关系的改变。']
+  ],
+  skills:[
+    ['从小事读出人物真正需要','名字、头发、袖子不只是小事，它们连接安妮对尊重和归属的需求。','挑一个安妮坚持的“小事”，用“表面上……其实……”写两层意思。'],
+    ['区分冲动、错误与故意伤害','人物犯错后，需要看动机、后果和修复，而不是一句“她很坏/很笨”。','用三栏记录一次安妮的错误：发生了什么、影响了谁、她怎样补救。'],
+    ['追踪关系如何慢慢改变','玛丽拉、吉尔伯特与安妮的关系都不是一幕改变。','各找开头和结尾一个细节，画出“从……到……”的关系箭头。'],
+    ['读景物与人物感受的呼应','绿山墙、白杨小径和湖水常跟安妮的心情、想象和归属一起出现。','给一个景物配上安妮会起的名字，再解释它为什么适合她当时的心情。'],
+    ['用行动而非标签评价人物','不急着说玛丽拉冷漠、吉尔伯特骄傲；先找他们做过的事。','为玛丽拉或吉尔伯特写一份“行动证据卡”，至少列两件事。'],
+    ['处理梦想与责任的两难','结尾的选择并非只有对错，要看人物在乎什么、还保留了什么可能。','假设你是安妮，给未来一年的自己写“留下以后我怎样继续学习”的计划。']
+  ],
+  quiz:[
+    ['内容理解 · 因果','马修和玛丽拉原本为什么去领养孩子？安妮为什么没有立刻被送走？','他们本想领养男孩帮忙农务；安妮是误送来的女孩。马修先被她打动，玛丽拉也在相处中看到她的需要与生命力，最终决定留下她。'],
+    ['人物分析 · 动机','安妮为什么那么在意别人叫她“红发”或把她的名字拼错？请不要只回答“她爱生气”。','这些称呼会触到她长期被忽视、被挑选、被评价的经历。她想争取被完整而有尊严地认识；也可以讨论她反应过激的部分。'],
+    ['词句品味 · 景物','安妮为什么总给小径、湖水等地方取名字？这只是“爱幻想”吗？','命名使陌生景物有了情感归属，也让她把愿望和美感说出来。它不是逃避现实，而是她理解并进入现实的一种方式。'],
+    ['推断 · 关系','吉尔伯特后来让出本地教职，比口头说“对不起”多说明了什么？','他理解安妮照顾玛丽拉的处境，并愿意承担自己离开本地的成本。关系修复需要尊重、行动和给对方空间。'],
+    ['主旨把握','安妮最后留下绿山墙，是不是等于放弃梦想？','不是。她作出与家庭责任有关的选择，同时仍保留学习和未来计划。可讨论不同阶段的选择如何调整，而非把人生看成一次决定。'],
+    ['联系生活','当朋友犯错让你尴尬或受伤时，怎样的道歉和行动会让你愿意再给他机会？','开放题。答案应包含：具体承认伤害、不推卸、愿意补救，并尊重被伤害者是否需要时间。']
+  ],
+  recs:[['海蒂','另一个来到陌生家庭的女孩，比较归属、自然与成长。'],['秘密花园','孤独的孩子在花园与友谊中恢复生命力。'],['长腿叔叔','以书信阅读成长、教育机会与独立选择。'],['小妇人','四个女孩在家庭、梦想与责任中长大，适合比较不同的女性角色。']]
+};
+
+B['08'].handbook={
+  edition:'曹文轩 著 · 版本、出版社请按教师所用版本补录',
+  relations:[
+    ['纸月','尊重 · 帮助','纸月的安静不是空白。桑桑从好奇靠近，逐渐学习用合适方式理解并帮助她。'],
+    ['秃鹤','取笑 → 理解','桑桑和同学曾用外表看秃鹤；秃鹤在关键时刻的选择让他们意识到尊严来自行动。'],
+    ['杜小康','同伴 · 映照','两人都在成长中遇到难处。杜小康从富足到失学、放鸭，使桑桑看见“承担”并不轻松。'],
+    ['细马','陌生 → 归属','细马起初因口音和习惯被视作外来者，后来以照料家人、努力生活的行动赢得信任。'],
+    ['秦大奶奶','对立 → 和解','她与学校、村庄的关系变化，提醒桑桑：不先贴“麻烦”标签，才可能看见一个人的孤独与善意。'],
+    ['桑乔','父子 · 责任','桑乔既是校长也是父亲；在桑桑病中，他的焦急、奔走和克制让父子关系更真实。']
+  ],
+  words:[
+    ['油麻地','作品中的水乡共同体名称；它承载学校、村庄与人物共同记忆。'],['芦苇荡','反复出现的水乡景物，既有辽阔感，也常映出人物的孤独和行动。'],
+    ['窘迫','生活困难或当众难堪的处境；读时要关注人物怎样维护体面。'],['体面','即使条件不好，也希望被尊重、保有自尊的状态。'],
+    ['倔强','不轻易低头的性格；可分辨它何时保护尊严、何时阻碍沟通。'],['沉默','没有说出口不等于没有感受；纸月等人物需要被耐心阅读。'],
+    ['守望','在不打扰中关注、等待和照料彼此。'],['承担','知道自己要面对生活后果，并用行动扛起一部分责任。'],
+    ['伤痕','外在或内在留下的痛；不该成为嘲笑和标签的理由。'],['告别','人与人、人与旧生活的分开，常带来成长也留下不舍。'],
+    ['理解','先知道对方的处境，再形成判断。'],['成长','不是突然变成熟，而是在一次次看见、失去和选择中发生。']
+  ],
+  sentences:[
+    ['【开篇意象】草房子、河流与水乡光线（非逐字引文，按版本核对）','环境描写不是背景板。可圈出颜色、声音和季节词，看它们怎样让油麻地成为人物共同生活的地方。'],
+    ['【人物定位】秃鹤用帽子遮掩头部的细节（非逐字引文，按版本核对）','一个动作能写出羞耻、警惕和自我保护。读者应避免把他的反应当笑话。'],
+    ['【人物定位】纸月的书包、沉默与来去（非逐字引文，按版本核对）','留意“没有说”的部分：安静人物的感受常由动作、停顿和旁人反应显露。'],
+    ['【情节定位】红门前后，杜小康离开校园（非逐字引文，按版本核对）','空间从学校转到放鸭路途，显示身份和生活骤变；比较他离开前后的说话方式与目光。'],
+    ['【人物定位】细马照料邱二爷爷的行动（非逐字引文，按版本核对）','不要只看细马“会不会说普通话”。他的责任感通过持续行动被看见。'],
+    ['【结尾定位】药寮里桑桑面对病痛和众人照料（非逐字引文，按版本核对）','病中体验使他重新感受生命和关系的重量。可找一处亲人、老师或同学照料他的细节。']
+  ],
+  skills:[
+    ['在群像故事中整理人物线','多人物作品要先分清“谁的故事、什么难题、发生了什么变化”。','做七张人物卡：人物、处境、关键行动、你对他的新理解。'],
+    ['从处境而非标签理解人物','秃鹤、纸月、杜小康和细马都不该被一个词定义。','选一位人物，完成“别人以为他……，我从……看见他还……”。'],
+    ['读沉默、动作和环境细节','人物没有直接说感受时，动作、景物、他人反应是证据。','在纸月或杜小康故事中找两处“没说心情”的细节，推断感受。'],
+    ['比较同一主题的不同答案','尊严、承担、归属在不同人物身上表现不同。','把秃鹤和细马放在一起：他们各自怎样赢得尊重？'],
+    ['把风景读成叙事线索','草房子、芦苇荡和水面常呼应人物的处境和记忆。','选一处景物，标记它出现的情节，并写“它让这一幕更像……”。'],
+    ['以同理心进行生活迁移','理解他人不是替人做决定，而是先问处境，再想能做什么。','写一份“面对被取笑同学的三个可做动作”，避免空泛的“别欺负人”。']
+  ],
+  quiz:[
+    ['内容理解 · 结构','《草房子》为什么不能只按“桑桑的一个冒险故事”来读？','它由秃鹤、纸月、白雀、艾地、杜小康、细马、桑桑等多条故事线组成。桑桑常是观察者，各人物经历互相映照，共同写出油麻地的成长。'],
+    ['人物分析 · 尊严','秃鹤被同学取笑后，为什么不能只说“他太爱面子”？','外表标签会伤害自尊。要看到他遮掩、反击和在关键场合努力表现的行动；“爱面子”背后是希望被平等对待的尊严需求。'],
+    ['词句品味 · 环境','草房子、芦苇荡、水面等景物反复出现，除了“写得美”，还有什么作用？','它们建立油麻地的共同空间和季节感，并常与人物的孤独、希望、告别相互映照。回答需挑一处具体情节说明。'],
+    ['推断 · 沉默','纸月不总把困难说出来。读她的故事时，怎样判断她是否需要帮助？','看动作、来去、身体反应、旁人言行和情境，而非逼她立刻解释。帮助也要尊重她的意愿和安全。'],
+    ['主旨把握','杜小康离开学校去放鸭，作品主要在写“贫穷很可怕”吗？','不止如此。它写生活变故如何打断少年日常，也写杜小康在失落、孤独和劳动中逐渐承担，保有尊严。'],
+    ['联系生活','当一个同学因外表、口音、家庭情况或沉默被取笑时，你能做哪三件具体而安全的事？','开放题。可包括：不附和、不传播；私下关心并征求需要；必要时告诉可信任的大人。重点是具体行动和尊重边界。']
+  ],
+  recs:[['青铜葵花','曹文轩另一部少年成长作品，继续读苦难中的尊严、陪伴与承担。'],['山羊不吃天堂草','曹文轩作品，适合高年级讨论家庭处境、劳动与少年选择。'],['我要做好孩子','从城市儿童日常切入，比较不同成长环境中的理解与教育。'],['青鸟','两个孩子寻找幸福的旅程，可延伸讨论“重要之物”是否就在身边。']]
+};
+
+B['09'].handbook={
+  edition:'林海音 著 · 版本、出版社请按教师所用版本补录',
+  relations:[
+    ['秀贞与妞儿','同情 · 相认','英子愿意听秀贞讲故事，也从细节联系起妞儿的身世；她的善意真诚，却无法替大人世界解决全部悲剧。'],
+    ['草地青年','亲近 · 困惑','他会对英子温和说话，也有偷窃行为。英子的视角要求读者同时看见他的困境、善意和过错。'],
+    ['兰姨娘','倾听 · 见证','英子不完全懂兰姨娘的选择，却以孩子的好奇和帮助见证一位女性离开不自由的生活。'],
+    ['宋妈','照料 · 思念','宋妈照顾英子，却一直牵挂乡下的孩子。关系提醒我们：照料者也有自己的失去和情感。'],
+    ['父亲','要求 · 引路','父亲的严格、爱护、鼓励与去世交织，让英子在毕业日突然感到必须长大。'],
+    ['北京城南','居住 · 记忆','骆驼、胡同、荒园、惠安馆等地点见证相遇与离别；城市不说话，却把人物的故事串在一起。']
+  ],
+  words:[
+    ['城南','北京旧城南一带的生活空间，也是英子记忆的地理坐标。'],['胡同','人物相遇、打听消息、彼此观看的日常通道。'],
+    ['离散','人与人因命运、迁徙或死亡而分开，常带来无力感。'],['惦念','放不下、常常想起；宋妈对孩子的情感可由此理解。'],
+    ['怅惘','面对失去与变化时，温柔而空落的心情。'],['窘迫','生活艰难、难以启齿的处境；需要先理解再判断。'],
+    ['秘密','人物没有立刻说出的往事、身份或选择，推动英子去观察。'],['体面','即使处境艰难，也希望保有尊严、不被轻慢。'],
+    ['告别','一段关系或童年阶段的结束，不必等同于遗忘。'],['童年','并非无忧无虑，而是一种尚未完全理解、却敏锐感受世界的目光。'],
+    ['记忆','把已经过去的人和地点重新组织、重新理解的方式。'],['长大','开始承担责任，也开始懂得有些事情没有简单答案。']
+  ],
+  sentences:[
+    ['【开篇意象】冬阳下缓慢行走、咀嚼的骆驼队（非逐字引文，按版本核对）','节奏很慢，像记忆被打开。圈出动作和声音词，感受童年观看世界时的专注。'],
+    ['【故事定位】惠安馆门口与“小桂子”的线索（非逐字引文，按版本核对）','英子从碎片信息中帮助秀贞辨认妞儿。可讨论：善意为何仍可能遇到无法控制的结局。'],
+    ['【意象定位】荒草地与“我们看海去”（非逐字引文，按版本核对）','轻快的想象和沉重的秘密并置，使草地青年不能被简单归为“好人”或“坏人”。'],
+    ['【人物定位】兰姨娘收拾、离开旧生活的细节（非逐字引文，按版本核对）','关注她如何从被安排的处境中做出选择；英子并不全懂，却真诚地见证。'],
+    ['【人物定位】宋妈讲起乡下孩子与“驴打滚儿”（非逐字引文，按版本核对）','一个照料者的故事让英子意识到：每天陪伴自己的大人，也有深重的牵挂和失去。'],
+    ['【结尾意象】父亲的花落、毕业钟声与英子的责任感（非逐字引文，按版本核对）','花落不是单纯伤感，而是童年阶段结束的信号。读英子如何在悲伤中开始承担，而不是突然变得无所不能。']
+  ],
+  skills:[
+    ['在回忆叙事中辨认时间层次','“正在发生的童年”与“长大后回望”会交织，注意叙述者知道什么、当时的英子又知道什么。','用两种颜色标出一段中“孩子眼前所见”和“后来读者可推断”的内容。'],
+    ['不把复杂人物压成好坏标签','草地青年、秀贞、宋妈等人有善意、困境和局限。','为一位人物写“双面证据卡”：他/她让你靠近的细节与让你困惑的细节。'],
+    ['从意象读情感与结构','骆驼、胡同、荒草、花等反复出现，串起记忆和告别。','选一个意象，记录它出现的场景、英子当时的感受和它与结尾的联系。'],
+    ['读懂叙述中的空白','英子“不完全懂”的地方不是漏洞，而是邀请读者用证据推断。','在草地青年故事中列出“英子知道/英子不知道/我从细节猜到”的三栏。'],
+    ['尊重历史处境中的人物选择','读旧时代人物时，不用今天一句话替他们决定对错，要先理解可选择的空间。','讨论兰姨娘或宋妈：她们当时有哪些限制？她们做了什么主动选择？'],
+    ['把告别写成具体记忆','好的读后表达不只写“我很难过”，要写一个物件、地点、动作和改变。','写 120 字“我的一个成长地点”，包含一个感官细节和一次小告别。']
+  ],
+  quiz:[
+    ['内容理解 · 结构','《城南旧事》为什么由多个相遇和告别的故事组成，而不是一条连续冒险线？','它以英子的童年回忆串联城南人物。每个故事让她接触一种成人处境和一次分离，共同构成“我长大了”的过程。'],
+    ['人物分析 · 复杂性','草地青年有偷窃行为，英子为什么仍觉得他亲切？读者该怎样评价他？','英子看到他的温和、对弟弟读书的牵挂与处境，也逐渐知道他的过错。评价应同时承认行为需要负责、人物处境值得理解，不能简单美化或妖魔化。'],
+    ['词句品味 · 意象','开篇的骆驼队为什么重要？它与全书的叙述节奏和记忆感有什么关系？','骆驼的缓慢、咀嚼、冬阳和城南声音打开了儿童视角的专注；它为整部作品定下温暖、回望而略带怅惘的节奏。'],
+    ['推断 · 叙述空白','英子帮助秀贞和妞儿时，她能不能完全理解她们的悲剧？从哪些地方看出“孩子知道得有限”？','不能。她主要从听来的故事、物件和自己的善意推断；事件结果和成人处境超出她的控制。答案需指出儿童视角的局限及其同情心。'],
+    ['主旨把握','父亲的花落与毕业日为什么放在一起写？','两件事同时标记阶段结束：英子完成小学毕业，也失去父亲的引导。她开始意识到家庭责任和“不能再只是小孩子”，但成长仍带着悲伤与不确定。'],
+    ['联系生活','当你听到一个人的经历很复杂时，怎样既不轻易评判，也不忽视不对的行为？','开放题。可用“先听事实和处境、区分理解与赞同、对伤害设边界、需要时向可信任的大人求助”等具体原则。']
+  ],
+  recs:[['呼兰河传','萧红以童年与故乡视角记录普通人的生活，适合比较记忆中的地域和人物。'],['朝花夕拾','鲁迅的回忆散文，比较成人回望童年时的叙述距离与情感。'],['童年','高尔基的成长叙事，适合高年级讨论儿童如何面对复杂的成人世界。'],['小王子','同样以孩子视角提出深刻问题，可比较“看不懂”如何帮助读者重新看世界。']]
+};
+
+    function applyPresetHandbook(key,handbook){
+      var book=B[key];book.handbook=handbook;
+      if(handbook.acts)book.acts=handbook.acts;
+      if(handbook.people)book.people=handbook.people.map(function(item){return Array.isArray(item)?item.join('|'):item});
+      if(handbook.themes)book.themes=handbook.themes.map(function(item){return Array.isArray(item)?item.join('|'):item});
+      if(handbook.deep)book.deep=handbook.deep.map(function(item){return Array.isArray(item)?item.join('|'):item});
+      if(handbook.family)book.family=handbook.family;
+      if(handbook.note)book.note=handbook.note;
+    }
+    applyPresetHandbook('02',handbook02);applyPresetHandbook('03',handbook03);applyPresetHandbook('04',handbook04);applyPresetHandbook('05',handbook05);
+    applyPresetHandbook('06',B['06'].handbook);applyPresetHandbook('07',B['07'].handbook);applyPresetHandbook('08',B['08'].handbook);applyPresetHandbook('09',B['09'].handbook);
+    applyPresetHandbook('10',windInWillowsHandbook);applyPresetHandbook('11',cuoreHandbook);applyPresetHandbook('12',pippiHandbook);
+    /* 可直接粘贴到 index.html：放在 B 定义完成后、render 函数之前。 */
+
+B['06'].map={
+  people:['小王子｜追问重要之物的旅行者','玫瑰｜牵挂与责任的起点','狐狸｜教会“建立联结”的朋友','飞行员｜倾听、记录与见证者','蛇｜离开地球的危险通道','点灯人｜认真履行职责的大人','地理学家｜只记录、不亲自探索的大人'],
+  plot:['沙漠相遇·请画一只羊','B-612·猴面包树与火山','玫瑰出现·爱而不懂爱','六颗星球·看见大人的荒唐','来到地球·玫瑰园的失落','遇见狐狸·理解驯养','井水与告别·把星星留给朋友'],
+  theme:['重要的东西，要用心才能看见','爱不是占有，而是对联结负责','保留追问与想象，警惕被数字遮住生活'],
+  deep:['背景：二战阴影下的飞行员寓言','情节：从“很多玫瑰”到“一朵玫瑰”的认知转折','人物：大人群像不是嘲笑，而是对单一价值的反思'],
+  words:['驯养','独一无二','责任','等候','思念','虚荣','荒唐','认真','星光','井水','告别','秘密'],
+  quotes:['帽子与蟒蛇图','B-612 小星球','猴面包树幼苗','玫瑰园的失落','狐狸约定同一时间','沙漠井水与星光']
+};
+B['06'].acts=[
+  '沙漠·请画一只羊|开篇|飞行员因飞机故障迫降撒哈拉，在孤独的沙漠里遇见小王子。小王子不问飞机，却认真请求“请你给我画一只羊”，两个世界由一幅画接上。',
+  'B-612·照料小星球|回望来处|小王子讲起自己的星球：清理猴面包树幼苗、打扫火山、看日落。这些重复的小事，是他对生活秩序的照料。',
+  '玫瑰·爱而不懂爱|关系出现|一朵骄傲又脆弱的玫瑰来到星球。小王子被她的话伤到，尚未学会从行动和需要里理解爱，于是决定出发。',
+  '六颗星球·看见大人世界|旅行|国王、爱虚荣的人、酒鬼、商人、点灯人和地理学家，分别被权力、称赞、逃避、占有、职责和空洞知识困住。',
+  '地球·玫瑰园的失落|转折|小王子看到一整座玫瑰园，以为自己的花并不独一无二。他难过地躺在草地上，也准备重新理解自己曾经的付出。',
+  '狐狸·学习驯养|关键领悟|狐狸请小王子“驯养”自己。等待、固定时间、仪式与告别，让小王子明白：花的独特来自自己为它花去的时间。',
+  '井水与星光·告别仍在|结尾|小王子和飞行员在沙漠寻找井水；临别时，他选择回到自己的星球。飞行员从此听见星星的笑声，读者也被留下继续寻找。'
+];
+B['06'].people=['小王子|中心·好奇、认真、愿意追问“什么真正重要”','玫瑰|牵挂的对象：骄傲脆弱，让小王子学习照料与理解','狐狸|驯养的朋友：用等待、仪式和告别解释联结','飞行员|倾听者·见证者：把小王子的故事留给后来读者','蛇|离开的通道：神秘而危险，指向身体与星球的分离','点灯人|最值得尊敬的大人之一：认真履行职责，却也被规则困住','地理学家|知识的提醒：只记录远方、不亲自探索，误把活的经验留在纸上'];
+B['06'].themes=['重要的东西，要用心才能看见|数量、价格和头衔容易遮住真实感受；玫瑰、井水和星光的意义，都要放进关系里理解。','爱不是占有，而是对联结负责|小王子没有因为花园里有许多玫瑰就否定自己的玫瑰；付出的时间、理解和照料让关系独一无二。','保持追问与想象的能力|小王子的“为什么”不断打断大人习以为常的判断，提醒我们不把忙碌、数字和规则当成全部生活。'];
+B['06'].deep=['背景|飞行员为什么在沙漠讲这个故事？|作者有飞行经历，作品写于战争年代。荒凉的沙漠让相遇更不可能，也让“水、朋友和星星”变得格外珍贵；不必把寓言硬译成单一答案。','情节|玫瑰园为什么是全书的重要转折？|看到许多玫瑰后，小王子先失落，后来借狐狸的话重新理解“独一无二”。独特不是天生标签，而是共同投入时间之后产生的关系。','人物|六个星球上的大人都在讽刺谁？|他们不是简单的坏人，而是把权力、称赞、数字、职责或书本知识推到极端的人。让孩子找一找：哪一种习惯自己也可能有。'];
+B['06'].family=['小王子把玫瑰当作牵挂，是因为它比别的花漂亮，还是因为他为它做过事？','狐狸说关系需要等待。我们家有没有一件固定的小仪式，让人感到被重视？','六颗星球上的大人，哪一位最像“只顾忙却忘了为什么忙”？生活里有这种时刻吗？','如果朋友说话很刺，但其实很不安，你愿意怎样既保护自己又理解他？','小王子离开后，飞行员为什么还能从星星里得到安慰？你怎样纪念一段重要关系？'];
+B['06'].note='写给你的玫瑰：因为你，我愿意……';
+
+B['07'].map={
+  people:['安妮｜热烈、敏感、渴望归属的女孩','玛丽拉｜从克制到柔软的养母','马修｜第一个无条件欢迎安妮的大人','戴安娜｜“知心朋友”与平等陪伴','吉尔伯特｜从竞争到理解的同学','林德太太｜直率尖锐的社区目光','阿冯利｜绿山墙、学校与邻里组成的共同体'],
+  plot:['阴差阳错·女孩来到绿山墙','名字与红发·争取被尊重','戴安娜·找到知心朋友','学校与吉尔伯特·冲突开始','错误与修复·长出责任','奖学金与家庭变故·重新选择','留下与未来·把家放进人生计划'],
+  theme:['被接纳，不等于被塑造成别人','错误是成长的材料，修复比掩饰重要','想象力让愿望有声音，也需要落到行动'],
+  deep:['背景：爱德华王子岛乡村共同体与孤儿处境','情节：喜剧性错误怎样推动责任成长','人物：玛丽拉的变化由行动而非口头宣言完成'],
+  words:['孤儿','归属','想象','自尊','莽撞','和解','窘迫','真诚','责任','选择','牵挂','成长'],
+  quotes:['马修在车站等待','“安妮带 e”的名字坚持','白杨小径与湖水','石板冲突','误把外用药放进蛋糕','父亲离世后的留下']
+};
+B['07'].acts=[
+  '错位·女孩来到绿山墙|开篇|马修和玛丽拉原本想领养男孩帮农务，车站却来了爱说话、红头发的孤女安妮。一次“弄错了”让三个人的生活重新开始。',
+  '名字与红发·争取被尊重|相遇|安妮坚持自己的名字要写成“Anne with an e”，也极其在意别人嘲笑她的红发。小事背后，是一个孩子对被认真看待的渴望。',
+  '戴安娜·知心朋友出现|发展|安妮和邻居女孩戴安娜结成“知心朋友”。她们的誓言、游戏和误会，让安妮第一次拥有平等、稳定的同伴关系。',
+  '学校与吉尔伯特·冲突开始|冲突|吉尔伯特用“胡萝卜”取笑安妮的红发，安妮用石板回击。两人长期别扭的竞争，既伤人也不断促使彼此成长。',
+  '错误与修复·长出责任|中段|醉了戴安娜的“覆盆子甜酒”误会、染绿头发等事件让安妮出丑。她会冲动，也开始学习道歉、承担后果、重新来过。',
+  '奖学金与家庭变故·重新选择|转折|安妮凭努力进入女王学院并获得奖学金；马修去世、玛丽拉视力变差后，她发现梦想和家并不必互相否定，需要重新安排人生。',
+  '留下与未来·把家放进计划|结尾|安妮决定留在阿冯利陪伴玛丽拉。吉尔伯特让出本地教职，旧日对手终于和解；安妮带着更稳的自我认同面向未来。'
+];
+B['07'].people=['安妮|中心·想象热烈、敏感自尊，逐渐学会责任与选择','玛丽拉|养母·规则与照料：从防备到把安妮当作家人','马修|第一个守护者·不善言辞，却用行动给安妮无条件欢迎','戴安娜|知心朋友·分享秘密、误会与修复，给安妮同伴归属','吉尔伯特|竞争者→理解者·让安妮练习自尊、宽恕与合作','林德太太|社区目光·尖锐评价触发冲突，也呈现邻里关系的复杂','阿冯利|共同体·学校、教会、邻里与绿山墙共同塑造安妮的归属'];
+B['07'].themes=['被接纳，不等于被塑造成别人|玛丽拉和马修没有把安妮的想象力抹掉，而是帮助她把热烈放进学习、友谊和责任里。','错误是成长的材料|安妮的麻烦常由冲动引起，但她会面对影响、真诚道歉、想办法修复；成长不是从此不犯错。','想象力让愿望有声音|安妮给小径、湖水和朋友取名字，不是在逃避生活，而是在贫乏和孤独中创造可被表达的希望。'];
+B['07'].deep=['背景|为什么“来到绿山墙”如此重要？|作品置于爱德华王子岛的乡村共同体。对没有稳定家庭的安妮来说，房子、学校、邻里和被叫对名字，都意味着一个人能否被允许安定下来。','情节|那些好笑的错误为什么不能只当笑话？|染发、误送甜酒、石板冲突让故事轻快，却都留下真实后果。观察安妮每次怎样从尴尬、愤怒走向承担和修复。','人物|玛丽拉什么时候开始改变？|不要只找她说“我爱安妮”的一句话，更看她如何倾听、如何担心、如何为安妮的学习和未来调整自己的决定。'];
+B['07'].family=['安妮最想被别人看见的是哪一面？你希望家人先看见你的哪一面？','想象力什么时候帮人度过困难，什么时候又需要和现实一起考虑？','安妮和吉尔伯特的关系为什么不能只用“敌人”或“朋友”概括？','玛丽拉没有常把爱说出口，你从哪些行动读出她在乎安妮？','如果你做错一件事，怎样道歉才不仅是“说对不起”？'];
+B['07'].note='写给安妮：你的热烈让我想起……';
+
+B['08'].map={
+  people:['桑桑｜观察油麻地、慢慢成熟的男孩','纸月｜安静坚韧、需要被看见的同学','秃鹤｜从被取笑到赢回尊严的同学','杜小康｜经历家庭变故、承担生活的朋友','细马｜外来孩子、寻找归处的人','秦大奶奶｜与油麻地和解的长者','桑乔｜校长与父亲，和桑桑一起面对责任'],
+  plot:['油麻地·草房子与日常','秃鹤·外表标签与尊严','纸月·沉默背后的勇敢','白雀与艾地·成人世界的遗憾','红门·杜小康家的变故','细马·陌生孩子寻找归处','药寮·桑桑生病后的重新看见'],
+  theme:['不要用外表、贫富或沉默定义一个人','成长来自看见别人的难处，也学会承担','平常生活有尊严，告别也能留下温暖'],
+  deep:['背景：油麻地不是布景，是共同成长的地方','情节：九章人物故事交织，不是单线冒险','人物：从“看热闹”到“能共情”的桑桑目光'],
+  words:['油麻地','芦苇荡','窘迫','体面','倔强','沉默','守望','承担','伤痕','告别','理解','成长'],
+  quotes:['草房子与水乡开篇','秃鹤戴帽子的细节','纸月的沉默与书包','红门前后的杜小康','细马与邱二爷爷','药寮里的桑桑']
+};
+B['08'].acts=[
+  '油麻地·草房子与日常|开篇|桑桑生活在水乡油麻地。草房子、河流、芦苇荡、学校和村庄不是静止背景，而是每个人成长和相遇的共同空间。',
+  '秃鹤·外表标签与尊严|人物线|秃鹤因秃头被同学取笑，也会用夸张行为保护自己。舞台上的关键表现让大家重新看见：一个人不应只被外表定义。',
+  '纸月·沉默背后的勇敢|人物线|纸月安静、敏感，却有自己的坚持；她遭遇骚扰等困境时，桑桑等人开始学习怎样帮助一个不善求助的人。',
+  '白雀与艾地·成人世界的遗憾|人物线|白雀、蒋一轮与秦大奶奶等人物的故事，让孩子的目光第一次触到爱情、孤独、失去与和解等复杂成人经验。',
+  '红门·杜小康家的变故|转折|杜小康家的生意变化，他不得不离开学校，随父亲去放鸭。昔日富足和骄傲被打断，少年开始面对生活的重量。',
+  '细马·陌生孩子寻找归处|人物线|来自外地的细马语言不通、被误解，后来在家庭困境中用行动承担。他从“外来者”慢慢成为可以被信赖的人。',
+  '药寮·桑桑重新看见世界|结尾|桑桑生病、四处求医，在亲人和师友照料中经历恐惧与告别。恢复后的他不再只看自己的好奇心，也更能理解生命和他人的难处。'
+];
+B['08'].people=['桑桑|中心·好奇敏感的观察者，从看热闹慢慢学会理解','纸月|被看见的同学·安静坚韧，让桑桑懂得尊重沉默','秃鹤|从取笑到理解·用行动赢回尊严的同学','杜小康|共同成长的朋友·家庭变故让他练习承担','细马|外来者→家人·在陌生处境中寻找归属并承担责任','秦大奶奶|油麻地长者·从对立到和解，提醒人敬重生命','桑乔|父亲·校长·在病痛和责任中与桑桑更靠近'];
+B['08'].themes=['不要用外表、贫富或沉默定义一个人|秃鹤、纸月、杜小康和细马都曾被快速判断。作品要求读者停下来，看见他们的处境、选择和尊严。','成长来自看见别人的难处，也学会承担|桑桑从淘气的观察者变成能共情的人；杜小康、细马等人则以不同方式说明承担不是口号。','平常生活有尊严，告别也能留下温暖|草房子、芦苇荡、药寮和村庄日常保存着人与人的照料。生命会有失去，但理解和记忆可以留下。'];
+B['08'].deep=['背景|油麻地为什么像一个角色？|草房子、河流、芦苇荡、校舍和季节反复出现，给人物的贫富、孤独、病痛和欢乐提供共同空间。读景物如何参与人物心情。','情节|这本书为什么不是一条直线的冒险故事？|全书由多条人物故事组成，彼此映照。读者可把每一章当作一扇窗：从不同孩子和成人身上，看见成长的不同难题。','人物|桑桑怎样从“看热闹”走向“能共情”？|他常有好奇甚至顽皮的举动；随着接触纸月、秃鹤、杜小康、细马和病痛，他的目光开始包含体谅与责任。'];
+B['08'].family=['你最初怎么看秃鹤？后来哪一个情节改变了你的看法？','纸月的沉默和杜小康的沉默有什么不同？沉默的人一定不想被帮助吗？','细马从外来者变成被信赖的人，最关键的不是说了什么，而是做了什么？','草房子为什么会成为桑桑记忆里重要的地方？你有什么类似的成长地点？','作品里谁最让你心疼？除了同情，我们还能怎样尊重他的选择和尊严？'];
+B['08'].note='写给油麻地的一个角色：我现在更理解你……';
+
+B['09'].map={
+  people:['英子｜以孩子目光记住城南的人与告别','秀贞与妞儿｜寻找亲人的母女','草地青年｜有善意也有过错的陌生人','兰姨娘｜寻找自主生活的女性','宋妈｜离乡做工、思念孩子的照料者','父亲｜严格又疼爱英子的成长引路人','北京城南｜骆驼、胡同、井、荒园与旧院落组成的记忆空间'],
+  plot:['冬阳·童年·骆驼队','惠安馆·秀贞和妞儿','我们看海去·草地青年的秘密','兰姨娘·离开旧生活','驴打滚儿·宋妈的思念','爸爸的花儿落了·失去父亲','离开城南·童年告别，记忆留下'],
+  theme:['孩子的目光能看见复杂的人，不急着定罪','成长常从一次次告别中发生','记忆让逝去的城市与人保留温度'],
+  deep:['背景：20 世纪 20 年代北京城南的日常与阶层','情节：串珠式回忆，不是悬疑答案册','人物：英子的“不懂”形成温柔而复杂的叙述距离'],
+  words:['城南','胡同','离散','惦念','怅惘','窘迫','秘密','体面','告别','童年','记忆','长大'],
+  quotes:['冬阳下的骆驼队','惠安馆门口与小桂子线索','草地与“我们看海去”','兰姨娘的离开','宋妈的孩子与驴打滚儿','父亲的花落与毕业钟声']
+};
+B['09'].acts=[
+  '冬阳·童年·骆驼队|开篇框架|冬日阳光、缓慢咀嚼的骆驼和城南胡同，打开英子的童年记忆。这个画面既温暖，也暗示故事会由回望和告别组成。',
+  '惠安馆·秀贞和妞儿|故事一|英子与被人称作“疯子”的秀贞相识，又发现妞儿的身世线索。孩子出于善意帮助母女相认，却无法完全掌控大人世界的悲剧。',
+  '我们看海去·草地青年的秘密|故事二|英子在荒草地认识一个年轻人，听他讲弟弟读书和生活困境。她感到他的亲切，也慢慢意识到他偷窃的秘密与即将到来的分离。',
+  '兰姨娘·离开旧生活|故事三|兰姨娘来到英子家，英子用孩子的好奇观察她的处境。兰姨娘最终与德先叔离开，作品让读者看见一个女性寻找新生活的选择。',
+  '驴打滚儿·宋妈的思念|故事四|照料英子的宋妈心里一直牵挂乡下的孩子。她的遭遇让英子第一次理解：每天陪在身边的大人，也有自己难以说出的失去和思念。',
+  '爸爸的花儿落了·失去父亲|转折|毕业日与父亲病逝相连。英子从父亲的严格、鼓励和花落的意象中，感到童年不能回头，必须开始承担家庭中的一部分责任。',
+  '离开城南·童年告别，记忆留下|结尾|英子随家人离开北京城南。人和地点都渐渐远去，但通过讲述被留在记忆里；“长大”不是忘记，而是带着记得的事继续走。'
+];
+B['09'].people=['英子|中心·好奇善良的观察者，在理解与告别中长大','秀贞与妞儿|寻找与相认·让英子第一次靠近成人世界的伤痛','草地青年|亲近又陌生·善意与过错并存，提醒人不急着简化判断','兰姨娘|倾听与见证·英子看见她寻找自主生活的选择','宋妈|照料者与母亲·陪伴英子，也背负对自己孩子的思念','父亲|严格的引路人·用要求、鼓励与离世推动英子承担责任','北京城南|记忆的容器·胡同、骆驼、荒园和旧院落保存成长痕迹'];
+B['09'].themes=['孩子的目光能看见复杂的人，不急着定罪|英子靠近秀贞、草地青年、兰姨娘和宋妈时，常常“不完全懂”，却先愿意听、愿意陪，让读者看到人物不止一个标签。','成长常从一次次告别中发生|母女相认后的离散、草地青年的被带走、兰姨娘的离开、宋妈的回乡和父亲去世，构成英子不能回避的长大过程。','记忆让逝去的城市与人保留温度|骆驼、胡同、井、荒草和花并不只是怀旧布景。它们把具体人事留住，让告别之后仍能回望与理解。'];
+B['09'].deep=['背景|为什么从北京城南的日常写起？|作品回望 20 世纪 20 年代的胡同生活，不同身份的人在同一片城南相遇。阅读时可观察家庭、佣工、女性和孩子的处境，而不把旧时光只读成风景。','情节|五个故事为什么像一串记忆而非一个谜题？|每段相遇都留下没有被完全解释的部分。不要急于“破案”；要看英子从相遇、疑惑到告别时，理解怎样一点点加深。','人物|英子“不懂”有什么力量？|她并不掌握成人世界所有信息，正因如此，叙述保留了同情和空白。读者需要用细节推断，也要承认有些人物无法被一句话说完。'];
+B['09'].family=['英子经常“不太懂”大人的事，为什么她仍能让读者感到温暖和可信？','草地青年做了错事，我们还要不要理解他的困难？理解和原谅有什么不同？','宋妈照顾英子，却想念自己的孩子。我们怎样看见照料自己的人也有需要？','父亲的严格和疼爱在书里怎样同时存在？你从哪些细节读出来？','你有没有一个会让你想起成长的地点、物件或声音？它保存了什么记忆？'];
+B['09'].note='写给城南记忆里的一个人：我想对你说……';
+
+    var aliases={'西游记':'04','吴承恩西游记':'04'};Object.keys(B).forEach(function(k){aliases[B[k].title]=k});var state={book:null,day:1,planLength:7,startDate:'',dailyMinutes:'15 分钟',progress:{},workspaceOpen:false,activePanel:'dashboard'};var active='dashboard',timer;
+    var LONG_TASKS=[['读情节','把今天这一幕讲给家长听，注意人物、地点和发生了什么。','只追问一个“为什么”，先接住孩子的完整复述。'],['找线索','圈出一个动作、语言或反复出现的细节，说说它告诉你什么。','请孩子指出原文位置，再说“我听见你从这里读到了……”。'],['看感受','给人物的感受画一条变化线：开始、中间、现在。','不急着评价人物，先问“他最担心或最想要什么？”。'],['辨关系','找一段互动，判断两个人（或动物）现在是什么关系。','用“谁帮助了谁？为什么？”把讨论拉回证据。'],['说因果','用“因为……所以……”串起今天最关键的一个转折。','把孩子说清楚的因果复述一遍，帮助他听见自己的思路。'],['品词句','摘一个好词或好句，写它让你看见的画面、情绪或变化。','问“如果换掉这个词，会少掉什么？”。'],['写观点','针对一个人物选择写一句判断，并给出一个文本证据。','允许不同结论，只提醒“理由要从书里来”。'],['补地图','给全书导图补一条人物、情节或主题连接线。','请孩子解释这条线为什么成立。'],['读背景','留意地点、季节或规则怎样影响人物的选择。','把故事环境和孩子熟悉的生活场景连起来。'],['问问题','写下一个真正想问角色的问题，再猜猜他会怎样回答。','不替孩子回答，先追问“你为什么最想问这个？”。'],['比前后','比较开头与现在：人物、关系或目标哪里变了？','用两个具体片段帮助孩子完成比较。'],['找主题','从一件小事里推测故事可能想提醒我们什么。','把主题改写成孩子自己的语言，不说标准答案。'],['做练习','完成一道理解练习，再回到故事核对理由。','先听完整答案，再一起找到支持它的细节。'],['亲子讨论','选择一个开放问题，轮流说观点和证据。','用“我和你想得不一样，因为……”示范平等讨论。'],['读后输出','写一句读后话，送给角色、作者或未来的自己。','回应孩子的具体发现，而不是只说“写得真棒”。'],['复盘回读','回读最想再看的一段，补一个第一次漏掉的细节。','请孩子说说“第二遍读到的和第一遍有什么不同”。'],['词句迁移','从词句本选一个词，口头造句或写进生活记录。','把孩子的表达记下来，留作下一本书的起点。'],['角色换位','站到一个配角的位置，重讲一次今天的事件。','问“换了位置后，你看见了什么不同？”。'],['主题辩一辩','选择一个没有标准答案的问题，用证据支持你的选择。','先说自己的立场，再邀请孩子找出不同看法。'],['完读仪式','填写完成日期，和家长一起读出“我的读后一句话”。','写下“我注意到你从……读出了……”，为这本书收尾。'],['下一本书','从延伸书里选一本，说说你想继续追的主题。','共同决定下一本的开始日期和阅读节奏。']];
+    function esc(x){return String(x||'').replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]})}function cover(b){return './assets/covers/'+b.cover}function split(s){return s.split('|')}function planDays(){return Number(state.planLength)||7}function fillDays(list,total){var a=Array.isArray(list)?list:[];while(a.length<total)a.push(false);return a.slice(0,total)}function progress(b){var k=(b.id||b.title)+'-'+planDays();if(!state.progress[k])state.progress[k]={child:[],parent:[],collect:[],answers:{},note:'',parentNote:'',completedAt:''};state.progress[k].child=fillDays(state.progress[k].child,planDays());state.progress[k].parent=fillDays(state.progress[k].parent,planDays());return state.progress[k]}function save(){try{localStorage.setItem('family-reading-studio-v5',JSON.stringify(state))}catch(e){}}function load(){try{var d=JSON.parse(localStorage.getItem('family-reading-studio-v5'))||JSON.parse(localStorage.getItem('family-reading-studio-v4'));if(d){state=d;state.planLength=Number(state.planLength)||7;state.startDate=state.startDate||'';state.dailyMinutes=state.dailyMinutes||'15 分钟';state.progress=state.progress||{};state.workspaceOpen=Boolean(state.workspaceOpen);state.activePanel=state.activePanel||'dashboard';if(state.book&&state.book.id&&B[state.book.id]){var fresh=B[state.book.id];fresh.id=state.book.id;state.book=fresh}active=state.activePanel}}catch(e){}}function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(timer);timer=setTimeout(function(){t.classList.remove('show')},2500)}
+    function generic(title){return profile(title,'CUSTOM READING PLAN','请填写版本信息','请根据版本确认','7 天共读','01-charlottes-web.jpg','系统已按完整精读手册建立阅读骨架；请用手中版本补齐章节范围与文字证据。','从故事出发，建立自己的理解',['开篇·走进故事|第 1 天|认识主人公、地点和他最在意的事。','相遇·关系出现|第 2 天|找出改变人物关系的重要相遇。','冲突·困难出现|第 3 天|观察人物遇到的困难与最初感受。','转折·新的选择|第 4 天|圈出让故事改变方向的动作或一句话。','深入·理解动机|第 5 天|站到人物位置上，想想为什么这样选择。','回望·人物变化|第 6 天|比较开头和现在，人物哪里变了？','迁移·带回生活|第 7 天|写下想带回生活的理解。'],['主人公|正在面对选择','一个伙伴|带来新目光','一条规则|让关系复杂','一个地方|让故事发生','一句关键话|推动人物改变'],['看见人物选择|先问他想要什么，再看怎样行动。','用证据支持理解|每个判断都从动作、语言或细节出发。','把故事带回生活|阅读不是找唯一答案，而是形成理由。'],['背景|故事在哪种环境发生？|观察地点、时间和规则如何影响人物。','情节|哪个细节改变了故事？|从转折处向前后读，确认因果。','人物|人物为什么做这个选择？|用“如果我是他”共情，再找证据。'],'观察|线索|选择|关系|转折|感受|理解|证据|推断|主题|迁移|表达',['谁最需要被理解？','哪一处改变了你对人物的看法？','哪个细节让你停下来？','你最想问角色什么？','这本书想带回生活的一件事是什么？'],['01','06','05','11'],'写给故事里一个角色：我想告诉你……')}
+    function current(){return state.book}function tb(no,title,copy){return '<div class="section-title"><div><span>'+no+'</span><h2>'+title+'</h2></div><p>'+copy+'</p></div>'}function act(b,i){return split(b.acts[Math.min(i,b.acts.length-1)])}function planFor(b){var total=planDays();return Array.from({length:total},function(_,i){var phase=Math.min(6,Math.floor(i*7/total)),a=split(b.acts[phase]),t=total===7?TASKS[i]:LONG_TASKS[i];return {title:total===7?a[0]:a[0]+' · '+t[0],range:a[1],intro:a[2],child:t[1],parent:t[2],focus:t[0],phase:phase+1}})}function planDate(i){if(!state.startDate)return '';var d=new Date(state.startDate+'T00:00:00');d.setDate(d.getDate()+i);return (d.getMonth()+1)+'/'+String(d.getDate()).padStart(2,'0')}
+    function renderHead(){var b=current(),n=planDays(),edition=b.handbook?b.handbook.edition:b.author;document.getElementById('railCover').src=cover(b);document.getElementById('railTitle').textContent=b.title;document.getElementById('railAuthor').textContent=edition+' · '+b.grade;document.getElementById('headKicker').textContent='家庭精读计划 · '+n+' 天节奏 · '+b.times;document.getElementById('bookHeading').textContent='《'+b.title+'》的 '+n+' 天家庭精读';document.getElementById('bookIntro').textContent=b.intro;document.getElementById('bookMeta').innerHTML='<span>'+esc(b.grade)+'</span><span>'+esc(b.times)+'</span><span>'+esc(b.theme)+'</span><span>'+esc(state.dailyMinutes||'15 分钟')+' / 天</span>'+(state.startDate?'<span>开始 '+esc(state.startDate)+'</span>':'')+'<span>孩子先答 · 家长再问</span>';document.getElementById('headCover').src=cover(b);document.getElementById('headCover').alt=b.title+'封面'}
+    function renderRail(){var b=current(),p=progress(b),plan=planFor(b),n=plan.length,c=p.child.filter(Boolean).length,pa=p.parent.filter(Boolean).length,j=p.child.filter(function(v,i){return v&&p.parent[i]}).length;document.getElementById('childText').textContent=c+'/'+n+' 天任务完成';document.getElementById('parentText').textContent=pa+'/'+n+' 次回应完成';document.getElementById('joint').textContent='共同点亮 '+j+'/'+n;document.getElementById('routeLabel').textContent=n+' 天阅读路线';document.getElementById('childBar').style.width=c/n*100+'%';document.getElementById('parentBar').style.width=pa/n*100+'%';document.getElementById('dayList').innerHTML=plan.map(function(x,i){return '<button type="button" class="day-item '+(state.day===i+1?'active':'')+'" data-day="'+(i+1)+'"><span class="day-index">'+(i+1)+'</span><span><b>'+esc(x.title)+'</b><small>'+esc(x.focus)+(planDate(i)?' · '+planDate(i):'')+'</small></span><span class="dots"><i class="'+(p.child[i]?'child':'')+'"></i><i class="'+(p.parent[i]?'parent':'')+'"></i></span></button>'}).join('')}
+    function renderDashboard(){var b=current(),p=progress(b),plan=planFor(b),n=plan.length,d=Math.min(state.day-1,n-1),x=plan[d],c=p.child.filter(Boolean).length,pa=p.parent.filter(Boolean).length,j=p.child.filter(function(v,i){return v&&p.parent[i]}).length;document.getElementById('panel-dashboard').innerHTML=tb('01 / TODAY','第 '+state.day+' / '+n+' 天 · '+esc(x.title),'今天把“孩子读到的”与“家长看见的”放在同一条阅读线上。'+(planDate(d)?' 计划日期：'+planDate(d)+'。':''))+'<div class="dash"><article class="today"><span class="badge">'+String(state.day).padStart(2,'0')+'</span><h3>'+esc(x.title)+' <span>·</span> '+esc(x.focus)+'</h3><p>'+esc(x.intro)+'</p><div class="today-tasks"><section class="task"><small>孩子任务 / '+esc(x.range)+'</small><b>'+esc(x.child)+'</b><p>完成后点亮绿色圆点，并留下一句发现。</p></section><section class="task parent"><small>家长任务 / 支持性回应</small><b>'+esc(x.parent)+'</b><p>完成后点亮珊瑚色圆点，不用打分。</p></section></div><div class="action-row"><button class="action '+(p.child[d]?'ghost':'')+'" type="button" data-progress="child">'+(p.child[d]?'<i data-lucide="check"></i>孩子已完成':'<i data-lucide="rocket"></i>孩子完成今天任务')+'</button><button class="action parent '+(p.parent[d]?'ghost':'')+'" type="button" data-progress="parent">'+(p.parent[d]?'<i data-lucide="check"></i>家长已回应':'<i data-lucide="heart-handshake"></i>家长完成陪读回应')+'</button></div></article><aside class="pulse"><header><b>这 '+n+' 天，我们正在一起完成</b><p>孩子进展和家长回应，都会让共读路线更清楚。</p></header><div class="pulse-body"><section class="pulse-block"><b>'+c+'/'+n+'</b><span>孩子完成天数</span><strong>'+c*parseInt(state.dailyMinutes||15,10)+' 分钟<br>专注阅读</strong></section><section class="pulse-block"><b>'+pa+'/'+n+'</b><span>家长回应天数</span><strong>'+pa*8+' 分钟<br>陪读交流</strong></section><div class="pulse-foot"><span>共同点亮 <b>'+j+'/'+n+'</b> 天 · 一起完成才算真正的家庭阅读</span><i data-lucide="sparkles"></i></div></div></aside></div><div class="plan">'+tb('02 / READING ROUTE',n+' 天精读路线','作品的 7 幕主线保持完整；长计划会在每一幕之间增加证据、词句、表达和亲子讨论。点击任意一天即可切换。')+'<div class="plan-grid">'+plan.map(function(y,i){return '<button type="button" class="plan-card '+(state.day===i+1?'active':'')+'" data-day="'+(i+1)+'"><span class="plan-day">DAY '+String(i+1).padStart(2,'0')+'<b>'+esc(y.range)+(planDate(i)?' · '+planDate(i):'')+'</b></span><h3>'+esc(y.title)+'</h3><p>'+esc(y.child)+'</p><span class="icons"><span class="'+(p.child[i]?'child':'')+'"><i data-lucide="rocket"></i></span><span class="'+(p.parent[i]?'parent':'')+'"><i data-lucide="heart-handshake"></i></span></span></button>'}).join('')+'</div></div>'}
+    function renderOverview(){var b=current(),h=b.handbook,basePeople=b.people.map(split),core=h&&h.relationCore?h.relationCore:basePeople[0],people=[core[0]].concat(h&&h.relations?h.relations.map(function(x){return x[0]}):basePeople.slice(1).map(function(x){return x[0]})).join('、'),theme=b.themes.map(function(x){return split(x)[0]}).join(' · '),index=[['00','书籍扉页','作者、译者、版本、适读年龄与共读节奏'],['01','全书思维导图','人物、情节、主题、深读、12 词与 6 句'],['02','7 幕故事主线',split(b.acts[0])[0]+' → '+split(b.acts[6])[0]],['03','人物关系与主题','中心人物、六条关系与三个主题'],['04','深度解析','背景、情节、人物三种镜头'],['05','词句宝库','12 个好词与 6 条赏析线索'],['06','6 项本领与 6 道练习','先作答，再展开参考思路'],['07','亲子共读与延伸','5 个问题、4 本延伸读物与完读仪式']];document.getElementById('panel-overview').innerHTML=tb('全书总览 / MIND MAP','一图读懂《'+esc(b.title)+'》','按作品结构整理人物、情节、主题、深读、好词和好句，所有结论都回到手中版本核对。')+'<div class="overview"><section class="mind"><h3>全书思维导图<small>先整体后局部 · 读前先有一张地图</small></h3><span class="line" style="left:47%;top:49%;width:28%;transform:rotate(-28deg)"></span><span class="line" style="left:52%;top:48%;width:28%;transform:rotate(25deg)"></span><span class="line" style="left:43%;top:53%;width:32%;transform:rotate(142deg)"></span><span class="line" style="left:50%;top:57%;width:25%;transform:rotate(47deg)"></span><div class="node center"><b>《'+esc(b.title)+'》</b><small>'+esc(b.theme)+'</small></div><div class="node a"><b>人物</b><small>'+esc(people)+'</small></div><div class="node b"><b>情节</b><small>7 幕：'+esc(split(b.acts[0])[0])+' → '+esc(split(b.acts[6])[0])+'</small></div><div class="node c"><b>主题</b><small>'+esc(theme)+'</small></div><div class="node d"><b>深读</b><small>背景 · 情节 · 人物</small></div><div class="node e"><b>词句</b><small>12 个词 · 6 个好句</small></div></section><section class="index"><header><h3>精读目录</h3><p>孩子先完成，家长用开放问题接住理解。</p></header><div class="index-list">'+index.map(function(v){return '<article><span>'+v[0]+'</span><div><b>'+v[1]+'</b><small>'+v[2]+'</small></div></article>'}).join('')+'</div></section></div>'}
+    function renderStory(){var b=current();document.getElementById('panel-story').innerHTML=tb('01 / STORYLINE','一图读懂全书 · 7 幕故事主线','每天阅读一幕：先复述事实，再回到关键转折，最后说出理解。')+'<div class="timeline">'+b.acts.map(function(x,i){var a=split(x);return '<article class="scene" data-day="'+(i+1)+'"><div><h3>'+esc(a[0])+'</h3><p>'+esc(a[2])+'</p><div class="turn">关键转折：'+esc(i===0?'故事从这里开始，谁先做出了不一样的选择？':i===6?'读完后，什么会继续留在人物身上？':'这里发生什么，让人物或关系往前走了一步？')+'</div></div><small>'+esc(a[1])+'</small></article>'}).join('')+'</div>'}
+    function renderPeople(){var b=current(),h=b.handbook,basePeople=b.people.map(split),core=h&&h.relationCore?h.relationCore:basePeople[0],p=[core].concat(h&&h.relations?h.relations.map(function(x){return [x[0],x[2]||x[1]]}):basePeople.slice(1)),ts=b.themes.map(split),icons=['heart','sparkles','infinity'],relationNotes=h?h.relations.map(function(x){return '<p><b>'+esc(x[0])+' · '+esc(x[1])+'</b><br>'+esc(x[2])+'</p>'}).join(''):'';document.getElementById('panel-people').innerHTML=tb('02 / PEOPLE & THEME','人物关系图 · 主题与启发','按人物行动梳理关系：中间是'+esc(core[0])+'，六个节点记录谁影响了谁、改变了什么。')+'<div class="people"><section class="relation"><span class="line" style="left:45%;top:49%;width:35%;transform:rotate(-25deg)"></span><span class="line" style="left:52%;top:50%;width:34%;transform:rotate(22deg)"></span><span class="line" style="left:42%;top:52%;width:33%;transform:rotate(145deg)"></span><span class="line" style="left:52%;top:56%;width:27%;transform:rotate(44deg)"></span><div class="person center"><b>'+esc(p[0][0])+'</b><small>'+esc(p[0][1])+'</small></div><div class="person a"><b>'+esc(p[1][0])+'</b><small>'+esc(p[1][1])+'</small></div><div class="person b"><b>'+esc(p[2][0])+'</b><small>'+esc(p[2][1])+'</small></div><div class="person c"><b>'+esc(p[3][0])+'</b><small>'+esc(p[3][1])+'</small></div><div class="person d"><b>'+esc(p[4][0])+'</b><small>'+esc(p[4][1])+'</small></div><div class="person e"><b>关系线索</b><small>语言 · 行动 · 选择</small></div></section><aside><div class="themes">'+ts.map(function(t,i){return '<article class="theme"><span><i data-lucide="'+icons[i]+'"></i></span><h3>'+esc(t[0])+'</h3><p>'+esc(t[1])+'</p></article>'}).join('')+'</div>'+(h?'<section class="debate"><span>完整关系表</span>'+relationNotes+'</section>':'')+'<section class="debate"><span>全家辩一辩 / 没有标准答案</span><b>'+esc(b.family[4])+'</b><p>先说选择，再用书里的动作、语言或情节作为理由。</p></section></aside></div>'}
+    function renderDeep(){var b=current(),d=b.deep.map(split),labels=['背景','情节','人物'];document.getElementById('panel-deep').innerHTML=tb('04 / DEEP READ','读得更深 · 背景、情节、人物','每一个结论，都带着一条“回到文本核对”的线索。')+'<div class="deep">'+d.map(function(x,i){return '<article class="deep-card"><span>'+labels[i]+'</span><h3>'+esc(x[1])+'</h3><p>'+esc(i===0?'先观察故事环境怎样影响人物与选择。':i===1?'不只看发生什么，也要问它为什么发生。':'用人物行动替代简单评价。')+'</p><p>'+esc(x[2])+'</p><div class="evidence">回到文本：找一个动作、语言或反复出现的细节，验证你的理解。</div></article>'}).join('')+'</div>'}
+    function renderLanguage(){var b=current(),p=progress(b),h=b.handbook,words=h?h.words:b.words.split('|').map(function(x){return [x,'留意它如何帮助你看见人物感受或故事气氛。']}),lines=h?h.sentences:[['开篇环境或人物描写','赏析角度：画面感与感官词。'],['人物第一次重要回应','赏析角度：语言背后的情绪。'],['反复出现的意象','赏析角度：一个词怎样让意象有重量。'],['关键转折前的停顿','赏析角度：没说出口的心理变化。'],['结尾留下余味的细节','赏析角度：结尾怎样让故事留在心里。'],['让你想读第二遍的一句话','赏析角度：它为什么让你想到生活。']];document.getElementById('panel-language').innerHTML=tb('05 / LANGUAGE BANK','好词好句宝库',h?'完整保留手册的 12 个好词、释义、6 个好句及赏析；孩子可将有感触的内容收藏到词句本。':'不同版本文字会有差异。系统给出赏析定位，孩子在手中版本勾出原句，再写发现。')+'<div class="language"><section class="lang"><header><h3>好词 · 12 个</h3><p>能抄、能懂、能在写作里用。点击收藏，加入孩子的词句本。</p></header><div class="words">'+words.map(function(x,i){var k='w'+i;return '<article class="word"><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small><button class="collect '+(p.collect.indexOf(k)>-1?'active':'')+'" type="button" data-collect="'+k+'"><i data-lucide="bookmark"></i>'+(p.collect.indexOf(k)>-1?'已收藏':'收藏')+'</button></article>'}).join('')+'</div></section><section class="lang"><header><h3>好句 · 6 条赏析</h3><p>读一读，再写下这句话为什么值得停留。</p></header><div class="sentences">'+lines.map(function(x,i){var k='s'+i;return '<article class="sentence"><b>'+esc(x[0])+'</b><p>'+esc(x[1])+'</p><button class="collect '+(p.collect.indexOf(k)>-1?'active':'')+'" type="button" data-collect="'+k+'"><i data-lucide="pen-line"></i>'+(p.collect.indexOf(k)>-1?'已加入词句本':'写下赏析')+'</button></article>'}).join('')+'</div></section></div>'}
+    function renderSkills(){var b=current(),items=b.handbook?b.handbook.skills:SKILLS.map(function(x,i){return [x[0],x[1],i===0?'在今天这段里找一个动作，说说人物心里怎样。':i===1?'找一个能证明你看法的细节。':i===2?'比较这一幕前后，人物感受怎样变。':i===3?'观察两人互动，关系是什么样。':i===4?'如果我是他，此刻会怎么想。':'用一句“这本书让我明白……”总结并给证据。']});document.getElementById('panel-skills').innerHTML=tb('06 / SIX SKILLS','6 项阅读本领 · 学到什么，怎么练',b.handbook?'手册原有 6 次共读对应 6 项能力；7 / 15 / 21 天只是把练习节奏拆得更细。':'每一次共读只练一种能力。家长任务是问清楚“你从哪里读到的？”。')+'<div class="skills">'+items.map(function(x,i){return '<article class="skill"><span class="skill-no">'+(i+1)+'</span><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p><div class="try">试一试：'+esc(x[2])+'</div></article>'}).join('')+'</div>'}
+    function renderQuiz(){var b=current(),p=progress(b),items=b.handbook?b.handbook.quiz:TYPE.map(function(x,i){return [x,['故事最开始发生什么？是谁做了什么，让后面有了变化？','选一个人物：他这样做真正想得到或害怕什么？','从今天读到的文字挑一个词，说说换掉会怎样。','故事里有什么没直接说出，但你能从细节猜到？','读到这里，你觉得《'+b.title+'》想提醒人们什么？','故事一个选择，让你想到生活中哪件事？'][i],'回到“'+act(b,Math.min(i,6))[0]+'”这一段，找人物的语言、行动或关系变化。说清“因为……所以我认为……”，比选对一个词更重要。']});document.getElementById('panel-quiz').innerHTML=tb('07 / CHECK','阅读理解小练习',b.handbook?'完整保留手册的 6 道练习与参考思路。先独立作答，再展开答案核对理由。':'先做一做，再展开参考思路。参考思路不是标准答案。')+'<div class="quiz-list">'+items.map(function(x,i){return '<article class="quiz"><span class="quiz-no">'+(i+1)+'</span><div><div class="quiz-head"><span>'+esc(x[0])+'</span></div><b>'+esc(x[1])+'</b><textarea data-answer="'+i+'" placeholder="孩子先写下自己的想法……">'+esc(p.answers[i]||'')+'</textarea><div class="quiz-tools"><button class="small" type="button" data-save="'+i+'"><i data-lucide="save"></i>保存答案</button><button class="small" type="button" data-ref="'+i+'"><i data-lucide="lightbulb"></i>参考思路</button></div><p class="reference" id="ref-'+i+'">参考思路：'+esc(x[2])+'</p></div></article>'}).join('')+'</div>'}
+    function renderFamily(){var b=current(),p=progress(b),h=b.handbook,r=h?h.recs:b.recs.map(function(k){return B[k]});document.getElementById('panel-family').innerHTML=tb('08 / FAMILY','亲子共读 · 聊一聊，再读这些',h?'完整保留手册的 5 个饭桌问题、4 本延伸书与读完仪式。家长不替孩子下结论，只帮助他把理由说清。':'饭桌、散步、睡前都能聊。家长不替孩子下结论，只帮助他把理由说清。')+'<div class="family"><section class="questions"><header><h3>5 个亲子开放问题</h3><p>先让孩子说，再用“你从哪里读到的？”把对话带回故事。</p></header><div class="q-list">'+b.family.map(function(x,i){return '<article class="q"><span>'+(i+1)+'</span><b>'+esc(x)+'</b></article>'}).join('')+'</div></section><aside class="parent-card"><span>PARENT FEEDBACK / 支持性回应</span><h3>给孩子一句具体的阅读反馈</h3><p>可用：我注意到你从“____”读出了“____”；我还想听你说说“____”。</p><textarea id="parentNote" placeholder="例如：我注意到你从一个细节里，读出了人物的温柔……">'+esc(p.parentNote||'')+'</textarea><button type="button" id="saveParent"><i data-lucide="send"></i>保存这条家长回应</button></aside></div><section class="extend">'+tb('09 / EXTEND','读完这本，再读这些','同主题或同作者延伸书，用下一本书拉长这次阅读。')+'<div class="rec-grid">'+r.map(function(x){return h?'<article class="rec"><div><b>《'+esc(x[0])+'》</b><small>'+esc(x[1])+'</small></div></article>':'<article class="rec"><img src="'+cover(x)+'" alt="'+esc(x.title)+'封面"><div><b>《'+esc(x.title)+'》</b><small>'+esc(x.theme)+'</small></div></article>'}).join('')+'</div><div class="after"><label for="afterNote">我的读后一句话<small>'+esc('完成日期由家庭自己记录 · 写给角色、作者或未来的自己')+'</small></label><textarea id="afterNote" placeholder="'+esc(b.note)+'">'+esc(p.note||'')+'</textarea></div></section>'}
+    function renderAll(){if(!current())return;renderHead();renderRail();renderDashboard();renderOverview();renderStory();renderPeople();renderDeep();renderLanguage();renderSkills();renderQuiz();renderFamily();activate(active);if(window.lucide)window.lucide.createIcons()}function activate(n){active=n;state.activePanel=n;document.querySelectorAll('.panel').forEach(function(x){x.classList.toggle('active',x.id==='panel-'+n)});document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('active',x.dataset.panel===n)});if(current())save()}function setDay(n){state.day=Math.min(planDays(),Math.max(1,Number(n)));active='dashboard';state.activePanel=active;save();renderRail();renderDashboard();activate('dashboard');if(window.lucide)window.lucide.createIcons();window.scrollTo({top:0,behavior:'smooth'})}function toggle(type){var p=progress(current()),i=state.day-1;p[type][i]=!p[type][i];save();renderRail();renderDashboard();if(window.lucide)window.lucide.createIcons();toast(type==='child'?(p.child[i]?'孩子的阅读任务已点亮。':'已撤销孩子任务。'):(p.parent[i]?'家长回应已点亮。':'已撤销家长回应。'))}function shelf(show){document.getElementById('drawer').classList.toggle('show',show);document.getElementById('scrim').classList.toggle('show',show);document.getElementById('drawer').setAttribute('aria-hidden',show?'false':'true')}function start(key,title){var b=key?B[key]:generic(title),lengthControl=document.getElementById('planLength'),dateControl=document.getElementById('planStartDate');b.id=key||'custom-'+title;state.planLength=lengthControl?Number(lengthControl.value):7;state.dailyMinutes=document.getElementById('dailyMinutes').value;state.startDate=dateControl?dateControl.value:'';document.getElementById('loadingTitle').textContent='正在为《'+b.title+'》铺开 '+state.planLength+' 天阅读路线';document.getElementById('loading').classList.add('show');setTimeout(function(){state.book=b;state.day=1;active='dashboard';state.activePanel=active;state.workspaceOpen=true;save();document.getElementById('landing').style.display='none';document.getElementById('workspace').classList.add('show');renderAll();document.getElementById('loading').classList.remove('show');window.scrollTo({top:0,behavior:'smooth'});toast('《'+b.title+'》的 '+state.planLength+' 天家庭精读计划已建立。')},850)}
+    document.getElementById('bookForm').addEventListener('submit',function(e){e.preventDefault();var t=document.getElementById('bookTitle').value.trim();if(!t){toast('请先输入书名。');return}start(aliases[t]||null,t)});document.querySelectorAll('[data-demo]').forEach(function(x){x.addEventListener('click',function(){start(x.dataset.demo)})});document.getElementById('openShelf').addEventListener('click',function(){shelf(true)});document.getElementById('closeShelf').addEventListener('click',function(){shelf(false)});document.getElementById('scrim').addEventListener('click',function(){shelf(false)});document.getElementById('openPlanner').addEventListener('click',function(){if(!current()){document.getElementById('bookTitle').focus();toast('先输入一本书，建立你们的阅读计划。');return}active='dashboard';state.activePanel=active;state.workspaceOpen=true;save();document.getElementById('landing').style.display='none';document.getElementById('workspace').classList.add('show');renderAll();document.getElementById('workspace').scrollIntoView({behavior:'smooth'})});document.getElementById('changeBook').addEventListener('click',function(){state.workspaceOpen=false;save();document.getElementById('workspace').classList.remove('show');document.getElementById('landing').style.display='';document.getElementById('bookTitle').focus();window.scrollTo({top:0,behavior:'smooth'})});document.getElementById('homeButton').addEventListener('click',function(){if(current()){state.workspaceOpen=false;save();document.getElementById('workspace').classList.remove('show');document.getElementById('landing').style.display=''}window.scrollTo({top:0,behavior:'smooth'})});
+    document.addEventListener('click',function(e){var d=e.target.closest('button[data-day]');if(d){setDay(d.dataset.day);return}var t=e.target.closest('[data-panel]');if(t){activate(t.dataset.panel);return}var pr=e.target.closest('[data-progress]');if(pr){toggle(pr.dataset.progress);return}var sb=e.target.closest('[data-shelf]');if(sb){shelf(false);start(sb.dataset.shelf);return}var c=e.target.closest('[data-collect]');if(c){var p=progress(current()),k=c.dataset.collect,i=p.collect.indexOf(k);if(i>-1)p.collect.splice(i,1);else p.collect.push(k);save();renderLanguage();if(window.lucide)window.lucide.createIcons();return}var s=e.target.closest('[data-save]');if(s){progress(current()).answers[s.dataset.save]=document.querySelector('[data-answer="'+s.dataset.save+'"]').value;save();toast('答案已保存，记得请家长先听你说理由。');return}var r=e.target.closest('[data-ref]');if(r){document.getElementById('ref-'+r.dataset.ref).classList.toggle('show');return}if(e.target.closest('#saveParent')){progress(current()).parentNote=document.getElementById('parentNote').value;save();toast('家长反馈已保存。')}});document.addEventListener('input',function(e){if(e.target.id==='afterNote'){progress(current()).note=e.target.value;save()}});document.addEventListener('keydown',function(e){if(e.key==='Escape')shelf(false)});
+    document.getElementById('shelf').innerHTML=Object.keys(B).sort(function(a,b){return Number(a)-Number(b)}).map(function(k){var b=B[k];return '<button type="button" class="shelf-book" data-shelf="'+k+'"><img src="'+cover(b)+'" alt="'+esc(b.title)+'封面"><span><small>预设 '+k+'</small><b>《'+esc(b.title)+'》</b></span></button>'}).join('');window.familyReadingStudio={setPlanLength:function(n){if(!current())return;state.planLength=Number(n);state.day=1;var planner=document.getElementById('openPlanner'),landingLength=document.getElementById('planLength');if(planner)planner.innerHTML='<i data-lucide="calendar-days"></i>我的 '+state.planLength+' 天计划';if(landingLength)landingLength.value=String(state.planLength);save();renderAll();if(window.lucide)window.lucide.createIcons();toast('已切换为 '+state.planLength+' 天精读计划。')},getPlanLength:function(){return planDays()},getStartDate:function(){return state.startDate||''},getDailyMinutes:function(){return state.dailyMinutes||'15 分钟'},getCurrentTitle:function(){return current()?current().title:''},getCurrentBookData:function(){return current()}};load();if(current()){document.getElementById('openPlanner').innerHTML='<i data-lucide="calendar-days"></i>我的 '+planDays()+' 天计划';if(state.workspaceOpen){document.getElementById('landing').style.display='none';document.getElementById('workspace').classList.add('show');renderAll();window.addEventListener('load',function(){window.scrollTo(0,0);setTimeout(function(){window.scrollTo(0,0)},80)},{once:true})}}if(window.lucide)window.lucide.createIcons();
+  }());
+  </script>
+  <script>
+    (function(){
+      var selects=document.querySelector('.selects'),daily=document.getElementById('dailyMinutes');
+      if(!selects||!daily||document.getElementById('planLength'))return;
+      daily.parentElement.insertAdjacentHTML('afterend','<div><label for="planLength">计划周期</label><select id="planLength"><option value="7">7 天重点精读</option><option value="15">15 天稳步精读</option><option value="21">21 天深度精读</option></select></div><div><label for="planStartDate">计划开始</label><input id="planStartDate" type="date" aria-label="计划开始日期" style="width:100%;height:37px;padding:0 5px;border:1px solid var(--line);border-radius:0;background:var(--paper2);font-size:10px;font-weight:800;color:var(--ink)"></div>');
+      var length=document.getElementById('planLength'),date=document.getElementById('planStartDate'),head=document.querySelector('.entry-head b'),button=document.querySelector('.start'),planner=document.getElementById('openPlanner');
+      var api=window.familyReadingStudio,today=new Date().toISOString().slice(0,10);date.value=api&&api.getStartDate()?api.getStartDate():today;if(api&&api.getCurrentTitle()){length.value=String(api.getPlanLength());daily.value=api.getDailyMinutes();document.getElementById('bookTitle').value=api.getCurrentTitle()}
+      function sync(){var n=length.value;head.textContent=n+' DAYS';button.innerHTML='生成这本书的 '+n+' 天精读计划 <i data-lucide="arrow-up-right"></i>';planner.innerHTML='<i data-lucide="calendar-days"></i>我的 '+n+' 天计划';if(window.lucide)window.lucide.createIcons()}
+      document.querySelector('.landing h1').innerHTML='让一本书，<br>成为全家的<br><span>阅读小世界。</span>';
+      length.addEventListener('change',sync);sync();
+    }());
+  </script>
+  <style>
+    .map-detail-callout{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:-3px 0 22px;padding:12px 14px;border:1px solid var(--line);border-left:4px solid var(--coral);background:#fff8e2}.map-detail-callout span{color:var(--f);font-size:11px;font-weight:850}.map-detail-trigger{display:inline-flex;align-items:center;gap:7px;min-height:35px;padding:0 10px;border:1.5px solid var(--f);background:var(--gold);color:var(--f);font-size:10px;font-weight:950;white-space:nowrap}.map-detail-trigger i{width:14px}.map-detail-modal{position:fixed;z-index:180;inset:0;display:none;padding:22px;background:rgba(12,37,31,.82);backdrop-filter:blur(8px)}.map-detail-modal.show{display:grid;place-items:center}.map-detail-shell{display:grid;width:min(1450px,100%);max-height:calc(100vh - 44px);overflow:hidden;border:2px solid var(--f);background:var(--paper);box-shadow:12px 12px 0 var(--gold)}.map-detail-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.18);background:var(--f);color:#fff}.map-detail-head span{display:block;color:var(--gold);font-size:9px;font-weight:950;letter-spacing:.14em}.map-detail-head h2{margin:5px 0 0;font-size:22px}.map-detail-close{display:grid;width:34px;height:34px;place-items:center;border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff}.map-detail-close i{width:17px}.map-detail-body{display:grid;grid-template-columns:minmax(640px,1fr) 315px;min-height:0}.map-detail-scroller{min-height:0;overflow:auto;background-color:#fbf8f0;background-image:linear-gradient(rgba(23,63,54,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,54,.055) 1px,transparent 1px);background-size:24px 24px}.map-detail-canvas{position:relative;width:1180px;min-height:790px}.map-lines{position:absolute;inset:0;width:1180px;height:790px;pointer-events:none}.map-lines path{fill:none;stroke-width:2.2}.map-lines .people-line{stroke:#df7162}.map-lines .plot-line{stroke:#dd9162}.map-lines .theme-line{stroke:#c25eb0}.map-lines .deep-line{stroke:#dc7e34}.map-lines .word-line{stroke:#7158d6}.map-lines .quote-line{stroke:#aa68d2}.map-root{position:absolute;z-index:3;left:462px;top:322px;display:grid;width:224px;min-height:72px;place-items:center;padding:9px;border:2px solid var(--gold);background:var(--f);box-shadow:5px 5px 0 rgba(23,63,54,.18);color:#fff;text-align:center}.map-root b{font-size:18px}.map-root small{display:block;margin-top:4px;color:#d5e3dd;font-size:9px;font-weight:800}.map-branch{position:absolute;z-index:4;padding:9px;border:1px solid var(--line);background:rgba(255,253,248,.97);box-shadow:3px 3px 0 rgba(23,63,54,.12)}.map-branch.people{left:35px;top:28px;width:330px}.map-branch.plot{left:825px;top:62px;width:315px}.map-branch.theme{left:60px;top:328px;width:330px}.map-branch.deep{left:800px;top:438px;width:340px}.map-branch.words{left:250px;top:548px;width:300px}.map-branch.quotes{left:560px;top:594px;width:300px}.map-branch-title{display:flex;width:100%;align-items:center;justify-content:space-between;padding:7px 9px;border:0;background:transparent;color:var(--f);font-size:12px;font-weight:950;text-align:left}.map-branch-title small{color:var(--muted);font-size:8px;font-weight:800}.map-leaves{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:4px}.map-branch.plot .map-leaves,.map-branch.theme .map-leaves,.map-branch.deep .map-leaves{grid-template-columns:1fr}.map-leaf{min-height:28px;padding:5px 6px;border:1px solid #d8d1c3;background:var(--white);color:#45574f;font-size:8px;font-weight:800;line-height:1.35;text-align:left}.map-leaf:hover,.map-leaf.active{border-color:currentColor;background:#fff8e2}.map-branch.people .map-branch-title,.map-branch.people .map-leaf{color:#bb5e54}.map-branch.plot .map-branch-title,.map-branch.plot .map-leaf{color:#b96b40}.map-branch.theme .map-branch-title,.map-branch.theme .map-leaf{color:#a54a98}.map-branch.deep .map-branch-title,.map-branch.deep .map-leaf{color:#c56324}.map-branch.words .map-branch-title,.map-branch.words .map-leaf{color:#5c49bd}.map-branch.quotes .map-branch-title,.map-branch.quotes .map-leaf{color:#8a4eb3}.map-inspector{min-height:0;padding:22px;border-left:1px solid var(--line);background:var(--white);overflow:auto}.map-inspector span{display:block;color:var(--coral);font-size:9px;font-weight:950;letter-spacing:.13em}.map-inspector h3{margin:9px 0 0;color:var(--f);font-size:23px;line-height:1.2}.map-inspector p{margin:12px 0 0;color:#53635b;font-size:12px;font-weight:650;line-height:1.75}.map-inspector .map-inspector-foot{margin-top:21px;padding-top:13px;border-top:1px solid var(--line);color:var(--muted);font-size:9px;font-weight:750;line-height:1.65}@media(max-width:760px){.map-detail-modal{padding:0}.map-detail-shell{width:100%;height:100vh;height:100dvh;max-height:100vh;max-height:100dvh;grid-template-rows:auto minmax(0,1fr);box-shadow:none}.map-detail-head{padding:13px 15px}.map-detail-head h2{font-size:18px}.map-detail-body{height:100%;min-height:0;overflow:hidden;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) minmax(150px,32vh)}.map-detail-scroller{min-height:0}.map-inspector{min-height:0;overflow:auto;border-top:1px solid var(--line);border-left:0;padding:14px 16px}.map-inspector h3{font-size:17px}.map-inspector p{margin-top:6px;font-size:10px;line-height:1.55}.map-inspector .map-inspector-foot{display:none}.map-detail-callout{align-items:flex-start}.map-detail-callout span{font-size:10px}}
+  </style>
+  <script>
+    (function(){
+      var mapData={
+        people:{title:'人物',subtitle:'7 个关系节点',summary:'谁是谁，谁守护谁。中心是威尔伯，每一条关系都由角色的行动来证明。',items:[['威尔伯','一只小猪，纯真胆小，渴望友谊。'],['夏洛','一只蜘蛛，聪明温柔，看透生死；威尔伯的挚友和救命恩人。'],['弗恩','小女孩，善良勇敢；威尔伯的第一个守护者。'],['老羊','谷仓消息通，见多识广，提醒威尔伯命运。'],['坦普尔顿','老鼠，贪吃自私，却在关键时刻帮忙。'],['朱克曼夫妇','谷仓农场主，威尔伯的主人。'],['514 只小蜘蛛','夏洛的孩子；三只留下来继续陪伴威尔伯。']]},
+        plot:{title:'情节',subtitle:'故事主线 · 七幕',summary:'从“出生险被宰”到“传承爱不息”，7 幕对应手册中的章节范围与关键转折。',items:[['出生·险被宰','第 1-4 章：弗恩求情救下瘦弱的威尔伯。'],['谷仓·遇知己','第 5-8 章：夏洛说“我可以做你的朋友”。'],['牺牲·许承诺','第 8 章：老羊透露命运，夏洛说“我来救你”。'],['织网·成明星','第 9-18 章：网上织出“王牌猪”“了不起”等字。'],['集市·守大奖','第 19-21 章：威尔伯赢得特别奖，性命保住。'],['谢幕·静离去','第 21-22 章：夏洛产下 514 颗卵，在集市角落离世。'],['传承·爱不息','第 22 章：威尔伯守护卵袋，三只小蜘蛛留下。']]},
+        theme:{title:'主题',subtitle:'3 个主题与启发',summary:'主题不是标准答案，而是从人物的语言、行动与结局里一步步读出来的。',items:[['友谊，是愿意为对方付出','夏洛用一夜又一夜的辛劳，甚至自己的生命，守护威尔伯。'],['生命的价值，不在草草活着，而在你为别人做了什么','颁奖台上为威尔伯欢呼，真正的功臣夏洛却在角落默默离去。'],['爱会延续','夏洛走了，它的爱却经由 514 个孩子留在威尔伯身边。']]},
+        deep:{title:'深度解析',subtitle:'背景 · 情节 · 人物',summary:'从农场真实感、标签如何影响判断，以及人物行动三条线读得更深。',items:[['背景','这本书，是怀特在自己的农场里“养”出来的。'],['情节','“织网救猪”最妙的地方：夏洛根本没有改变威尔伯。'],['人物','一只吃虫子的蜘蛛，为什么成了最了不起的朋友？']]},
+        words:{title:'好词（12 个）',subtitle:'能抄、能懂、能用',summary:'这些词在手册中连接人物感受、谷仓气氛与故事变化。',items:[['生死攸关','关系到生和死，形容事情非常重要、紧急。'],['自得其乐','自己从中找到乐趣，自己觉得快活。'],['心事重重','心里有很多事情在想，放不下来。'],['勃勃生机','充满了旺盛的生命力。'],['冥思苦想','深沉地、反复地思考，想办法。'],['食言','说了话不算数，不兑现诺言。'],['息息相关','紧密相连，一个变化另一个也跟着变化。'],['一不做二不休','既然开始做了，就索性做到最彻底。'],['忧郁','心情不好、闷闷不乐的样子。'],['多才多艺','能做很多不同的事情，而且都做得很好。'],['安宁','内心平静、安详的感觉。'],['遐迩闻名','远近都很有名，人人都知道。']]},
+        quotes:{title:'好句（6 句）',subtitle:'含赏析方向',summary:'每一句都可以从画面、人物心情、朋友关怀、光影、季节与热闹背后的牺牲来读。',items:[['青草湿湿的','泥土散发着一股春天的气息：感官画面写出了春天。'],['天空亮起来了','威尔伯等待朋友的急切和期待。'],['你必须尽力打起精神来','夏洛对威尔伯的安慰，体现朋友关怀与力量。'],['一滴滴露水对着太阳光','露水和阳光衬托蜘蛛网的光影之美。'],['蟋蟀觉得这是它们的责任','蟋蟀歌声暗示季节转变与命运。'],['夏洛蹲在天花板的阴影里','热闹颁奖典礼背面，夏洛的牺牲令人动容。']]}
+      };
+      var order=['people','plot','theme','deep','words','quotes'];
+      var modal=document.createElement('section');
+      modal.className='map-detail-modal';
+      modal.id='charlotteMapModal';
+      modal.setAttribute('role','dialog');
+      modal.setAttribute('aria-modal','true');
+      modal.setAttribute('aria-labelledby','charlotteMapHeading');
+      modal.setAttribute('aria-hidden','true');
+      function leaves(key){return mapData[key].items.map(function(item,index){return '<button type="button" class="map-leaf" data-map-key="'+key+'" data-map-index="'+index+'">'+item[0]+'</button>'}).join('')}
+      function branch(key){var data=mapData[key];return '<section class="map-branch '+key+'"><button type="button" class="map-branch-title" data-map-key="'+key+'"><span>'+data.title+'</span><small>'+data.subtitle+'</small></button><div class="map-leaves">'+leaves(key)+'</div></section>'}
+      modal.innerHTML='<div class="map-detail-shell"><header class="map-detail-head"><div><span>CHARLOTTE\'S WEB / HANDBOOK MIND MAP</span><h2 id="charlotteMapHeading">《夏洛的网》手册同款思维导图</h2></div><button class="map-detail-close" type="button" aria-label="关闭详图"><i data-lucide="x"></i></button></header><div class="map-detail-body"><div class="map-detail-scroller"><div class="map-detail-canvas"><svg class="map-lines" viewBox="0 0 1180 790" aria-hidden="true"><path class="people-line" d="M462 344 C405 320 375 244 365 168"></path><path class="plot-line" d="M686 344 C770 307 805 240 825 194"></path><path class="theme-line" d="M462 362 C414 381 406 405 390 410"></path><path class="deep-line" d="M686 365 C750 390 784 440 800 480"></path><path class="word-line" d="M485 394 C437 454 400 510 400 548"></path><path class="quote-line" d="M570 394 C618 467 686 548 710 594"></path></svg><div class="map-root"><b>《夏洛的网》</b><small>人物 · 情节 · 主题 · 深读 · 好词 · 好句</small></div>'+order.map(branch).join('')+'</div></div><aside class="map-inspector" id="mapInspector"><span>思维导图</span><h3>《夏洛的网》</h3><p>从中心出发，沿六条分支读清这本书的全部关键信息。</p><p class="map-inspector-foot">点击任意分支或叶子节点，查看手册中的完整说明；阅读后可回到下方模块完成词句、练习与亲子共读。</p></aside></div></div>';
+      document.body.appendChild(modal);
+      function inspect(key,index){var data=mapData[key],item=typeof index==='number'?data.items[index]:null,box=document.getElementById('mapInspector');document.querySelectorAll('.map-leaf').forEach(function(x){x.classList.toggle('active',x.dataset.mapKey===key&&Number(x.dataset.mapIndex)===index)});box.innerHTML='<span>'+data.title+' / '+data.subtitle+'</span><h3>'+ (item?item[0]:data.title) +'</h3><p>'+ (item?item[1]:data.summary) +'</p><p class="map-inspector-foot">'+(item?'回到《夏洛的网》的阅读模块，用人物语言、行为和情节细节继续验证这条理解。':'点击分支里的任意节点，展开手册中的具体信息。')+'</p>'}
+      function openMap(){modal.classList.add('show');modal.setAttribute('aria-hidden','false');inspect('people');if(window.lucide)window.lucide.createIcons()}
+      function closeMap(){modal.classList.remove('show');modal.setAttribute('aria-hidden','true')}
+      function addTrigger(){var panel=document.getElementById('panel-overview');if(!panel||panel.querySelector('.map-detail-trigger')||panel.textContent.indexOf('《夏洛的网》')===-1)return;var title=panel.querySelector('.section-title');if(title)title.insertAdjacentHTML('afterend','<div class="map-detail-callout"><span>手册原图六大分支：人物、情节、主题、深读、好词、好句</span><button class="map-detail-trigger" type="button" data-charlotte-map><i data-lucide="map"></i>打开手册同款详图</button></div>');if(window.lucide)window.lucide.createIcons()}
+      var overview=document.getElementById('panel-overview');
+      if(overview)new MutationObserver(addTrigger).observe(overview,{childList:true,subtree:true});
+      document.addEventListener('click',function(e){var trigger=e.target.closest('[data-charlotte-map]');if(trigger){openMap();return}if(e.target.closest('.map-detail-close')||e.target===modal){closeMap();return}var leaf=e.target.closest('.map-leaf');if(leaf){inspect(leaf.dataset.mapKey,Number(leaf.dataset.mapIndex));return}var section=e.target.closest('.map-branch-title');if(section){inspect(section.dataset.mapKey)}});
+      document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMap()});
+      addTrigger();
+    }());
+  </script>
+  <style>
+    .hmap-section{padding-top:2px}.hmap-lead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:0 0 16px}.hmap-kicker{display:block;color:var(--coral);font-size:10px;font-weight:950;letter-spacing:.13em}.hmap-lead h2{margin:6px 0 0;color:var(--f);font-size:30px;line-height:1.15}.hmap-lead p{max-width:440px;margin:0;color:var(--muted);font-size:10px;font-weight:700;line-height:1.65;text-align:right}.hmap-focus{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:0 11px;border:1.5px solid var(--f);background:var(--gold);color:var(--f);font-size:10px;font-weight:950}.hmap-focus i{width:14px}.hmap-frame{overflow:auto;border:1.5px solid var(--f);background:#fdfaf1;box-shadow:7px 7px 0 rgba(23,63,54,.13)}.hmap-canvas{position:relative;width:1240px;min-height:735px;background-color:#fdfaf1;background-image:linear-gradient(rgba(23,63,54,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,54,.055) 1px,transparent 1px);background-size:25px 25px}.hmap-canvas:before{content:'六个角度，读透一本书';position:absolute;right:27px;top:20px;color:#9a9d92;font-size:10px;font-weight:850;letter-spacing:.08em}.hmap-lines{position:absolute;inset:0;width:1240px;height:735px;pointer-events:none}.hmap-lines path{fill:none;stroke-width:2.2}.hmap-lines .hp{stroke:#d96467}.hmap-lines .hs{stroke:#cf8b55}.hmap-lines .ht{stroke:#c75eb1}.hmap-lines .hd{stroke:#de813e}.hmap-lines .hw{stroke:#6d5bcd}.hmap-lines .hq{stroke:#9d59c2}.hmap-root{position:absolute;z-index:4;left:492px;top:304px;display:grid;width:244px;min-height:82px;place-items:center;padding:12px;border:2px solid var(--gold);background:var(--f);box-shadow:5px 5px 0 rgba(23,63,54,.2);color:#fff;text-align:center}.hmap-root b{font-size:19px}.hmap-root small{display:block;margin-top:4px;color:#d5e3dd;font-size:9px;font-weight:800}.hmap-branch{position:absolute;z-index:5;padding:9px;border:1px solid var(--line);background:rgba(255,253,248,.98);box-shadow:3px 3px 0 rgba(23,63,54,.1)}.hmap-branch h3{display:flex;align-items:center;justify-content:space-between;margin:0;padding:4px 6px;font-size:12px}.hmap-branch h3 small{font-size:8px;font-weight:850}.hmap-branch.people{left:40px;top:56px;width:342px}.hmap-branch.plot{left:876px;top:84px;width:320px}.hmap-branch.theme{left:70px;top:335px;width:333px}.hmap-branch.deep{left:860px;top:438px;width:337px}.hmap-branch.words{left:250px;top:555px;width:304px}.hmap-branch.quotes{left:560px;top:575px;width:303px}.hmap-branch.people h3,.hmap-branch.people button{color:#b95259}.hmap-branch.plot h3,.hmap-branch.plot button{color:#b96943}.hmap-branch.theme h3,.hmap-branch.theme button{color:#a54a97}.hmap-branch.deep h3,.hmap-branch.deep button{color:#c6682c}.hmap-branch.words h3,.hmap-branch.words button{color:#5b49bf}.hmap-branch.quotes h3,.hmap-branch.quotes button{color:#884eb1}.hmap-leaf-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}.hmap-branch.plot .hmap-leaf-grid,.hmap-branch.theme .hmap-leaf-grid,.hmap-branch.deep .hmap-leaf-grid{grid-template-columns:1fr}.hmap-leaf{min-height:29px;padding:5px 6px;border:1px solid #ded7ca;background:var(--white);font-size:8px;font-weight:850;line-height:1.3;text-align:left}.hmap-leaf:hover{border-color:currentColor;background:#fff7de}.relationship-sheet{border:1.5px solid var(--f);background:#fdfaf1;box-shadow:7px 7px 0 rgba(23,63,54,.13)}.relationship-top{padding:18px 20px 0}.relationship-top h3{margin:0;color:var(--f);font-size:20px}.relationship-top p{margin:5px 0 0;color:var(--muted);font-size:10px;font-weight:700}.relationship-frame{overflow:auto;padding:15px 18px 24px}.relationship-canvas{position:relative;width:1080px;min-height:535px;background-color:#fdfaf1;background-image:linear-gradient(rgba(23,63,54,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,54,.045) 1px,transparent 1px);background-size:25px 25px}.relationship-lines{position:absolute;inset:0;width:1080px;height:535px;pointer-events:none}.relationship-lines path{fill:none;stroke:#86a99e;stroke-width:2}.relationship-label{position:absolute;z-index:4;padding:3px 5px;background:#fdfaf1;color:#3d7568;font-size:10px;font-weight:950}.relationship-core,.relationship-node{position:absolute;z-index:5;display:grid;place-items:center;padding:10px;border:1.5px solid var(--line);background:var(--white);box-shadow:3px 3px 0 rgba(23,63,54,.12);text-align:center}.relationship-core{left:444px;top:210px;width:194px;min-height:100px;border:2px solid var(--gold);background:var(--f);color:#fff}.relationship-core b{font-size:20px}.relationship-core small{display:block;margin-top:5px;color:#d5e3dd;font-size:9px;font-weight:750}.relationship-node{width:151px;min-height:80px;color:var(--f)}.relationship-node b{font-size:13px}.relationship-node small{display:block;margin-top:4px;color:var(--muted);font-size:8px;font-weight:750;line-height:1.35}.relationship-node:hover{border-color:var(--gold);background:#fff7de}.rel-fern{left:65px;top:89px}.rel-charlotte{left:467px;top:32px}.rel-sheep{left:862px;top:89px}.rel-templeton{left:65px;top:391px}.rel-owners{left:862px;top:391px}.rel-spiders{left:467px;top:419px}.rel-label-fern{left:278px;top:177px}.rel-label-charlotte{left:499px;top:145px}.rel-label-sheep{left:721px;top:177px}.rel-label-templeton{left:269px;top:347px}.rel-label-owners{left:748px;top:347px}.rel-label-spiders{left:496px;top:370px}.theme-archive{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;padding:0 18px 18px}.theme-archive article{padding:15px;border:1px solid var(--line);background:var(--white)}.theme-archive span{display:block;color:var(--coral);font-size:9px;font-weight:950;letter-spacing:.1em}.theme-archive h3{margin:8px 0 0;color:var(--f);font-size:14px;line-height:1.4}.theme-archive p{margin:7px 0 0;color:var(--muted);font-size:10px;font-weight:700;line-height:1.6}.family-debate-strip{margin:0 18px 18px;padding:13px 15px;border:1.5px dashed var(--gold);background:#fff8e2;color:var(--f)}.family-debate-strip span{font-size:9px;font-weight:950;letter-spacing:.1em}.family-debate-strip b{display:block;margin-top:6px;font-size:14px;line-height:1.45}.workspace-cycle{position:absolute;z-index:8;right:34px;bottom:22px;display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid rgba(255,255,255,.38);background:rgba(23,63,54,.9);color:#fff}.workspace-cycle label{font-size:8px;font-weight:900;letter-spacing:.08em}.workspace-cycle select{height:26px;border:1px solid var(--gold);background:var(--paper);color:var(--f);font-size:9px;font-weight:900}@media(max-width:760px){.hmap-lead{display:block}.hmap-lead p{margin-top:8px;text-align:left}.hmap-focus{margin-top:12px}.hmap-frame{margin:0 -2px}.relationship-top{padding:15px 15px 0}.relationship-frame{padding:12px}.theme-archive{grid-template-columns:1fr;padding:0 12px 12px}.family-debate-strip{margin:0 12px 12px}.workspace-cycle{position:relative;right:auto;bottom:auto;width:max-content;margin-top:12px}.workspace-cycle label{display:none}}
+  </style>
+  <script>
+    (function(){
+      var diagram={people:['威尔伯','夏洛','弗恩','老羊','坦普尔顿','朱克曼夫妇','514 只小蜘蛛'],plot:['出生·险被宰','谷仓·遇知己','牺牲·许承诺','织网·成明星','集市·守大奖','谢幕·静离去','传承·爱不息'],theme:['友谊，是愿意为对方付出','生命的价值，不在草草活着，而在你为别人做了什么','爱会延续'],deep:['背景：农场真实感','情节：标签改变眼光','人物：用行动认识夏洛'],words:['生死攸关','自得其乐','心事重重','勃勃生机','冥思苦想','食言','息息相关','一不做二不休','忧郁','多才多艺','安宁','遐迩闻名'],quotes:['青草湿湿的','天空亮起来了','你必须尽力打起精神来','一滴滴露水对着太阳光','蟋蟀觉得这是它们的责任','夏洛蹲在天花板的阴影里']};
+      var branchMeta={people:['人物','7 个关系节点'],plot:['情节','故事主线 · 七幕'],theme:['主题','3 个主题与启发'],deep:['深度解析','背景 · 情节 · 人物'],words:['好词（12 个）','能抄、能懂、能用'],quotes:['好句（6 句）','含赏析方向']};
+      function leafs(key){return diagram[key].map(function(name,index){return '<button type="button" class="hmap-leaf" data-map-jump="'+key+'" data-map-index="'+index+'">'+name+'</button>'}).join('')}
+      function branch(key){var meta=branchMeta[key];return '<section class="hmap-branch '+key+'"><h3><span>'+meta[0]+'</span><small>'+meta[1]+'</small></h3><div class="hmap-leaf-grid">'+leafs(key)+'</div></section>'}
+      function overviewMarkup(){return '<section class="hmap-section"><header class="hmap-lead"><div><span class="hmap-kicker">全书总览 / HANDBOOK MIND MAP</span><h2>一图读懂《夏洛的网》</h2></div><div><p>按原手册的导图结构：人物、情节、主题、深读、好词、好句，六条线全部落回作品。</p><button type="button" class="map-detail-trigger hmap-focus" data-charlotte-map><i data-lucide="maximize-2"></i>进入手册同款详图</button></div></header><div class="hmap-frame"><div class="hmap-canvas"><svg class="hmap-lines" viewBox="0 0 1240 735" aria-hidden="true"><path class="hp" d="M492 340 C420 290 396 220 382 170"></path><path class="hs" d="M736 340 C805 300 850 240 876 205"></path><path class="ht" d="M492 360 C438 380 420 402 403 408"></path><path class="hd" d="M736 365 C800 392 835 440 860 485"></path><path class="hw" d="M515 386 C460 455 425 512 402 555"></path><path class="hq" d="M614 386 C650 455 697 520 710 575"></path></svg><div class="hmap-root"><b>《夏洛的网》</b><small>人物 · 情节 · 主题 · 深读 · 好词 · 好句</small></div>'+['people','plot','theme','deep','words','quotes'].map(branch).join('')+'</div></div></section>'}
+      function peopleMarkup(){return '<section class="hmap-section"><header class="hmap-lead"><div><span class="hmap-kicker">人物与主题 / RELATIONSHIP MAP</span><h2>谁是谁 · 谁守护谁</h2></div><p>按手册原图的中心辐射关系呈现：关系不靠评价，而看每个角色做过什么。</p></header><section class="relationship-sheet"><header class="relationship-top"><h3>人物关系图</h3><p>中心是威尔伯；六个节点围绕“守护、消息、帮助、陪伴”和命运展开。</p></header><div class="relationship-frame"><div class="relationship-canvas"><svg class="relationship-lines" viewBox="0 0 1080 535" aria-hidden="true"><path d="M444 245 L216 170"></path><path d="M540 210 L540 112"></path><path d="M638 245 L862 170"></path><path d="M444 276 L216 430"></path><path d="M638 276 L862 430"></path><path d="M540 310 L540 419"></path></svg><button class="relationship-core" type="button" data-map-jump="people" data-map-index="0"><b>威尔伯</b><small>小猪 · 纯真胆小，渴望友谊</small></button><button class="relationship-node rel-fern" type="button" data-map-jump="people" data-map-index="2"><b>弗恩</b><small>小女孩 · 善良勇敢，救下威尔伯</small></button><button class="relationship-node rel-charlotte" type="button" data-map-jump="people" data-map-index="1"><b>夏洛</b><small>蜘蛛 · 聪明温柔，看透生死</small></button><button class="relationship-node rel-sheep" type="button" data-map-jump="people" data-map-index="3"><b>老羊</b><small>见多识广 · 爱报信出主意</small></button><button class="relationship-node rel-templeton" type="button" data-map-jump="people" data-map-index="4"><b>坦普尔顿</b><small>老鼠 · 贪吃自私，关键时刻帮忙</small></button><button class="relationship-node rel-owners" type="button" data-map-jump="people" data-map-index="5"><b>朱克曼夫妇</b><small>谷仓农场主 · 威尔伯的主人</small></button><button class="relationship-node rel-spiders" type="button" data-map-jump="people" data-map-index="6"><b>514 只小蜘蛛</b><small>夏洛的孩子 · 三只留下来陪威尔伯</small></button><span class="relationship-label rel-label-fern">第一个守护者</span><span class="relationship-label rel-label-charlotte">挚友 · 救命恩人</span><span class="relationship-label rel-label-sheep">谷仓消息通</span><span class="relationship-label rel-label-templeton">损友 · 帮手</span><span class="relationship-label rel-label-owners">农场主人</span><span class="relationship-label rel-label-spiders">接力守护</span></div></div><section class="theme-archive"><article><span>THEME 01</span><h3>友谊，是愿意为对方付出</h3><p>夏洛用一夜夜的辛劳，甚至自己的生命，守护朋友。</p></article><article><span>THEME 02</span><h3>生命的价值，在你为别人做了什么</h3><p>威尔伯被欢呼时，真正的功臣夏洛在角落默默离去。</p></article><article><span>THEME 03</span><h3>爱会延续</h3><p>514 个孩子和三只留下的小蜘蛛，让陪伴继续发生。</p></article></section><section class="family-debate-strip"><span>全家辩一辩 / 没有标准答案</span><b>夏洛为救威尔伯付出了自己的生命，到底值不值得？</b></section></section></section>'}
+      function isCharlotte(){var heading=document.getElementById('bookHeading');return Boolean(heading&&heading.textContent.indexOf('夏洛的网')>-1)}
+      function mountCycle(){var head=document.querySelector('.book-head'),api=window.familyReadingStudio;if(!head||!api||!isCharlotte()||head.querySelector('.workspace-cycle'))return false;var wrap=document.createElement('div');wrap.className='workspace-cycle';wrap.innerHTML='<label for="workspacePlanLength">计划周期</label><select id="workspacePlanLength"><option value="7">7 天重点</option><option value="15">15 天稳步</option><option value="21">21 天深读</option></select>';head.appendChild(wrap);var selector=wrap.querySelector('select');selector.value=String(api.getPlanLength());selector.addEventListener('change',function(){api.setPlanLength(selector.value)});return true}
+      function mountDiagrams(){if(!isCharlotte())return;var overview=document.getElementById('panel-overview'),people=document.getElementById('panel-people'),changed=false;if(overview&&!overview.querySelector('.hmap-section')){overview.innerHTML=overviewMarkup();changed=true}if(people&&!people.querySelector('.relationship-sheet')){people.innerHTML=peopleMarkup();changed=true}changed=mountCycle()||changed;if(changed&&window.lucide)window.lucide.createIcons()}
+      var observer=new MutationObserver(function(){setTimeout(mountDiagrams,0)});observer.observe(document.getElementById('workspace'),{childList:true,subtree:true});
+      document.addEventListener('click',function(e){var jump=e.target.closest('[data-map-jump]');if(!jump)return;var trigger=document.querySelector('#panel-overview [data-charlotte-map]');if(!trigger){var tab=document.querySelector('[data-panel="overview"]');if(tab)tab.click();setTimeout(function(){var t=document.querySelector('#panel-overview [data-charlotte-map]');if(t)t.click()},30);return}trigger.click();setTimeout(function(){var selector='#charlotteMapModal .map-leaf[data-map-key="'+jump.dataset.mapJump+'"][data-map-index="'+jump.dataset.mapIndex+'"]';var target=document.querySelector(selector);if(target)target.click()},40)});
+      mountDiagrams();
+    }());
+  </script>
+  <style>
+    .hmap-preview-section{padding-top:2px}.hmap-preview{position:relative;min-height:445px;overflow:hidden;border:1.5px solid var(--f);background-color:#fdfaf1;background-image:linear-gradient(rgba(23,63,54,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,54,.055) 1px,transparent 1px);background-size:25px 25px;box-shadow:7px 7px 0 rgba(23,63,54,.12)}.hmap-preview:after{content:'点击右上角放大整图';position:absolute;right:16px;bottom:13px;color:#83968e;font-size:9px;font-weight:850;letter-spacing:.08em}.hmap-preview svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.hmap-preview path{fill:none;stroke-width:2.1}.preview-root{position:absolute;z-index:3;left:50%;top:49%;display:grid;width:178px;height:72px;place-items:center;border:2px solid var(--gold);background:var(--f);box-shadow:4px 4px 0 rgba(23,63,54,.2);color:#fff;font-size:16px;font-weight:950;transform:translate(-50%,-50%)}.preview-root small{display:block;margin-top:3px;color:#d5e3dd;font-size:8px;font-weight:750}.preview-branch{position:absolute;z-index:4;min-width:130px;padding:9px 10px;border:1px solid currentColor;background:rgba(255,253,248,.97);box-shadow:3px 3px 0 rgba(23,63,54,.08);text-align:left}.preview-branch b{display:block;font-size:12px}.preview-branch small{display:block;margin-top:3px;color:#627168;font-size:8px;font-weight:800}.preview-branch.people{left:7%;top:18%;color:#ba585e}.preview-branch.plot{right:7%;top:17%;color:#bb704a}.preview-branch.theme{left:8%;bottom:18%;color:#a24d98}.preview-branch.deep{right:7%;bottom:17%;color:#c56c2d}.preview-branch.language{left:50%;bottom:6%;color:#5e50b9;transform:translateX(-50%)}.handbook-tree-canvas{position:relative!important;width:1263px!important;min-height:893px!important;background-color:#fdfaf1;background-image:linear-gradient(rgba(23,63,54,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,54,.05) 1px,transparent 1px)!important;background-size:25px 25px}.detail-tree-lines{position:absolute;inset:0;width:1263px;height:893px;pointer-events:none}.detail-tree-lines path{fill:none;stroke-width:2.15}.detail-tree-root{position:absolute;z-index:3;left:506px;top:403px;display:grid;width:250px;height:82px;place-items:center;border:2px solid var(--gold);background:var(--f);box-shadow:5px 5px 0 rgba(23,63,54,.2);color:#fff;text-align:center}.detail-tree-root b{font-size:19px}.detail-tree-root small{display:block;margin-top:4px;color:#d5e3dd;font-size:9px;font-weight:750}.detail-tree-branch{position:absolute;z-index:4;color:var(--f)}.detail-tree-branch.people{left:42px;top:70px;width:337px;color:#b9585b}.detail-tree-branch.plot{left:912px;top:155px;width:296px;color:#bd7046}.detail-tree-branch.theme{left:85px;top:378px;width:355px;color:#a44e98}.detail-tree-branch.deep{left:880px;top:555px;width:325px;color:#c96b2b}.detail-tree-branch.language{left:250px;top:630px;width:570px;color:#6250bd}.detail-tree-title{display:inline-flex;align-items:center;gap:8px;padding:5px 9px;border:1px solid currentColor;background:var(--paper);color:inherit;font-size:12px;font-weight:950}.detail-tree-title small{font-size:8px;font-weight:850}.detail-tree-leaves{display:grid;gap:4px;margin:7px 0 0 15px;padding:2px 0 2px 11px;border-left:1px solid currentColor}.detail-tree-leaf{display:block;min-height:20px;padding:2px 3px;border:0;background:transparent;color:inherit;font-size:8px;font-weight:850;line-height:1.35;text-align:left}.detail-tree-leaf:before{content:'—';margin-right:4px;opacity:.65}.detail-tree-leaf:hover,.detail-tree-leaf.active{background:#fff3cd;outline:1px solid currentColor}.detail-tree-language-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;margin-top:8px}.detail-tree-language-group{padding:7px 9px;border-left:1px solid currentColor}.detail-tree-language-group b{font-size:10px}.detail-tree-language-group .detail-tree-leaves{margin-left:0}.detail-tree-language-group.words .detail-tree-leaves{grid-template-columns:1fr 1fr}.detail-tree-language-group.quotes .detail-tree-leaves{grid-template-columns:1fr}@media(max-width:760px){.hmap-preview{min-height:385px}.preview-branch{min-width:102px;padding:7px}.preview-branch b{font-size:10px}.preview-branch small{font-size:7px}.preview-branch.people{left:4%;top:16%}.preview-branch.plot{right:4%;top:15%}.preview-branch.theme{left:5%;bottom:20%}.preview-branch.deep{right:4%;bottom:19%}.preview-root{width:132px;height:62px;font-size:13px}.hmap-preview:after{display:none}.detail-tree-branch .detail-tree-leaf{min-height:30px;font-size:10px}.detail-tree-title{font-size:14px}.detail-tree-language-group b{font-size:12px}}
+  </style>
+  <script>
+    (function(){
+      var previewBranches=[['people','人物','7 个关系节点'],['plot','情节','7 幕故事主线'],['theme','主题','3 个主题与启发'],['deep','深度解析','背景 · 情节 · 人物'],['language','好词好句','12 个好词 · 6 个好句']];
+      var tree={people:['威尔伯','夏洛','弗恩','老羊','坦普尔顿','朱克曼夫妇','514 只小蜘蛛'],plot:['出生·险被宰','谷仓·遇知己','牺牲·许承诺','织网·成明星','集市·守大奖','谢幕·静离去','传承·爱不息'],theme:['友谊，是愿意为对方付出','生命的价值，不在草草活着，而在你为别人做了什么','爱会延续'],deep:['背景：这本书是怀特在农场里“养”出来的','情节：夏洛改变的是人们的眼光','人物：别用外表判断一个人'],words:['生死攸关','自得其乐','心事重重','勃勃生机','冥思苦想','食言','息息相关','一不做二不休','忧郁','多才多艺','安宁','遐迩闻名'],quotes:['青草湿湿的','天空亮起来了','你必须尽力打起精神来','一滴滴露水对着太阳光','蟋蟀觉得这是它们的责任','夏洛蹲在天花板的阴影里']};
+      function isCharlotte(){var heading=document.getElementById('bookHeading');return Boolean(heading&&heading.textContent.indexOf('夏洛的网')>-1)}
+      function previewMarkup(){return '<section class="hmap-section hmap-preview-section"><header class="hmap-lead"><div><span class="hmap-kicker">全书总览 / HANDBOOK MIND MAP</span><h2>一眼看清《夏洛的网》</h2></div><div><p>按手册的 5 条主分支组织：人物、情节、主题、深度解析、好词好句。</p><button type="button" class="map-detail-trigger hmap-focus" data-charlotte-map><i data-lucide="maximize-2"></i>放大整张导图</button></div></header><div class="hmap-preview"><svg viewBox="0 0 1000 445" preserveAspectRatio="none" aria-hidden="true"><path d="M500 218 C420 180 360 135 245 105" stroke="#d96467"></path><path d="M500 218 C590 175 650 130 755 105" stroke="#cf8b55"></path><path d="M500 235 C410 280 340 330 245 347" stroke="#c75eb1"></path><path d="M500 235 C590 282 660 330 755 347" stroke="#de813e"></path><path d="M500 250 L500 380" stroke="#6d5bcd"></path></svg><div class="preview-root">《夏洛的网》<small>读前先有一张地图</small></div>'+previewBranches.map(function(x){return '<button type="button" class="preview-branch '+x[0]+'" data-charlotte-map><b>'+x[1]+'</b><small>'+x[2]+'</small></button>'}).join('')+'</div></section>'}
+      function leaves(key){return tree[key].map(function(label,index){return '<button type="button" class="map-leaf detail-tree-leaf" data-map-key="'+key+'" data-map-index="'+index+'">'+label+'</button>'}).join('')}
+      function fullTree(){return '<svg class="detail-tree-lines" viewBox="0 0 1263 893" aria-hidden="true"><path d="M506 435 C430 365 400 245 379 170" stroke="#d96467"></path><path d="M756 435 C835 375 875 285 912 245" stroke="#cf8b55"></path><path d="M506 452 C465 452 440 450 440 450" stroke="#c75eb1"></path><path d="M756 455 C818 500 852 560 880 615" stroke="#de813e"></path><path d="M560 485 C515 545 470 600 470 630" stroke="#6d5bcd"></path></svg><div class="detail-tree-root"><b>《夏洛的网》</b><small>人物 · 情节 · 主题 · 深度解析 · 好词好句</small></div><section class="detail-tree-branch people"><button type="button" class="map-branch-title detail-tree-title" data-map-key="people"><span>人物</span><small>7 个关系节点</small></button><div class="detail-tree-leaves">'+leaves('people')+'</div></section><section class="detail-tree-branch plot"><button type="button" class="map-branch-title detail-tree-title" data-map-key="plot"><span>情节</span><small>故事主线 · 七幕</small></button><div class="detail-tree-leaves">'+leaves('plot')+'</div></section><section class="detail-tree-branch theme"><button type="button" class="map-branch-title detail-tree-title" data-map-key="theme"><span>主题</span><small>3 个主题与启发</small></button><div class="detail-tree-leaves">'+leaves('theme')+'</div></section><section class="detail-tree-branch deep"><button type="button" class="map-branch-title detail-tree-title" data-map-key="deep"><span>深度解析</span><small>背景 · 情节 · 人物</small></button><div class="detail-tree-leaves">'+leaves('deep')+'</div></section><section class="detail-tree-branch language"><button type="button" class="detail-tree-title"><span>好词好句</span><small>二级分支</small></button><div class="detail-tree-language-grid"><section class="detail-tree-language-group words"><b>好词（12 个）</b><div class="detail-tree-leaves">'+leaves('words')+'</div></section><section class="detail-tree-language-group quotes"><b>好句（6 句）</b><div class="detail-tree-leaves">'+leaves('quotes')+'</div></section></div></section>'}
+      function upgradeModal(){var canvas=document.querySelector('#charlotteMapModal .map-detail-canvas');if(!canvas||canvas.dataset.treeReady)return false;canvas.dataset.treeReady='true';canvas.classList.add('handbook-tree-canvas');canvas.innerHTML=fullTree();return true}
+      function upgradePreview(){if(!isCharlotte())return;var panel=document.getElementById('panel-overview'),changed=false;if(panel&&!panel.querySelector('.hmap-preview-section')){panel.innerHTML=previewMarkup();changed=true}changed=upgradeModal()||changed;if(changed&&window.lucide)window.lucide.createIcons()}
+      var workspace=document.getElementById('workspace');if(workspace)new MutationObserver(function(){setTimeout(upgradePreview,0)}).observe(workspace,{childList:true,subtree:true});
+      upgradePreview();
+    }());
+  </script>
+  <script>
+    (function(){
+      document.addEventListener('click',function(e){
+        if(!e.target.closest('[data-charlotte-map]'))return;
+        setTimeout(function(){
+          var scroller=document.querySelector('#charlotteMapModal .map-detail-scroller');
+          if(scroller){scroller.scrollLeft=235;scroller.scrollTop=130}
+        },80);
+      });
+    }());
+  </script>
+  <style>
+    .preset-map-detail .preset-map-leaf{min-height:28px;padding:5px 6px;border:1px solid #d8d1c3;background:var(--white);font-size:8px;font-weight:800;line-height:1.35;text-align:left}.preset-map-detail .preset-map-leaf:hover,.preset-map-detail .preset-map-leaf.active{border-color:currentColor;background:#fff8e2}.preset-map-detail .map-branch.people .preset-map-leaf{color:#bb5e54}.preset-map-detail .map-branch.plot .preset-map-leaf{color:#b96b40}.preset-map-detail .map-branch.theme .preset-map-leaf{color:#a54a98}.preset-map-detail .map-branch.deep .preset-map-leaf{color:#c56324}.preset-map-detail .map-branch.words .preset-map-leaf{color:#5c49bd}.preset-map-detail .map-branch.quotes .preset-map-leaf{color:#8a4eb3}.preset-map-detail .preset-map-branch-title{display:flex;width:100%;align-items:center;justify-content:space-between;padding:7px 9px;border:0;background:transparent;color:var(--f);font-size:12px;font-weight:950;text-align:left}.preset-map-detail .preset-map-branch-title small{color:var(--muted);font-size:8px;font-weight:800}.preset-relationship-node{position:absolute;z-index:5;display:grid;width:151px;min-height:80px;place-items:center;padding:10px;border:1.5px solid var(--line);background:var(--white);box-shadow:3px 3px 0 rgba(23,63,54,.12);color:var(--f);text-align:center}.preset-relationship-node b{font-size:13px}.preset-relationship-node small{display:block;margin-top:4px;color:var(--muted);font-size:8px;font-weight:750;line-height:1.35}.preset-relationship-node:hover{border-color:var(--gold);background:#fff7de}@media(max-width:760px){.preset-map-detail .preset-map-leaf{min-height:30px;font-size:10px}}
+  </style>
+  <script>
+    (function(){
+      var cache={};
+      function currentBook(){var api=window.familyReadingStudio;return api&&api.getCurrentBookData?api.getCurrentBookData():null}
+      function cleanTitle(){var b=currentBook();return b?b.title:''}
+      function pair(value){if(Array.isArray(value))return [String(value[0]||''),String(value[value.length>2?2:1]||'')];var parts=String(value||'').split('|');return [parts[0]||'',parts.length>2?parts.slice(2).join(' · '):parts.slice(1).join(' · ')]}
+      function mapPairs(source,details){var raw=Array.isArray(source)?source:[],base=Array.isArray(details)?details:[];if(raw.length!==base.length)return base;return raw.map(function(item,index){var label=Array.isArray(item)?item[0]:item;return [String(label||base[index][0]||''),base[index][1]||'回到手中版本，核对对应人物、情节或语言细节。']})}
+      function currentData(){
+        var b=currentBook();if(!b||b.title==='夏洛的网')return null;
+        var h=b.handbook||{},map=h.map||b.map||{},language=map.language&&!Array.isArray(map.language)?map.language:{};
+        var basePeople=(b.people||[]).map(pair),core=h.relationCore?pair(h.relationCore):(basePeople[0]||['','']);
+        var relations=(h.relations||[]).map(function(x){return [String(x[0]||''),String(x[1]||'关键关系'),String(x[2]||x[1]||'')]});
+        if(!relations.length)relations=basePeople.slice(1,7).map(function(x){return [x[0],'故事关系节点',x[1]]});
+        var acts=(h.acts||b.acts||[]).map(pair),themes=(h.themes||b.themes||[]).map(pair),deep=(h.deep||b.deep||[]).map(pair);
+        var wordDetails=(h.words||[]).map(pair),quoteDetails=(h.sentences||[]).map(pair);
+        var rawWords=language.words||map.words,rawQuotes=language.quotes||map.quotes;
+        var plot=mapPairs(map.plot,acts),theme=mapPairs(map.theme,themes),deepGroup=mapPairs(map.deep,deep);
+        var words=mapPairs(Array.isArray(rawWords)&&rawWords.length===12?rawWords:[],wordDetails);
+        var quotes=mapPairs(Array.isArray(rawQuotes)&&rawQuotes.length===6?rawQuotes:[],quoteDetails);
+        var people=[[core[0],core[1]]].concat(relations.slice(0,6).map(function(x){return [x[0],x[2]||x[1]]}));
+        var family=(h.family||b.family||[]).map(function(x){return [Array.isArray(x)?x[0]:x,'亲子共读问题：先说自己的想法，再回到书中找依据。']});
+        if(!core[0]||people.length<7||plot.length<7||theme.length<3||deepGroup.length<3||words.length<12||quotes.length<6)return null;
+        return {title:b.title,core:core,relations:relations.slice(0,6),groups:{people:people,plot:plot,theme:theme,deep:deepGroup,words:words,quotes:quotes},family:family};
+      }
+      function esc(value){return String(value||'').replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]})}
+      function overviewMarkup(d){
+        var branches=[['people','人物','7 个关系节点'],['plot','情节','7 幕故事主线'],['theme','主题','3 个主题与启发'],['deep','深度解析','背景 · 情节 · 人物'],['language','好词好句','12 个好词 · 6 个好句']];
+        return '<section class="hmap-section hmap-preview-section"><header class="hmap-lead"><div><span class="hmap-kicker">全书总览 / HANDBOOK MIND MAP</span><h2>一眼看清《'+esc(d.title)+'》</h2></div><div><p>按手册的 5 条主分支组织：人物、情节、主题、深度解析、好词好句。</p><button type="button" class="map-detail-trigger hmap-focus" data-book-map data-book-map-key="people"><i data-lucide="maximize-2"></i>放大整张导图</button></div></header><div class="hmap-preview"><svg viewBox="0 0 1000 445" preserveAspectRatio="none" aria-hidden="true"><path d="M500 218 C420 180 360 135 245 105" stroke="#d96467"></path><path d="M500 218 C590 175 650 130 755 105" stroke="#cf8b55"></path><path d="M500 235 C410 280 340 330 245 347" stroke="#c75eb1"></path><path d="M500 235 C590 282 660 330 755 347" stroke="#de813e"></path><path d="M500 250 L500 380" stroke="#6d5bcd"></path></svg><div class="preview-root">《'+esc(d.title)+'》<small>读前先有一张地图</small></div>'+branches.map(function(x){return '<button type="button" class="preview-branch '+x[0]+'" data-book-map data-book-map-key="'+x[0]+'"><b>'+x[1]+'</b><small>'+x[2]+'</small></button>'}).join('')+'</div></section>';
+      }
+      function relationshipMarkup(d){var positions=[[65,89],[467,32],[862,89],[65,391],[862,391],[467,419]],labels=[[278,177],[499,145],[721,177],[269,347],[748,347],[496,370]],nodes=d.relations;return '<section class="hmap-section"><header class="hmap-lead"><div><span class="hmap-kicker">人物与主题 / RELATIONSHIP MAP</span><h2>谁是谁 · 谁推动了谁</h2></div><p>把人物关系画成可点击的行动网络：不贴标签，先看谁做了什么、改变了什么。</p></header><section class="relationship-sheet"><header class="relationship-top"><h3>人物关系图</h3><p>中心是 '+esc(d.core[0])+'；六个节点记录故事里真正起作用的关系和选择。</p></header><div class="relationship-frame"><div class="relationship-canvas"><svg class="relationship-lines" viewBox="0 0 1080 535" aria-hidden="true"><path d="M444 245 L216 170"></path><path d="M540 210 L540 112"></path><path d="M638 245 L862 170"></path><path d="M444 276 L216 430"></path><path d="M638 276 L862 430"></path><path d="M540 310 L540 419"></path></svg><button class="relationship-core" type="button" data-book-map data-book-map-key="people" data-book-map-index="0"><b>'+esc(d.core[0])+'</b><small>'+esc(d.core[1])+'</small></button>'+nodes.map(function(x,i){var p=positions[i]||positions[5];return '<button class="preset-relationship-node" type="button" style="left:'+p[0]+'px;top:'+p[1]+'px" data-book-map data-book-map-key="people" data-book-map-index="'+(i+1)+'"><b>'+esc(x[0])+'</b><small>'+esc(x[2]||x[1])+'</small></button>'}).join('')+nodes.map(function(x,i){var p=labels[i]||labels[5];return '<span class="relationship-label" style="left:'+p[0]+'px;top:'+p[1]+'px">'+esc(x[1])+'</span>'}).join('')+'</div></div><section class="theme-archive">'+d.groups.theme.map(function(x,i){return '<article><span>THEME 0'+(i+1)+'</span><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></article>'}).join('')+'</section><section class="family-debate-strip"><span>全家辩一辩 / 没有标准答案</span><b>'+esc(d.family[4]?d.family[4][0]:'请围绕人物的关键选择，说出你和家人的不同理由。')+'</b></section></section></section>'}
+      function mountCycle(){var head=document.querySelector('.book-head'),api=window.familyReadingStudio;if(!head||!api)return false;var existing=head.querySelector('.workspace-cycle');if(existing){var select=existing.querySelector('select');if(select)select.value=String(api.getPlanLength());return false}var wrap=document.createElement('div');wrap.className='workspace-cycle';wrap.innerHTML='<label for="workspacePlanLength">计划周期</label><select id="workspacePlanLength"><option value="7">7 天重点</option><option value="15">15 天稳步</option><option value="21">21 天深读</option></select>';head.appendChild(wrap);var selector=wrap.querySelector('select');selector.value=String(api.getPlanLength());selector.addEventListener('change',function(){api.setPlanLength(selector.value)});return true}
+      function enhance(){var d=currentData();if(!d)return;cache[d.title]=d;var overview=document.getElementById('panel-overview'),people=document.getElementById('panel-people'),changed=false;if(overview&&(overview.dataset.bookMap!==d.title||!overview.querySelector('.hmap-preview-section'))){overview.innerHTML=overviewMarkup(d);overview.dataset.bookMap=d.title;changed=true}if(people&&(people.dataset.bookMap!==d.title||!people.querySelector('.relationship-sheet'))){people.innerHTML=relationshipMarkup(d);people.dataset.bookMap=d.title;changed=true}changed=mountCycle()||changed;if(changed&&window.lucide)window.lucide.createIcons()}
+      var modal=document.createElement('section');modal.className='map-detail-modal preset-map-detail';modal.id='presetBookMapModal';modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-hidden','true');document.body.appendChild(modal);
+      function detailLeaves(key,items){return items.map(function(item,index){return '<button type="button" class="detail-tree-leaf" data-preset-leaf="'+key+'" data-preset-index="'+index+'">'+esc(item[0])+'</button>'}).join('')}
+      function detailBranch(key,label,sub,items){return '<section class="detail-tree-branch '+key+'"><button type="button" class="detail-tree-title" data-preset-branch="'+key+'"><span>'+label+'</span><small>'+sub+'</small></button><div class="detail-tree-leaves">'+detailLeaves(key,items)+'</div></section>'}
+      function languageBranch(d){return '<section class="detail-tree-branch language"><button type="button" class="detail-tree-title" data-preset-branch="language"><span>好词好句</span><small>二级分支</small></button><div class="detail-tree-language-grid"><section class="detail-tree-language-group words"><b>好词（12 个）</b><div class="detail-tree-leaves">'+detailLeaves('words',d.groups.words)+'</div></section><section class="detail-tree-language-group quotes"><b>好句（6 句）</b><div class="detail-tree-leaves">'+detailLeaves('quotes',d.groups.quotes)+'</div></section></div></section>'}
+      function fullMap(d){return '<div class="map-detail-shell"><header class="map-detail-head"><div><span>FAMILY READING / HANDBOOK MIND MAP</span><h2>《'+esc(d.title)+'》全书思维导图</h2></div><button class="map-detail-close" type="button" aria-label="关闭详图"><i data-lucide="x"></i></button></header><div class="map-detail-body"><div class="map-detail-scroller"><div class="map-detail-canvas handbook-tree-canvas"><svg class="detail-tree-lines" viewBox="0 0 1263 893" aria-hidden="true"><path d="M506 435 C430 365 400 245 379 170" stroke="#d96467"></path><path d="M756 435 C835 375 875 285 912 245" stroke="#cf8b55"></path><path d="M506 452 C465 452 440 450 440 450" stroke="#c75eb1"></path><path d="M756 455 C818 500 852 560 880 615" stroke="#de813e"></path><path d="M560 485 C515 545 470 600 470 630" stroke="#6d5bcd"></path></svg><div class="detail-tree-root"><b>《'+esc(d.title)+'》</b><small>人物 · 情节 · 主题 · 深度解析 · 好词好句</small></div>'+detailBranch('people','人物','7 个关系节点',d.groups.people)+detailBranch('plot','情节','故事主线 · 七幕',d.groups.plot)+detailBranch('theme','主题','3 个主题与启发',d.groups.theme)+detailBranch('deep','深度解析','背景 · 情节 · 人物',d.groups.deep)+languageBranch(d)+'</div></div><aside class="map-inspector" id="presetMapInspector"><span>全书总览</span><h3>《'+esc(d.title)+'》</h3><p>从中心出发，沿五条主分支读清人物、故事、主题、深度解析和语言线索。</p><p class="map-inspector-foot">点击任一节点，查看说明；再回到下方模块完成词句积累、练习与亲子讨论。</p></aside></div></div>'}
+      function inspect(d,key,index){var labels={people:'人物',plot:'情节',theme:'主题',deep:'深度解析',language:'好词好句',words:'好词',quotes:'好句'},list=d.groups[key]||[],item=typeof index==='number'?list[index]:null,box=document.getElementById('presetMapInspector');modal.querySelectorAll('[data-preset-leaf]').forEach(function(x){x.classList.toggle('active',x.dataset.presetLeaf===key&&Number(x.dataset.presetIndex)===index)});if(!box)return;if(key==='language'){box.innerHTML='<span>好词好句 / 二级分支</span><h3>12 个好词 · 6 个好句</h3><p>先积累能懂、能用的词，再按手中版本定位原句，从画面、感受和写法三个角度赏析。</p><p class="map-inspector-foot">点击“好词”或“好句”中的具体节点，查看释义与赏析方向。</p>';return}box.innerHTML='<span>'+labels[key]+' / 精读线索</span><h3>'+esc(item?item[0]:labels[key])+'</h3><p>'+esc(item?item[1]:'点击分支中的节点，查看具体说明。')+'</p><p class="map-inspector-foot">回到对应精读模块，用人物语言、行动、故事转折或手中版本的原文继续验证这条理解。</p>'}
+      function openMap(key,index){var title=cleanTitle(),d=cache[title]||currentData();if(!d)return;cache[title]=d;modal.innerHTML=fullMap(d);modal.classList.add('show');modal.setAttribute('aria-hidden','false');inspect(d,key||'people',typeof index==='number'?index:undefined);if(window.lucide)window.lucide.createIcons()}
+      document.addEventListener('click',function(e){var trigger=e.target.closest('[data-book-map]');if(trigger){e.preventDefault();openMap(trigger.dataset.bookMapKey,trigger.dataset.bookMapIndex===''?undefined:Number(trigger.dataset.bookMapIndex));return}if(e.target.closest('#presetBookMapModal .map-detail-close')||e.target===modal){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');return}var leaf=e.target.closest('#presetBookMapModal [data-preset-leaf]');if(leaf){var d=cache[cleanTitle()];if(d)inspect(d,leaf.dataset.presetLeaf,Number(leaf.dataset.presetIndex));return}var branch=e.target.closest('#presetBookMapModal [data-preset-branch]');if(branch){var current=cache[cleanTitle()];if(current)inspect(current,branch.dataset.presetBranch);return}});document.addEventListener('keydown',function(e){if(e.key==='Escape'){modal.classList.remove('show');modal.setAttribute('aria-hidden','true')}});var workspace=document.getElementById('workspace');if(workspace)new MutationObserver(function(){setTimeout(enhance,0)}).observe(workspace,{childList:true,subtree:true});enhance();
+    }());
+  </script>
+</body>
+</html>

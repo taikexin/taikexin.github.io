@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apollo · 世界观设计方案 · 邰可心的主页</title>
+<style>
+:root{--ink:#0b0e17;--ink2:#111527;--ink3:#181d33;--gold:#c9a86a;--gold2:#e8cf9a;--txt:#e9e6df;--dim:#9aa0b5;
+--serif:"Songti SC","STSong","Noto Serif SC","SimSun",serif;--sans:"PingFang SC","Microsoft YaHei",sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--txt);font-family:var(--sans);line-height:1.9}
+img{max-width:100%;display:block}
+a{color:inherit}
+.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;
+padding:16px 5vw;background:rgba(11,14,23,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,106,.2)}
+.top a{color:var(--gold2);font-size:13px;letter-spacing:.15em;text-decoration:none}
+.top .t{font-family:var(--serif);letter-spacing:.1em;font-size:15px}
+.hero{padding:10vh 5vw 6vh;text-align:center;background:radial-gradient(900px 460px at 50% 0%,rgba(201,168,106,.12),transparent 60%)}
+.hero .k{font-size:11px;letter-spacing:.5em;color:var(--gold);margin-bottom:16px}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,5vw,52px)}
+.hero p{margin-top:14px;color:var(--dim);font-size:14px;letter-spacing:.12em}
+.quote{max-width:760px;margin:0 auto;padding:28px 32px;border-left:3px solid var(--gold);
+background:linear-gradient(150deg,var(--ink3),var(--ink2));border-radius:0 14px 14px 0;
+font-family:var(--serif);font-size:19px;line-height:2.1;color:var(--gold2)}
+.wrap{max-width:980px;margin:0 auto;padding:0 5vw}
+section.blk{margin-top:11vh}
+.blk-head{display:flex;align-items:baseline;gap:16px;margin-bottom:30px}
+.blk-head .no{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.2em}
+.blk-head h2{font-family:var(--serif);font-size:clamp(24px,3vw,32px);color:var(--gold2);letter-spacing:.06em}
+.blk-head .en{font-size:11px;letter-spacing:.35em;color:var(--dim)}
+.blk p{font-size:14.5px;color:#c9c5bb;margin:12px 0;text-align:justify}
+.blk p b{color:var(--gold2)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:8px}
+.card{background:linear-gradient(160deg,var(--ink3),var(--ink2));border:1px solid rgba(201,168,106,.16);
+border-radius:14px;padding:26px 24px;transition:.35s}
+.card:hover{transform:translateY(-5px);border-color:rgba(201,168,106,.5);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.card h4{font-family:var(--serif);font-size:17px;color:var(--gold2);margin-bottom:10px}
+.card p{font-size:13px;color:var(--dim);margin:0;line-height:1.95}
+.spec{display:grid;grid-template-columns:110px 1fr;border:1px solid rgba(201,168,106,.2);border-radius:14px;overflow:hidden}
+.spec div{padding:16px 20px;font-size:14px;border-bottom:1px solid rgba(201,168,106,.12)}
+.spec div:nth-child(4n+1),.spec div:nth-child(4n+3){background:rgba(201,168,106,.07)}
+.spec .k{color:var(--gold);font-family:var(--serif);letter-spacing:.15em}
+.spec div:nth-last-child(-n+2){border-bottom:none}
+.stages{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:10px}
+.stage{background:linear-gradient(170deg,var(--ink3),var(--ink2));border:1px solid rgba(201,168,106,.16);
+border-radius:12px;padding:20px 16px;text-align:center}
+.stage b{display:block;font-family:var(--serif);color:var(--gold2);font-size:15px;margin-bottom:8px}
+.stage span{font-size:12px;color:var(--dim);line-height:1.8}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;margin-top:14px}
+.split img{border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.45)}
+.ol{counter-reset:n;margin-top:8px}
+.ol li{list-style:none;counter-increment:n;position:relative;padding:10px 0 10px 46px;font-size:14px;color:#c9c5bb;border-bottom:1px dashed rgba(201,168,106,.15)}
+.ol li::before{content:counter(n,decimal-leading-zero);position:absolute;left:0;top:12px;
+font-family:var(--serif);color:var(--gold);font-size:15px}
+.gallery{margin-top:12vh}
+.gallery .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+figure{background:var(--ink2);border:1px solid rgba(201,168,106,.18);border-radius:14px;overflow:hidden;transition:.35s}
+figure:hover{transform:translateY(-5px);border-color:rgba(201,168,106,.5);box-shadow:0 22px 55px rgba(0,0,0,.5)}
+figcaption{padding:14px 18px;font-size:12.5px;letter-spacing:.12em;color:var(--dim)}
+.back{display:block;text-align:center;margin:10vh auto;color:var(--gold2);font-size:13px;letter-spacing:.3em;text-decoration:none}
+@media(max-width:760px){.split{grid-template-columns:1fr}.stages{grid-template-columns:repeat(2,1fr)}.gallery .grid{grid-template-columns:1fr}.spec{grid-template-columns:86px 1fr}}
+</style>
+</head>
+<body>
+<div class="top"><a href="../index.html#book">← 返回作品集</a><span class="t">邰可心 · IP 世界观设计</span></div>
+
+<div class="hero">
+  <div class="k">IP UNIVERSE DESIGN</div>
+  <h1>Apollo · 世界观设计方案</h1>
+  <p>清北网校 IP「小北」宇宙 · 顶层设计全案 · 完整呈现</p>
+</div>
+<div class="quote">知识就是力量，知识改变世界。<br>成为教育类爆款产品，打造超级知识产权（IP, Intellectual Property）。</div>
+
+<!-- 01 顶层设计 -->
+<section class="blk wrap" id="s1">
+  <div class="blk-head"><span class="no">01</span><h2>顶层设计</h2><span class="en">TOP LEVEL</span></div>
+  <p>遥远的 X 宇宙，有一颗智慧星球（瓜瓜龙和 Gogokid 所在的星球），与它遥相呼应的是我们的<b>清北星球</b>。故事发生在清北星球的清北小镇上，IP 主角<b>小北</b>就生活在这里。</p>
+  <p>在这里生活的孩子们，有温暖的家和知心的朋友，他们健康快乐、自由自在地长大。通过不断的成长，他们都将逐渐成为善良、诚实、谦虚、守信、勇敢的人，并逐渐树立起这样的理想：<b>做一个有知识、受人尊重、为世界做贡献的人</b>。</p>
+  <p>有一天，从天而降的<b>大萌</b>打破了小北平静的生活。两人在相处中成为好朋友，并和其他小伙伴组成<b>清北战队</b>。为了维护世界和平，清北战队通过探索世界、不断增长知识、收集能量，对抗来自另外一个星球的邪恶势力。</p>
+  <div class="spec" style="margin-top:24px">
+    <div class="k">时间</div><div>2046 年</div>
+    <div class="k">空间</div><div>充满知识能量的 X 宇宙：神奇的星球科技发达，遍布高科技与人工智能；未来 20 多年，人工智能解放了大量劳动力</div>
+    <div class="k">特征</div><div>知识就是一切力量的源泉——只有掌握知识，才能搜集能量、维护和平</div>
+    <div class="k">规则</div><div>距银河系 35 光年的阿尔法星系，有一颗存在了 48 亿年的清北星球；存在了 55 亿年的紫荆星，坐落在距它 51 亿公里的宇宙深处</div>
+  </div>
+</section>
+
+<!-- 02 故事脉络 -->
+<section class="blk wrap" id="s2">
+  <div class="blk-head"><span class="no">02</span><h2>故事脉络</h2><span class="en">STORYLINE</span></div>
+  <div class="cards">
+    <div class="card"><h4>矛盾点</h4><p>正反派一起争夺知识能量：大王子大萌不愿与弟弟争夺王位，离开紫荆星球来到清北小镇；二王子二萌为抢夺大萌继承的知识力量追到小镇，打破了宁静。</p></div>
+    <div class="card"><h4>清北战队</h4><p>大萌与小北等人成为好友。二萌入侵使小镇陷入混乱，小北和伙伴们组建清北战队——不断学习新知识、掌握能量，对抗外部邪恶势力。</p></div>
+    <div class="card"><h4>交通与通信</h4><p>小镇主要交通工具是人工智能驾驶的公交车；穿梭星球靠宇宙飞船。通信从超智能手机，到大萌赠送的「超级眼镜」专属信道。</p></div>
+    <div class="card"><h4>主题曲</h4><p>作用：洗脑、强化品牌记忆。位置：课前或课间播放，满足品宣需求。形式：MV + 5 秒内的过场 slogan 音乐。</p></div>
+  </div>
+</section>
+
+<!-- 03 空间关系 -->
+<section class="blk wrap" id="s3">
+  <div class="blk-head"><span class="no">03</span><h2>空间关系</h2><span class="en">UNIVERSE MAP</span></div>
+  <p>一片浩瀚的 <b>X 宇宙</b>，漫天繁星蕴含各种知识能量；坐上飞船遨游，可以看到各种由知识组成的美丽星球。<b>清北星球</b>充满知识，人工智能、飞船、高科技遍布各个角落——除各学科大陆外，皆是知识海洋。<b>清北小镇</b>坐落在数学大陆上；数学大陆、英语大陆、语文大陆在清北星球，知识星球在 X 宇宙。</p>
+  <div class="split">
+    <img src="../assets/img/apollo-p03.png" alt="X宇宙空间关系">
+    <div>
+      <div class="cards" style="grid-template-columns:1fr">
+        <div class="card"><h4>X 宇宙</h4><p>漫天繁星蕴含知识能量，由知识组成的美丽星球散落其间。</p></div>
+        <div class="card"><h4>阿尔法星系</h4><p>距银河系 35 光年，清北星球与紫荆星所在星系。</p></div>
+        <div class="card"><h4>清北星球</h4><p>学科大陆 + 知识海洋：数学大陆、英语大陆、语文大陆。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 人物关系 -->
+<section class="blk wrap" id="s4">
+  <div class="blk-head"><span class="no">04</span><h2>人物关系与角色设计</h2><span class="en">CHARACTERS</span></div>
+  <p>皮克斯动画工作室创始人之一拉塞特曾说：「皮克斯的故事必须与主角的成长以及如何改变有关。」每个角色经历冒险后认识自己、迅速成长，观众也在观影过程中陪伴角色完成一次成长——<b>成长与改变</b>是本世界观人物关系的内核。</p>
+  <div class="cards">
+    <div class="card"><h4>小北 × 大萌</h4><p>反差萌 CP：一个急吼吼，一个慢吞吞，能力和性格互补。</p></div>
+    <div class="card"><h4>大萌 × 鹦鹉</h4><p>欢喜冤家 CP：一个慢条斯理，一个絮絮叨叨，互相争宠。</p></div>
+    <div class="card"><h4>小北 × 小清</h4><p>同学组 CP：一个调皮胆小又机智，一个傲娇胆大又心细，两小无猜。</p></div>
+  </div>
+  <div class="split" style="margin-top:26px">
+    <img src="../assets/img/apollo-p05.png" alt="角色关系设计">
+    <img src="../assets/img/apollo-p07.png" alt="主要角色设定">
+  </div>
+</section>
+
+<!-- 05 成长脉络 -->
+<section class="blk wrap" id="s5">
+  <div class="blk-head"><span class="no">05</span><h2>成长脉络</h2><span class="en">GROWTH PATH</span></div>
+  <p>世界观跟随学龄段层层扩展——小镇 → 生活 → 世界 → 宇宙，守护的范围随孩子的认知一同长大。</p>
+  <div class="stages">
+    <div class="stage"><b>幼小衔接</b><span>探索社区<br>维护清北小镇和平</span></div>
+    <div class="stage"><b>小学低段 1-2</b><span>探索生活<br>维护清北小镇和平</span></div>
+    <div class="stage"><b>小学中段 3-4</b><span>探索世界<br>维护清北星球和平</span></div>
+    <div class="stage"><b>小学高段 5-6</b><span>探索未知<br>维护阿尔法星系与 X 宇宙和平</span></div>
+  </div>
+  <div class="cards" style="margin-top:22px">
+    <div class="card"><h4>清北小镇（幼小衔接）</h4><p>小北和妹妹在清北小镇出生。妹妹通过瓜瓜龙网课学习数学思维，二人都很喜欢瓜瓜龙。一天小北放学路上遇到麻烦，被路过的大萌用神奇道具解救，从此成为好朋友。</p></div>
+    <div class="card"><h4>清北小镇（1-2 年级）</h4><p>大萌对小镇一切充满好奇，像多啦A梦一样拥有很强的数学思维能力和神奇科技道具。相处中感情日益深厚，组成清北战队，集结智慧、收集能量。</p></div>
+    <div class="card"><h4>清北星球（3-4 年级）</h4><p>清北星球遭入侵，大萌被迫揭露大王子身份。二萌担忧王权不稳，不断制造麻烦。大萌带小北探索未知领域、获得知识能量，与二萌斗智斗勇。</p></div>
+    <div class="card"><h4>X 宇宙（5-6 年级）</h4><p>清北星球的知识能量有限。为对抗二萌日益猛烈的攻势，清北战队把目光投向更远的其他星系、乃至整个 X 宇宙，开启更强大的知识能量收集。</p></div>
+  </div>
+</section>
+
+<!-- 06 数学场景 -->
+<section class="blk wrap" id="s6">
+  <div class="blk-head"><span class="no">06</span><h2>数学场景</h2><span class="en">MATH SCENES</span></div>
+  <div class="cards">
+    <div class="card"><h4>清北小镇</h4><p>与现实生活方式无异的小镇：博物馆、商业区（奶茶店、糖果店、水果店）、居住区、游乐园、学校、体育馆、警察局、消防局、医院、动物园一应俱全。各种有趣的知识藏在小镇的各个角落，小北和伙伴们通过探索知识、集结能量来解决问题、实现愿望。</p></div>
+    <div class="card"><h4>几何城</h4><p>由各种神奇几何图形建筑组成的城市，蕴藏神秘能量「几何之源」。它被城市密码保护，只有破解所有几何建筑内的数学难题，才能夺得几何之源。小伙伴们运用几何知识破解密码、阻止二萌，并用几何之源恢复被破坏的城市。</p></div>
+    <div class="card"><h4>运算岛</h4><p>数学大陆的知识能量汇聚地，岛中心的「运算之心」维持整个大陆的能量稳定。二萌突袭藏匿之所，守卫们趁乱将运算之心分为 N 块封印在岛屿各处。清北战队必须根据残留线索，抢在二萌之前找齐碎片并重组，恢复岛屿运转。</p></div>
+  </div>
+  <div class="split" style="margin-top:26px">
+    <img src="../assets/img/apollo-p13.png" alt="清北小镇场景">
+    <img src="../assets/img/apollo-p12.png" alt="莫比乌斯大陆设定">
+  </div>
+</section>
+
+<!-- 07 美术风格 -->
+<section class="blk wrap" id="s7">
+  <div class="blk-head"><span class="no">07</span><h2>美术风格与形象手册</h2><span class="en">ART STYLE</span></div>
+  <p>阿波罗项目的美术风格参考与「小北」品牌形象基础手册，为动画量产确立统一视觉标准；动画的故事情节、主 IP 与真人老师及游戏化设计紧密连接，避免动画情节与知识讲解之间的割裂感。</p>
+  <div class="split" style="margin-top:14px">
+    <img src="../assets/img/apollo-p14.png" alt="美术风格参考">
+    <img src="../assets/img/apollo-p15.png" alt="小北形象基础手册">
+  </div>
+</section>
+
+<!-- 08 设计思路 -->
+<section class="blk wrap" id="s8">
+  <div class="blk-head"><span class="no">08</span><h2>设计思路</h2><span class="en">DESIGN THINKING</span></div>
+  <div class="cards">
+    <div class="card"><h4>课程形式</h4><p>类别：网校大班课；展现类型：系列剧（每个阶段一个故事）；动画时长：1-3 分钟；课程路径：30+10+30。</p></div>
+    <div class="card"><h4>动力系统</h4><p>将游戏化八大要素嵌入世界观：史诗意义与使命感、进步与成就感、创意授权与反馈、所有权与拥有感、社交影响与关联性、稀缺性与渴望、未知性与好奇心、亏损与逃避心——让孩子有陪伴感、参与感，进入心流、主动学习。</p></div>
+  </div>
+  <h4 style="font-family:var(--serif);color:var(--gold2);margin:34px 0 8px;font-size:18px">设计出发点（九条原则）</h4>
+  <ul class="ol">
+    <li>人生观、价值观、世界观「三观合一」</li>
+    <li>体现陪伴，利于 6-12 岁孩子的成长（伴学设计的重要性分析）</li>
+    <li>与学科相关联（数学、语文、英语），利于展开教学</li>
+    <li>与品牌强关联（清北网校），与 IP 小北、鹦鹉相关联</li>
+    <li>游戏化：使命感、成就、创造、拥有、社交、稀缺、未知、逃避</li>
+    <li>正面积极：没有绝对的善与恶；有反派角色、有达成目的；有科技感与各种道具，趣味性强</li>
+    <li>设计落地性好，尽可能降低生产成本</li>
+    <li>围绕课程的引入、易错强调、重点强调等环节创作，世界观故事贯穿整节课</li>
+    <li>构建一个虚拟 IP：全能的稀有动物（或非生物角色），倾向于超能陆战队里的「大白」</li>
+  </ul>
+  <h4 style="font-family:var(--serif);color:var(--gold2);margin:34px 0 8px;font-size:18px">优势点与爆款策略</h4>
+  <div class="cards">
+    <div class="card"><h4>优势点</h4><p>① IP 经济带动，打造清北 IP 爆款，口碑与商业双价值；② 嵌入动力系统（自我决定论：自主、胜任、归属）与游戏化；③ 基于 6-12 岁儿童发展心理学理论设计；④ 基于对经典和爆款 IP 的深入研究；⑤ 行业丰富经验的动画团队。</p></div>
+    <div class="card"><h4>爆款策略</h4><p>宏观策略：打造头部爆款、传递文化内涵、形成流量矩阵。集中资源（产品、内容、教学、服务、运营）协作冲刺头部；通过品牌 IP 化对用户形成持久记忆与关注，增强粘性与影响力；内容拓展空间广阔，可持续强化单一 IP 或借力延伸。</p></div>
+  </div>
+</section>
+
+<!-- 原稿图集 -->
+<section class="gallery wrap">
+  <div class="blk-head" style="justify-content:center"><span class="no">附</span><h2>设计方案原稿 · 全 16 页</h2><span class="en">ORIGINAL DECK</span></div>
+  <div class="grid">
+    <figure><img src="../assets/img/apollo-p01.png" loading="lazy" alt="原稿P01"><figcaption>P01 · 顶层设计</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p02.png" loading="lazy" alt="原稿P02"><figcaption>P02 · 故事脉络</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p03.png" loading="lazy" alt="原稿P03"><figcaption>P03 · X宇宙空间关系</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p04.png" loading="lazy" alt="原稿P04"><figcaption>P04 · 清北星球</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p05.png" loading="lazy" alt="原稿P05"><figcaption>P05 · 角色关系与成长</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p06.png" loading="lazy" alt="原稿P06"><figcaption>P06 · 角色CP设计</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p07.png" loading="lazy" alt="原稿P07"><figcaption>P07 · 主要角色</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p08.png" loading="lazy" alt="原稿P08"><figcaption>P08 · 人物设计细节</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p09.png" loading="lazy" alt="原稿P09"><figcaption>P09 · 成长脉络</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p10.png" loading="lazy" alt="原稿P10"><figcaption>P10 · 年级进阶</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p11.png" loading="lazy" alt="原稿P11"><figcaption>P11 · 数学场景</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p12.png" loading="lazy" alt="原稿P12"><figcaption>P12 · 莫比乌斯大陆</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p13.png" loading="lazy" alt="原稿P13"><figcaption>P13 · 清北小镇场景</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p14.png" loading="lazy" alt="原稿P14"><figcaption>P14 · 美术风格</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p15.png" loading="lazy" alt="原稿P15"><figcaption>P15 · 小北形象手册</figcaption></figure>
+    <figure><img src="../assets/img/apollo-p16.png" loading="lazy" alt="原稿P16"><figcaption>P16 · 课程设计思路</figcaption></figure>
+  </div>
+</section>
+
+<a class="back" href="../index.html#book">← 返回作品集继续翻阅</a>
+</body>
+</html>

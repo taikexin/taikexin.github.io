@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0e17">
+<meta name="description" content="邰可心 · 教育科技内容产品专家：10年经验 × AI 赋能 × 爆品思维。简历、完整剧本、影像作品与世界观设计在线呈现。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="邰可心的主页｜简历与作品集">
+<meta property="og:description" content="10年经验 × AI 赋能 × 爆品思维 —— 剧本 · 影像 · 舞台剧 · 世界观，一次翻完。">
+<meta property="og:image" content="https://taikexin-home.app.workbuddy.link/assets/img/cover.jpg">
+<meta itemprop="name" content="邰可心的主页｜简历与作品集">
+<meta itemprop="image" content="https://taikexin-home.app.workbuddy.link/assets/img/cover.jpg">
+<title>邰可心的主页</title>
+<style>
+:root{
+  --ink:#0b0e17;
+  --ink-2:#111527;
+  --ink-3:#181d33;
+  --gold:#c9a86a;
+  --gold-2:#e8cf9a;
+  --paper:#f6f0e2;
+  --paper-2:#efe6d0;
+  --txt:#e9e6df;
+  --txt-dim:#9aa0b5;
+  --serif:"Songti SC","STSong","Noto Serif SC","SimSun",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--txt);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--gold);color:var(--ink)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ---------- 通用 ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+section{position:relative}
+.kicker{font-size:12px;letter-spacing:.45em;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+.h2{font-family:var(--serif);font-size:clamp(30px,4vw,46px);font-weight:700;line-height:1.25}
+.h2 em{font-style:normal;color:var(--gold)}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.22,.8,.3,1),transform .9s cubic-bezier(.22,.8,.3,1)}
+.reveal.visible{opacity:1;transform:none}
+
+/* ---------- 导航 ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+  padding:18px 44px;background:linear-gradient(rgba(11,14,23,.85),rgba(11,14,23,0));backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);transition:.4s}
+nav.solid{background:rgba(11,14,23,.92);border-bottom:1px solid rgba(201,168,106,.18)}
+.logo{font-family:var(--serif);font-size:20px;letter-spacing:.2em;color:var(--gold-2)}
+.logo span{color:var(--txt-dim);font-size:11px;letter-spacing:.3em;margin-left:10px;font-family:var(--sans)}
+nav ul{display:flex;gap:34px;list-style:none}
+nav ul a{font-size:13px;letter-spacing:.2em;color:var(--txt-dim);transition:.3s;position:relative}
+nav ul a:hover{color:var(--gold-2)}
+nav ul a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:.35s}
+nav ul a:hover::after{width:100%}
+
+/* ---------- 封面 ---------- */
+.hero{min-height:100vh;display:flex;align-items:flex-end;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 22%;transform:scale(1.06);animation:heroZoom 14s ease-out forwards}
+@keyframes heroZoom{to{transform:scale(1)}}
+.hero-bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(11,14,23,.55) 0%,rgba(11,14,23,.25) 38%,rgba(11,14,23,.82) 78%,var(--ink) 100%)}
+.hero-inner{position:relative;z-index:2;width:100%;padding:0 0 9vh}
+.hero-tag{display:inline-block;border:1px solid rgba(201,168,106,.5);color:var(--gold-2);
+  font-size:12px;letter-spacing:.35em;padding:9px 20px;border-radius:999px;margin-bottom:28px;background:rgba(11,14,23,.35)}
+.hero h1{font-family:var(--serif);font-size:clamp(56px,9vw,118px);font-weight:900;letter-spacing:.08em;line-height:1;
+  text-shadow:0 8px 40px rgba(0,0,0,.6)}
+.hero h1 .en{display:block;font-size:clamp(13px,1.4vw,17px);letter-spacing:.62em;color:var(--gold);font-family:var(--sans);font-weight:400;margin-top:16px}
+.hero-sub{margin-top:26px;max-width:640px;color:#d8d4ca;font-size:clamp(15px,1.6vw,19px);line-height:1.9}
+.hero-sub b{color:var(--gold-2);font-weight:600}
+.hero-roles{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px}
+.hero-roles span{font-size:13px;letter-spacing:.12em;color:var(--txt);border-left:2px solid var(--gold);padding:4px 14px;background:rgba(255,255,255,.05)}
+.scroll-cue{position:absolute;right:48px;bottom:9vh;z-index:2;writing-mode:vertical-rl;font-size:11px;letter-spacing:.5em;color:var(--txt-dim);display:flex;align-items:center;gap:14px}
+.scroll-cue::after{content:"";width:1px;height:64px;background:linear-gradient(var(--gold),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ---------- 数据带 ---------- */
+.stats{border-top:1px solid rgba(201,168,106,.15);border-bottom:1px solid rgba(201,168,106,.15);background:var(--ink-2)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:64px;padding-bottom:64px}
+.stat{text-align:center;position:relative}
+.stat+.stat::before{content:"";position:absolute;left:-10px;top:12%;height:76%;width:1px;background:rgba(201,168,106,.18)}
+.stat b{font-family:var(--serif);font-size:clamp(38px,4.4vw,58px);color:var(--gold-2);font-weight:800;display:block;line-height:1.1}
+.stat b i{font-style:normal;font-size:.55em}
+.stat p{margin-top:10px;font-size:13px;letter-spacing:.15em;color:var(--txt-dim)}
+
+/* ---------- 简历 ---------- */
+.resume{padding:130px 0 110px;background:
+  radial-gradient(900px 500px at 85% -5%,rgba(201,168,106,.07),transparent 60%),var(--ink)}
+.resume-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;flex-wrap:wrap}
+.resume-head p{max-width:520px;color:var(--txt-dim);line-height:2;font-size:15px}
+.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:90px}
+.adv{background:linear-gradient(160deg,var(--ink-3),var(--ink-2));border:1px solid rgba(201,168,106,.14);
+  border-radius:14px;padding:34px 30px;position:relative;overflow:hidden;transition:.45s}
+.adv::before{content:attr(data-i);position:absolute;right:18px;top:6px;font-family:var(--serif);font-size:64px;color:rgba(201,168,106,.12);font-weight:900}
+.adv:hover{transform:translateY(-6px);border-color:rgba(201,168,106,.45);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.adv h3{font-family:var(--serif);font-size:20px;color:var(--gold-2);margin-bottom:14px;letter-spacing:.06em}
+.adv p{font-size:13.5px;line-height:1.95;color:var(--txt-dim)}
+
+/* 时间轴 */
+.timeline{position:relative;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:linear-gradient(var(--gold),rgba(201,168,106,.1))}
+.t-item{position:relative;padding:0 0 54px 34px}
+.t-item::before{content:"";position:absolute;left:-33px;top:8px;width:11px;height:11px;border-radius:50%;
+  background:var(--ink);border:2px solid var(--gold);box-shadow:0 0 0 5px rgba(201,168,106,.12)}
+.t-date{font-size:12px;letter-spacing:.28em;color:var(--gold);margin-bottom:10px}
+.t-item h3{font-family:var(--serif);font-size:24px;margin-bottom:6px}
+.t-item h3 span{font-size:14px;color:var(--txt-dim);font-family:var(--sans);letter-spacing:.1em;margin-left:12px}
+.t-item ul{list-style:none;margin-top:14px}
+.t-item li{font-size:14px;line-height:1.9;color:#c6c2b8;padding-left:18px;position:relative;margin-bottom:6px}
+.t-item li::before{content:"◆";position:absolute;left:0;color:var(--gold);font-size:9px;top:7px}
+.t-item li b{color:var(--gold-2);font-weight:600}
+
+/* ---------- 翻书 ---------- */
+.booksec{padding:130px 0 150px;background:
+  radial-gradient(1100px 600px at 50% 0%,rgba(201,168,106,.08),transparent 55%),var(--ink-2);
+  border-top:1px solid rgba(201,168,106,.12);text-align:center;overflow:hidden}
+.booksec .lead{color:var(--txt-dim);margin:18px auto 56px;max-width:560px;line-height:2;font-size:15px}
+.book-stage{perspective:2600px;display:flex;justify-content:center;margin:0 auto}
+.book{position:relative;width:980px;height:660px;transform-style:preserve-3d}
+.sheet{position:absolute;left:50%;top:0;width:50%;height:100%;transform-style:preserve-3d;
+  transform-origin:left center;transition:transform 1.05s cubic-bezier(.35,.9,.35,1)}
+.sheet.flipped{transform:rotateY(-180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:linear-gradient(105deg,var(--paper) 0%,var(--paper-2) 100%);color:#33302a;
+  border:1px solid #d9cfb6;overflow:hidden;display:flex;flex-direction:column}
+.face.front{border-radius:0 14px 14px 0;box-shadow:inset 14px 0 26px -14px rgba(80,60,20,.35)}
+.face.back{border-radius:14px 0 0 14px;transform:rotateY(180deg);box-shadow:inset -14px 0 26px -14px rgba(80,60,20,.35)}
+.page{padding:38px 40px 30px;flex:1;display:flex;flex-direction:column;text-align:left;position:relative}
+.page::after{content:attr(data-page);position:absolute;bottom:14px;font-size:10px;letter-spacing:.3em;color:#a89a78}
+.face.front .page::after{right:22px}
+.face.back .page::after{left:22px}
+.p-kicker{font-size:10px;letter-spacing:.4em;color:#b08d4f;margin-bottom:10px}
+.p-title{font-family:var(--serif);font-size:26px;font-weight:800;color:#2b2620;line-height:1.3}
+.p-sub{font-size:12px;color:#8b7d5f;margin-top:6px;letter-spacing:.1em}
+.p-rule{height:1px;background:linear-gradient(90deg,#b08d4f,transparent);margin:16px 0 18px}
+.script{flex:1;overflow:hidden;font-size:12.5px;line-height:1.85;color:#4a443a}
+.script p{margin-bottom:7px}
+.script .role{font-weight:700;color:#7a5416}
+.script .scene{color:#8d8570;font-style:italic}
+.script .more{margin-top:10px;font-size:11px;color:#a89a78;letter-spacing:.2em}
+.full-link{display:inline-block;margin-top:12px;font-size:12px;letter-spacing:.15em;color:#7a5416;
+  border:1px solid #b08d4f;border-radius:999px;padding:7px 18px;transition:.3s;text-decoration:none}
+.full-link:hover{background:#b08d4f;color:#fff}
+.video-box{flex:1;display:flex;flex-direction:column;justify-content:center}
+.video-box video{width:100%;border-radius:8px;box-shadow:0 14px 34px rgba(60,45,15,.28);background:#000}
+.video-note{margin-top:12px;font-size:11.5px;color:#8b7d5f;display:flex;justify-content:space-between;letter-spacing:.08em}
+.p-img{flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:0}
+.p-img img{border-radius:8px;box-shadow:0 12px 30px rgba(60,45,15,.22);max-height:100%;object-fit:contain}
+.apollo-txt{font-size:12.5px;line-height:1.9;color:#4a443a}
+.apollo-txt b{color:#7a5416}
+.apollo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.apollo-grid img{border-radius:6px;box-shadow:0 8px 20px rgba(60,45,15,.18)}
+/* 扉页与尾页 */
+.cover-page{align-items:center;justify-content:center;text-align:center}
+.cover-page .big{font-family:var(--serif);font-size:44px;font-weight:900;color:#2b2620;letter-spacing:.14em}
+.cover-page .en{font-size:11px;letter-spacing:.55em;color:#b08d4f;margin-top:14px}
+.cover-page .orn{width:64px;height:1px;background:#b08d4f;margin:26px auto}
+.cover-page p{font-size:12.5px;color:#8b7d5f;line-height:2.1;letter-spacing:.1em}
+/* 控制 */
+.book-ctrl{margin-top:44px;display:flex;align-items:center;justify-content:center;gap:26px}
+.bbtn{width:52px;height:52px;border-radius:50%;border:1px solid rgba(201,168,106,.5);background:transparent;color:var(--gold-2);
+  font-size:20px;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;font-family:var(--serif)}
+.bbtn:hover{background:var(--gold);color:var(--ink);transform:scale(1.08)}
+.bbtn:disabled{opacity:.25;cursor:default;transform:none;background:transparent;color:var(--gold-2)}
+.dots{display:flex;gap:10px}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(201,168,106,.3);transition:.3s;cursor:pointer}
+.dots i.on{background:var(--gold-2);transform:scale(1.4)}
+.book-hint{margin-top:18px;font-size:12px;letter-spacing:.3em;color:var(--txt-dim)}
+
+/* ---------- 其他作品 ---------- */
+.works{padding:130px 0;background:var(--ink)}
+.works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.work-card{background:var(--ink-3);border:1px solid rgba(201,168,106,.14);border-radius:16px;overflow:hidden;transition:.45s}
+.work-card:hover{transform:translateY(-6px);border-color:rgba(201,168,106,.45);box-shadow:0 26px 60px rgba(0,0,0,.5)}
+.work-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;display:block}
+.work-body{padding:24px 26px 28px}
+.work-body h3{font-family:var(--serif);font-size:19px;color:var(--gold-2);margin-bottom:8px}
+.work-body p{font-size:13px;line-height:1.85;color:var(--txt-dim)}
+/* 豆包爱学 */
+.doubao{margin-top:60px;display:grid;grid-template-columns:200px 1fr;gap:0;background:linear-gradient(150deg,var(--ink-3),var(--ink-2));
+  border:1px solid rgba(201,168,106,.2);border-radius:20px;overflow:hidden}
+.doubao-icon{display:flex;align-items:center;justify-content:center;padding:40px;background:radial-gradient(circle at 50% 40%,rgba(201,168,106,.12),transparent 70%)}
+.doubao-icon img{width:120px;filter:drop-shadow(0 14px 30px rgba(0,0,0,.5))}
+.doubao-body{padding:40px 46px;display:grid;grid-template-columns:1fr 300px;gap:36px;align-items:center}
+.doubao-body h3{font-family:var(--serif);font-size:26px;color:var(--gold-2)}
+.doubao-body .tag{display:inline-block;font-size:11px;letter-spacing:.2em;color:var(--gold);border:1px solid rgba(201,168,106,.4);border-radius:999px;padding:5px 14px;margin:12px 12px 16px 0}
+.doubao-body p{font-size:14px;line-height:2;color:#c6c2b8}
+.doubao-body p b{color:var(--gold-2)}
+.doubao-body img{border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.5)}
+
+/* ---------- 页脚 ---------- */
+footer{border-top:1px solid rgba(201,168,106,.15);background:var(--ink-2);padding:80px 0 50px;text-align:center}
+footer .h2{margin-bottom:14px}
+footer p{color:var(--txt-dim);font-size:14px;letter-spacing:.1em;line-height:2.2}
+footer .mail{color:var(--gold-2);font-size:20px;font-family:var(--serif);letter-spacing:.08em}
+footer .fine{margin-top:44px;font-size:11px;color:#5a6076;letter-spacing:.25em}
+
+/* ---------- 响应式 ---------- */
+@media(max-width:1060px){
+  .book{width:760px;height:560px}
+  .adv-grid{grid-template-columns:repeat(2,1fr)}
+  .works-grid{grid-template-columns:repeat(2,1fr)}
+  .doubao-body{grid-template-columns:1fr}
+}
+@media(max-width:820px){
+  .wrap{padding:0 22px}
+  nav{padding:14px 20px}
+  nav ul{display:none}
+  .hero h1{font-size:clamp(40px,11vw,56px);letter-spacing:.05em}
+  .hero h1 .en{letter-spacing:.35em;font-size:11px}
+  .hero-sub{font-size:14.5px}
+  .hero-tag{font-size:10px;letter-spacing:.25em;padding:7px 14px}
+  .stats .wrap{grid-template-columns:repeat(2,1fr);gap:36px 12px}
+  .stat+.stat::before{display:none}
+  .adv-grid,.works-grid{grid-template-columns:1fr}
+  .doubao{grid-template-columns:1fr}
+  .resume,.booksec,.works{padding-top:80px;padding-bottom:80px}
+  /* 手机端：单页翻书 */
+  .book{display:none}
+  .book-stage{perspective:none;display:block;padding:0 16px}
+  .mbook{display:block;position:relative;width:100%;max-width:520px;height:min(600px,80vh);min-height:480px;margin:0 auto;perspective:1800px}
+  .mpage{position:absolute;inset:0;transform-origin:left center;
+    transition:transform .75s cubic-bezier(.35,.9,.35,1),opacity .75s;will-change:transform}
+  .mpage.away{transform:rotateY(-88deg) translateX(-6%);opacity:0;pointer-events:none}
+  .mpage .face{position:static;transform:none!important;backface-visibility:visible;
+    border-radius:14px;height:100%;box-shadow:0 18px 46px rgba(0,0,0,.45)}
+  .page{padding:24px 20px}
+  .p-title{font-size:21px}
+  .script{overflow:hidden;font-size:11.5px;line-height:1.75}
+  .apollo-txt{font-size:11.5px}
+  .cover-page .big{font-size:34px}
+  .book-ctrl{gap:18px;margin-top:30px}
+  .bbtn{width:46px;height:46px}
+  .book-hint{display:none}
+  .scroll-cue{display:none}
+}
+@media(min-width:821px){.mbook{display:none}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">邰可心<span>PORTFOLIO</span></div>
+  <ul>
+    <li><a href="#resume">关于我</a></li>
+    <li><a href="#book">作品集</a></li>
+    <li><a href="#works">更多作品</a></li>
+    <li><a href="#contact">联系我</a></li>
+  </ul>
+</nav>
+
+<!-- ================= 封面 ================= -->
+<section class="hero">
+  <div class="hero-bg"><img src="assets/img/cover.jpg" alt="邰可心"></div>
+  <div class="hero-inner wrap">
+    <div class="hero-tag">教育科技 · 内容产品 · AI 课程</div>
+    <h1>邰可心的主页<span class="en">TAI KEXIN · EDUCATION CONTENT CREATOR</span></h1>
+    <p class="hero-sub"><b>10 年经验 × AI 赋能 × 爆品思维</b> —— 从总编剧到 AI 课负责人，我把好故事讲进好课程，让千万孩子爱上学习。</p>
+    <div class="hero-roles">
+      <span>作业帮 · AI课负责人</span>
+      <span>猿辅导 · AI课负责人</span>
+      <span>字节跳动 · 总编剧</span>
+      <span>《米小圈》系列主创</span>
+    </div>
+  </div>
+  <div class="scroll-cue">向下探索</div>
+</section>
+
+<!-- ================= 数据带 ================= -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><b><span class="num" data-n="10">0</span><i>年+</i></b><p>互联网教育行业经验</p></div>
+    <div class="stat reveal"><b><span class="num" data-n="93">0</span><i>%</i></b><p>自研课程完课率</p></div>
+    <div class="stat reveal"><b><span class="num" data-n="800">0</span><i>W+</i></b><p>IP 动画课程播放量</p></div>
+    <div class="stat reveal"><b><span class="num" data-n="300">0</span><i>W+</i></b><p>《豆包爱学》单集最高点击</p></div>
+  </div>
+</section>
+
+<!-- ================= 简历 ================= -->
+<section class="resume" id="resume">
+  <div class="wrap">
+    <div class="resume-head reveal">
+      <div>
+        <div class="kicker">ABOUT ME</div>
+        <h2 class="h2">把教育的慢功夫，<br>做成<em>可复制的爆款方法论</em></h2>
+      </div>
+      <p>10 年深耕互联网教育，从大学生村官到字节跳动总编剧，再到作业帮 AI 课负责人。擅长从 0 到 1 搭建课程体系、用 AI 重塑研发流程、以数据驱动产品迭代。</p>
+    </div>
+
+    <div class="adv-grid">
+      <div class="adv reveal" data-i="01"><h3>课程体系 0→1</h3><p>多次从 0 到 1 设计 AI、机器人、编程、思维多领域课程，具备跨学科整合能力，完课率最高达 93%，远超行业均值。</p></div>
+      <div class="adv reveal" data-i="02"><h3>AI 工具深度应用</h3><p>率先将 Codex、ChatGPT、WorkBuddy、DeepSeek 等 AI 工具引入工作全流程，研发周期压减 40% 以上，让 AI 真正为生产赋能提效。</p></div>
+      <div class="adv reveal" data-i="03"><h3>爆款内容方法论</h3><p>《信息科技简史》销量 12000+ 登顶寒假畅销榜；《米小圈》系列全网播放 500W+、舞台剧巡演 30+ 城市。</p></div>
+      <div class="adv reveal" data-i="04"><h3>数据驱动决策</h3><p>以完课率、好评率、GMV 为核心指标持续迭代，《超能编程队》融合产品销量提升 60%，编程产品线 GMV 增长 10%。</p></div>
+      <div class="adv reveal" data-i="05"><h3>跨部门整合</h3><p>打通编剧、教研、编导、制作全链路，标准化 SOP 与反馈机制让 NPS 达 8.7，跨部门协作效率提升 60%。</p></div>
+      <div class="adv reveal" data-i="06"><h3>团队搭建与赋能</h3><p>具备 0→1 团队搭建经验，课程研发 SOP 体系使人效提升 150%，支撑 3 条产品线并行开发。</p></div>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="t-item">
+        <div class="t-date">2024.01 — 至今</div>
+        <h3>作业帮 <span>AI课负责人 · 互联网教育</span></h3>
+        <ul>
+          <li>从 0 到 1 设计 AI、机器人、编程、思维多领域科技课程体系，<b>完课率达 93%</b>，远超行业平均水平</li>
+          <li>引入 ChatGPT、Midjourney、DeepSeek 等前沿 AI 工具，<b>研发周期压减 33%</b>（30 天 → 20 天）</li>
+          <li>建立标准化 SOP 及反馈机制，<b>NPS 评分 8.7</b>，跨部门协作效率提升 60%</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <div class="t-date">2021.03 — 2023.11</div>
+        <h3>猿辅导 <span>AI课负责人 · 互联网教育</span></h3>
+        <ul>
+          <li>由编剧成功转型教研负责人，设计 AI + 科学思维融合课程，开发 <b>90 节爆款 AI 课</b>，完课率超 90%，带动编程产品线 <b>GMV 增长 10%</b></li>
+          <li>打造《信息科技简史》爆款直播课，90% 好评率、<b>销量 12000+</b>，登顶寒假扩课畅销榜</li>
+          <li>构建《猿编程萌萌班》世界观，动画课程<b>播放量突破 800W</b>；SOP 体系使人效提升 150%，支撑 3 条产品线并行</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <div class="t-date">2020.03 — 2021.03</div>
+        <h3>字节跳动 <span>总编剧 & 课程产品开发</span></h3>
+        <ul>
+          <li>搭建教育 IP 开发体系，完成《瓜瓜龙》《开言英语》<b>3 大 IP 全流程开发</b>，量产效率提升 300%</li>
+          <li>建立剧本开发 SOP 模板库，研课周期由 <b>15 天缩减至 10 天</b></li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <div class="t-date">2013 — 2021</div>
+        <h3>编剧与早期课程设计 <span>米小圈教育 · 听云文化 · 大学生村官</span></h3>
+        <ul>
+          <li>《米小圈》成语课、古诗课登陆学而思、腾讯平台，<b>全网播放超 500W</b>，舞台剧巡演 30+ 城市</li>
+          <li>输出《教育视频开发手册》复用至 8 大项目，制作周期缩短 50%；知识情景剧开创「难点趣味化」教学模式</li>
+          <li>为留守儿童设计科普课程，获市级<b>「优秀村官」</b>表彰——这是我最初的教育情怀</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 翻书作品集 ================= -->
+<section class="booksec" id="book">
+  <div class="wrap">
+    <div class="kicker reveal">SELECTED WORKS</div>
+    <h2 class="h2 reveal">作品集 · <em>翻开这本书</em></h2>
+    <p class="lead reveal">从剧本到影像，从舞台到世界观——每一页，都是一次从文字到体验的完整创作。点击两侧箭头或使用键盘方向键翻阅。</p>
+  </div>
+
+  <div class="book-stage reveal">
+    <div class="book" id="bookEl">
+      <!-- Sheet 1 -->
+      <div class="sheet">
+        <div class="face front"><div class="page cover-page" data-page="01">
+          <div class="big">作品集</div>
+          <div class="en">SELECTED WORKS 2013—2026</div>
+          <div class="orn"></div>
+          <p>剧本 · 影像 · 舞台剧 · 世界观<br>邰可心 创作精选<br><br>请向右翻阅 →</p>
+        </div></div>
+        <div class="face back"><div class="page" data-page="02">
+          <div class="p-kicker">剧本 · SCREENPLAY</div>
+          <div class="p-title">《长度的测量》</div>
+          <div class="p-sub">半间教室 · 物理启蒙情景剧（节选）</div>
+          <div class="p-rule"></div>
+          <div class="script">
+            <p class="scene">片头：秦始皇忙碌地摆弄着刻度尺、数字计时器、写着各种物理公式</p>
+            <p><span class="role">秦始皇：</span>（看到镜头，起范儿）想知道朕为什么如此特别吗？因为朕就是——半间教室特供版秦始皇。</p>
+            <p class="scene">【一个小贩惊恐地站着，瑟瑟发抖，秦始皇看着地面，疑惑地来回踱步</p>
+            <p><span class="role">小　贩：</span>陛下，陛下您看，我用的尺子，是比一般尺子长一点的。</p>
+            <p><span class="role">秦始皇：</span>看起来，确实是这样……</p>
+            <p class="scene">【秦始皇走上前，将两根尺子都拿在手里，发现两根尺子一样长</p>
+            <p><span class="role">秦始皇：</span>大胆！竟敢骗朕！</p>
+            <p><span class="role">小　贩：</span>（下跪）陛下，我错了。这，这就是个障眼法。</p>
+            <p><span class="role">秦始皇：</span>唉，眼见不一定为实啊。所以朕要统一度量衡，让万事万物的测量，有个共同的标准……</p>
+            <p class="more">…… 后文含「米的定义」「身体尺子」「估读与骗术拆解」等完整教学环节</p>
+          </div>
+          <a class="full-link" href="scripts/changdu.html" target="_blank">阅读完整剧本 →</a>
+        </div></div>
+      </div>
+
+      <!-- Sheet 2 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="03">
+          <div class="p-kicker">影像 · FILM</div>
+          <div class="p-title">《长度的测量》成片</div>
+          <div class="p-sub">编剧 / 课程设计 · 约 13 分钟</div>
+          <div class="p-rule"></div>
+          <div class="video-box">
+            <video controls playsinline preload="none" poster="assets/img/poster-changdu.jpg" src="assets/video/changdu.mp4"></video>
+            <div class="video-note"><span>秦始皇 × 小贩：把「统一度量衡」讲成一出戏</span><span>13′16″</span></div>
+          </div>
+        </div></div>
+        <div class="face back"><div class="page" data-page="04">
+          <div class="p-kicker">剧本 · SCREENPLAY</div>
+          <div class="p-title">《田忌赛马》</div>
+          <div class="p-sub">米小圈成语故事 · 配音对比稿（节选）</div>
+          <div class="p-rule"></div>
+          <div class="script">
+            <p><span class="role">米小圈旁白：</span>我跟铁头因为抢零食争执不下，于是约好放学比武，谁赢谁吃。</p>
+            <p><span class="role">米小圈：</span>咏春！米小圈。</p>
+            <p><span class="role">铁　头：</span>第七套广播体操！铁头。</p>
+            <p><span class="role">米小圈旁白：</span>铁头人高马大，单挑我肯定不是对手，于是我偷偷叫来了我的表哥，上初一。</p>
+            <p class="scene">【邻居家哥哥骑着自行车，一个甩尾急刹车登场</p>
+            <p><span class="role">米小圈旁白：</span>就在敌强我弱之时，我淡定一笑。登场吧，我上高一的小舅舅！</p>
+            <p><span class="role">米小圈旁白：</span>有了！田忌赛马！此计定能助我方反败为胜！只不过我忽视了一点……我就是那匹下等马！</p>
+            <p class="more">…… 后文含「三局两胜赛马正篇」「孙膑解局」「知识环节」完整结构</p>
+          </div>
+          <a class="full-link" href="scripts/tianji.html" target="_blank">阅读完整剧本 →</a>
+        </div></div>
+      </div>
+
+      <!-- Sheet 3 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="05">
+          <div class="p-kicker">影像 · FILM</div>
+          <div class="p-title">《田忌赛马》成片</div>
+          <div class="p-sub">编剧 · 约 8 分钟</div>
+          <div class="p-rule"></div>
+          <div class="video-box">
+            <video controls playsinline preload="none" poster="assets/img/poster-tianji.jpg" src="assets/video/tianji.mp4"></video>
+            <div class="video-note"><span>以弱胜强的策略启蒙，笑点与知识点齐飞</span><span>08′05″</span></div>
+          </div>
+        </div></div>
+        <div class="face back"><div class="page" data-page="06">
+          <div class="p-kicker">舞台剧 · STAGE PLAY</div>
+          <div class="p-title">《米小圈之李白白不白》</div>
+          <div class="p-sub">儿童舞台剧 · 巡演 30+ 城市</div>
+          <div class="p-rule"></div>
+          <div class="p-img">
+            <img src="assets/img/libai-still.jpg" alt="《李白白不白》海报剧照">
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Sheet 4 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="07">
+          <div class="p-kicker">剧本 · STAGE SCRIPT</div>
+          <div class="p-title">《李白白不白》剧本</div>
+          <div class="p-sub">根据北猫《米小圈上学记》改编（节选）</div>
+          <div class="p-rule"></div>
+          <div class="script">
+            <p class="scene">人物：米小圈——8 岁小学生，调皮捣蛋，不爱背诗，喜欢足球。李白——8 岁少年，喜欢舞枪弄棒，希望成为侠客。</p>
+            <p class="scene">【下课铃声响起，舞台上灯光音乐骤起，开场舞《下课舞》</p>
+            <p><span class="role">铁　头：</span>姜小牙，你快点呀，球赛马上就要开始了。</p>
+            <p><span class="role">米小圈：</span>铁头，你怎么不叫我呀？</p>
+            <p><span class="role">铁　头：</span>可是米小圈，莫老师不是说，你背不下诗就不让你去踢球吗？</p>
+            <p><span class="role">米小圈：</span>李黎？你们觉得我会怕李黎吗？</p>
+            <p><span class="role">铁头、姜小牙：</span>会！</p>
+            <p class="more">…… 米小圈穿越唐朝，遇见少年李白的成长故事</p>
+          </div>
+          <a class="full-link" href="scripts/libai.html" target="_blank">阅读完整剧本 →</a>
+        </div></div>
+        <div class="face back"><div class="page" data-page="08">
+          <div class="p-kicker">世界观 · IP UNIVERSE</div>
+          <div class="p-title">Apollo · 世界观设计</div>
+          <div class="p-sub">清北网校 IP「小北」宇宙 · 顶层设计</div>
+          <div class="p-rule"></div>
+          <div class="apollo-txt">
+            <p><b>「知识就是力量，知识改变世界。」</b>故事发生在 2046 年 X 宇宙的清北星球：从天而降的大萌打破小北平静的生活，二人组成清北战队，通过探索世界、增长知识、收集能量，对抗邪恶势力、维护和平。</p>
+            <p style="margin-top:8px">世界观以「知识是力量的源泉」为规则内核，覆盖幼小衔接至小学高段的成长脉络，并嵌入游戏化动力系统。</p>
+          </div>
+          <div class="apollo-grid">
+            <img src="assets/img/apollo-p03.png" alt="X宇宙空间关系">
+            <img src="assets/img/apollo-p05.png" alt="角色关系设计">
+          </div>
+          <a class="full-link" href="scripts/apollo.html" target="_blank">查看完整世界观 →</a>
+        </div></div>
+      </div>
+
+      <!-- Sheet 5 -->
+      <div class="sheet">
+        <div class="face front"><div class="page" data-page="09">
+          <div class="p-kicker">世界观 · CHARACTER & ART</div>
+          <div class="p-title">角色与美术风格</div>
+          <div class="p-sub">主要角色 · 数学大陆 · 场景设定</div>
+          <div class="p-rule"></div>
+          <div class="apollo-txt">
+            <p><b>角色 CP 设计：</b>小北 × 大萌【反差萌 CP】· 大萌 × 鹦鹉【欢喜冤家 CP】· 小北 × 小清【同学组 CP】。数学大陆分为清北小镇、几何城、运算岛三大场景，知识藏在小镇的每个角落。</p>
+          </div>
+          <div class="apollo-grid">
+            <img src="assets/img/apollo-p07.png" alt="角色设定">
+            <img src="assets/img/apollo-p12.png" alt="莫比乌斯大陆">
+          </div>
+          <a class="full-link" href="scripts/apollo.html" target="_blank">查看完整世界观 →</a>
+        </div></div>
+        <div class="face back"><div class="page cover-page" data-page="10">
+          <div class="big">谢谢翻阅</div>
+          <div class="en">THANKS FOR READING</div>
+          <div class="orn"></div>
+          <p>更多作品，请继续向下浏览<br>↓</p>
+        </div></div>
+      </div>
+
+    </div>
+    <div class="mbook" id="mbookEl"></div>
+  </div>
+
+  <div class="book-ctrl">
+    <button class="bbtn" id="prevBtn" aria-label="上一页">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="bbtn" id="nextBtn" aria-label="下一页">›</button>
+  </div>
+  <div class="book-hint">← → 方向键也可翻页 · 视频可直接在书页内播放</div>
+</section>
+
+<!-- ================= 其他作品 ================= -->
+<section class="works" id="works">
+  <div class="wrap">
+    <div class="kicker reveal">MORE WORKS</div>
+    <h2 class="h2 reveal">更多作品</h2>
+
+    <div class="works-grid">
+      <div class="work-card reveal">
+        <video controls playsinline preload="none" poster="assets/img/poster-yuansu.jpg" src="assets/video/yuansu.mp4"></video>
+        <div class="work-body"><h3>《元素公寓》</h3><p>化学启蒙动画：元素周期表化身公寓住户，用拟人化故事讲清元素性格，约 3 分钟。</p></div>
+      </div>
+      <div class="work-card reveal">
+        <video controls playsinline preload="none" poster="assets/img/poster-yunlv.jpg" src="assets/video/yunlv.mp4"></video>
+        <div class="work-body"><h3>《韵律操》</h3><p>动感韵律教学内容，节奏与动作设计结合，让孩子在律动中学习与记忆。</p></div>
+      </div>
+      <div class="work-card reveal">
+        <video controls playsinline preload="none" poster="assets/img/poster-suanfa.jpg" src="assets/video/suanfa.mp4"></video>
+        <div class="work-body"><h3>《聪明的算法》</h3><p>计算思维启蒙：把抽象的算法概念变成孩子看得懂、愿意看的故事，约 7 分钟。</p></div>
+      </div>
+      <div class="work-card reveal">
+        <video controls playsinline preload="none" poster="assets/img/poster-kechuang.jpg" src="assets/video/kechuang.mp4"></video>
+        <div class="work-body"><h3>《科技创新课》</h3><p>科创课程完整切片：科技发明与课堂互动结合，呈现完整的科创课堂设计，约 11 分钟。</p></div>
+      </div>
+    </div>
+
+    <div class="doubao reveal">
+      <div class="doubao-icon"><img src="assets/img/doubao-icon.png" alt="豆包爱学"></div>
+      <div class="doubao-body">
+        <div>
+          <h3>字节跳动 ·《豆包爱学》</h3>
+          <span class="tag">AI 互动故事</span><span class="tag">AI 口语练习</span><span class="tag">2022 — 至今</span>
+          <p>负责《豆包爱学》中「互动故事」「口语练习」产品的课程与内容设计，涵盖内容体系、课程形式、交互逻辑、人物设定与故事脉络。<b>单集最高点击超 300 万</b>——让孩子一边写故事、一边学知识，是一种全新的 AI 学习体验。</p>
+        </div>
+        <img src="assets/img/doubao-page.jpg" alt="豆包爱学项目展示页">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 页脚 ================= -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="kicker reveal">CONTACT</div>
+    <h2 class="h2 reveal">期待与您聊聊</h2>
+    <p class="reveal">教育内容产品 · AI 课程设计 · IP 与剧本创作<br><br>
+    <span class="mail">669407416@qq.com</span><br>
+    电话 173-1050-2220 · 现居北京</p>
+    <div class="fine">© 2026 TAI KEXIN · DESIGNED WITH CARE</div>
+  </div>
+</footer>
+
+<script>
+/* ---------- 导航滚动态 ---------- */
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 60), {passive:true});
+
+/* ---------- 入场动画 ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+}), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- 数字滚动 ---------- */
+const nio = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target, n = +el.dataset.n, t0 = performance.now();
+  (function tick(t){
+    const p = Math.min((t - t0) / 1400, 1);
+    el.textContent = Math.round(n * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+  nio.unobserve(el);
+}), {threshold:.6});
+document.querySelectorAll('.num').forEach(el => nio.observe(el));
+
+/* ---------- 翻书（桌面跨页 + 手机单页） ---------- */
+const sheets = [...document.querySelectorAll('.sheet')];
+const dotsEl = document.getElementById('dots');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const mbookEl = document.getElementById('mbookEl');
+let cur = 0, mode = '', mpages = [];
+
+function pauseVideos(){ document.querySelectorAll('video').forEach(v => { if(!v.paused) v.pause(); }); }
+
+function buildMobile(){
+  mbookEl.innerHTML = '';
+  mpages = [...document.querySelectorAll('#bookEl .face')].map((f, i) => {
+    const d = document.createElement('div');
+    d.className = 'mpage';
+    d.appendChild(f.cloneNode(true));
+    d.addEventListener('click', e => {
+      if (e.target.closest('video')) return;
+      i === cur ? goTo(cur + 1) : goTo(i);
+    });
+    mbookEl.appendChild(d);
+    return d;
+  });
+}
+
+function render(){
+  const max = mode === 'm' ? mpages.length - 1 : sheets.length;
+  if (mode === 'm') {
+    mpages.forEach((p, i) => {
+      p.classList.toggle('away', i < cur);
+      p.style.zIndex = i < cur ? i + 1 : mpages.length - i;
+    });
+  } else {
+    sheets.forEach((s, i) => {
+      s.classList.toggle('flipped', i < cur);
+      s.style.zIndex = i < cur ? i + 1 : sheets.length - i;
+    });
+  }
+  [...dotsEl.children].forEach((d, i) => d.classList.toggle('on', i === cur));
+  prevBtn.disabled = cur === 0;
+  nextBtn.disabled = cur === max;
+  pauseVideos();
+}
+
+function buildDots(){
+  dotsEl.innerHTML = '';
+  const total = mode === 'm' ? mpages.length : sheets.length + 1;
+  for (let i = 0; i <= total - 1; i++) {
+    const d = document.createElement('i');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+}
+
+function goTo(n){
+  const max = mode === 'm' ? mpages.length - 1 : sheets.length;
+  cur = Math.max(0, Math.min(max, n));
+  render();
+}
+
+function initBook(){
+  const m = matchMedia('(max-width:820px)').matches;
+  const newMode = m ? 'm' : 'd';
+  if (newMode === mode) return;
+  mode = newMode;
+  cur = 0;
+  if (m) buildMobile();
+  buildDots();
+  render();
+}
+
+prevBtn.addEventListener('click', () => goTo(cur - 1));
+nextBtn.addEventListener('click', () => goTo(cur + 1));
+addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goTo(cur + 1);
+  if (e.key === 'ArrowLeft') goTo(cur - 1);
+});
+// 桌面端：点击书的左右半区翻页
+document.getElementById('bookEl').addEventListener('click', e => {
+  if (e.target.closest('video')) return;
+  const r = e.currentTarget.getBoundingClientRect();
+  (e.clientX - r.left > r.width / 2) ? goTo(cur + 1) : goTo(cur - 1);
+});
+matchMedia('(max-width:820px)').addEventListener('change', initBook);
+initBook();
+</script>
+</body>
+</html>
